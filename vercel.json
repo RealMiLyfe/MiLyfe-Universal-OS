@@ -1,0 +1,24 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/ubi",
+      "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/cron/decay",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/freshness",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/proposals",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/timers",
+      "schedule": "0 8 * * *"
+    }
+  ]
+}

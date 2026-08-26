@@ -1,0 +1,13 @@
+# MiLyfe Platform Code Owners
+# These users will be automatically requested for review on PRs
+
+# Default owner for everything
+* @RealMiLyfe
+
+# Security-sensitive files require explicit review
+src/lib/security/ @RealMiLyfe
+src/lib/supabase/ @RealMiLyfe
+src/app/api/cron/ @RealMiLyfe
+src/app/api/wallet/ @RealMiLyfe
+.env* @RealMiLyfe
+SECURITY.md @RealMiLyfe
