@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { CheckCircle, ArrowRight, MapPin, User, Sparkles } from 'lucide-react';
 
-const STEPS = ['Profile', 'Neighborhood', 'Welcome'];
+const STEPS = ['Profile', 'Neighborhood', 'Civic', 'Welcome'];
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function OnboardingPage() {
   const [displayName, setDisplayName] = useState(user?.display_name || '');
   const [bio, setBio] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
+  const [voterStatus, setVoterStatus] = useState<'registered' | 'not_registered' | 'unsure' | 'prefer_not_to_say' | 'unknown'>('unknown');
   const [isPending, startTransition] = useTransition();
 
   function handleNext() {
@@ -33,6 +34,7 @@ export default function OnboardingPage() {
         bio,
         neighborhood: neighborhood || undefined,
         interests: [],
+        voter_status: voterStatus,
       });
 
       if (result.success) {
@@ -128,6 +130,64 @@ export default function OnboardingPage() {
         )}
 
         {step === 2 && (
+          <>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-lg bg-teal-50 dark:bg-teal-900/20">
+                <svg className="h-5 w-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-harbor-800 dark:text-white">Your Civic Status</h1>
+                <p className="text-sm text-gray-500">Optional — helps us support your civic journey</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              Your voice matters beyond this platform. Are you registered to vote in Florida?
+              This is completely private — only you can see this.
+            </p>
+            <div className="space-y-2">
+              {[
+                { value: 'registered', label: 'Yes, I\'m registered to vote', icon: '✅' },
+                { value: 'not_registered', label: 'No, I\'m not registered yet', icon: '📋' },
+                { value: 'unsure', label: 'I\'m not sure', icon: '❓' },
+                { value: 'prefer_not_to_say', label: 'Prefer not to say', icon: '🔒' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setVoterStatus(opt.value as typeof voterStatus)}
+                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                    voterStatus === opt.value
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20'
+                      : 'border-gray-200 dark:border-harbor-700 hover:border-gray-300'
+                  }`}
+                >
+                  <span className="mr-2">{opt.icon}</span>
+                  <span className="text-sm font-medium">{opt.label}</span>
+                </button>
+              ))}
+            </div>
+            {(voterStatus === 'not_registered' || voterStatus === 'unsure') && (
+              <div className="mt-4 p-3 bg-mly-50 dark:bg-mly-900/20 rounded-lg border border-mly-200 dark:border-mly-800">
+                <p className="text-sm font-medium text-harbor-800 dark:text-white mb-2">
+                  Register to vote in Florida:
+                </p>
+                <a
+                  href="https://registertovoteflorida.gov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-teal-600 dark:text-teal-400 underline font-medium"
+                >
+                  registertovoteflorida.gov →
+                </a>
+                <p className="text-xs text-gray-500 mt-2">
+                  You can always update your status later in your profile settings.
+                </p>
+              </div>
+            )}
+          </>
+        )}
+
+        {step === 3 && (
           <div className="text-center py-4">
             <div className="inline-flex p-3 rounded-full bg-mly-100 dark:bg-mly-900/20 mb-4">
               <Sparkles className="h-8 w-8 text-mly-600" aria-hidden="true" />

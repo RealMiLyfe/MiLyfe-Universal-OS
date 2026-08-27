@@ -240,6 +240,7 @@ const onboardingSchema = z.object({
   bio: z.string().max(500).optional(),
   neighborhood: z.string().max(100).optional(),
   interests: z.array(z.string()).max(5).optional(),
+  voter_status: z.enum(['registered', 'not_registered', 'unsure', 'prefer_not_to_say', 'unknown']).optional(),
 });
 
 export async function completeOnboarding(input: z.infer<typeof onboardingSchema>) {
@@ -256,6 +257,7 @@ export async function completeOnboarding(input: z.infer<typeof onboardingSchema>
       display_name: parsed.data.display_name,
       bio: parsed.data.bio || '',
       neighborhood: parsed.data.neighborhood || null,
+      voter_status: parsed.data.voter_status || 'unknown',
       onboarding_complete: true,
       metadata: { interests: parsed.data.interests || [] },
       updated_at: new Date().toISOString(),
@@ -336,5 +338,28 @@ export async function completeOnboarding(input: z.infer<typeof onboardingSchema>
   revalidatePath('/home');
   revalidatePath('/treasury');
   revalidatePath('/profile');
+
+  // Notify war room of new citizen (fire and forget — never blocks onboarding)
+  try {
+    const warRoomUrl = process.env.WAR_ROOM_INTAKE_URL;
+    const intakeSecret = process.env.WAR_ROOM_INTAKE_SECRET;
+    if (warRoomUrl) {
+      fetch(warRoomUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-intake-secret': intakeSecret || '',
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          display_name: parsed.data.display_name,
+          neighborhood: parsed.data.neighborhood || null,
+          voter_status: parsed.data.voter_status || 'unknown',
+          source: 'platform',
+        }),
+      }).catch(() => {}); // Never fail onboarding because of war room
+    }
+  } catch {}
+
   return { success: true };
 }
