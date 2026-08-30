@@ -18,9 +18,23 @@ const PUBLIC_ROUTES = [
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Fail open (don't 500 the whole site) if Supabase env is missing/misconfigured.
+  // Without auth env, we can't check sessions — let the request through so public
+  // pages still render and misconfiguration is obvious in logs, not a hard crash.
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error(
+      '[middleware] Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY — ' +
+      'set these in the deployment environment. Skipping auth checks.'
+    );
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -39,7 +53,14 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (err) {
+    // Transient auth/network error — don't crash the site; treat as logged-out.
+    console.error('[middleware] auth.getUser failed:', err);
+  }
   const pathname = request.nextUrl.pathname;
 
   // Allow public routes and auth endpoints
