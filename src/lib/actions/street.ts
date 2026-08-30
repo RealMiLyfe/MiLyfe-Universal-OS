@@ -141,6 +141,84 @@ export async function createQuest(input: CreateQuestInput) {
   return { success: true, id: data.id };
 }
 
+// ─── Cancel / Remove Quest (creator only) + refund unclaimed escrow ──────────
+export async function cancelQuest(questId: string) {
+  const supabase = createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: 'Not authenticated' };
+
+  // Load the quest and confirm ownership
+  const { data: quest } = await supabase
+    .from('quests')
+    .select('id, creator_id, reward_mly, reward_source, max_completions, current_completions, status')
+    .eq('id', questId)
+    .single();
+
+  if (!quest) return { error: 'Quest not found' };
+  if (quest.creator_id !== user.id) return { error: 'You can only remove quests you posted' };
+  if (quest.status === 'cancelled') return { error: 'Quest is already removed' };
+  if (quest.status === 'completed') return { error: 'Completed quests cannot be removed' };
+
+  // Block removal if a claim is mid-flight (claimed/submitted) so we never
+  // yank a reward out from under someone actively doing the work.
+  const { count: activeClaims } = await supabase
+    .from('quest_claims')
+    .select('id', { count: 'exact', head: true })
+    .eq('quest_id', questId)
+    .in('status', ['claimed', 'submitted']);
+
+  if ((activeClaims ?? 0) > 0) {
+    return { error: 'This quest has active claims in progress. Resolve or reject them before removing it.' };
+  }
+
+  // Refund only the UNCLAIMED remaining escrow (creator-funded quests only).
+  // Escrowed at creation = reward_mly * max_completions; already paid out =
+  // reward_mly * current_completions; so remaining = reward_mly * (max - current).
+  const remaining = Math.max(0, quest.max_completions - quest.current_completions);
+  const refund = quest.reward_source === 'creator' ? Number(quest.reward_mly) * remaining : 0;
+
+  // Mark the quest cancelled first (guard against double-refund via status check)
+  const { error: cancelErr } = await supabase
+    .from('quests')
+    .update({ status: 'cancelled', updated_at: new Date().toISOString() })
+    .eq('id', questId)
+    .eq('creator_id', user.id)
+    .neq('status', 'cancelled');
+
+  if (cancelErr) return { error: cancelErr.message };
+
+  if (refund > 0) {
+    const { data: wallet } = await supabase
+      .from('wallets')
+      .select('spending_balance')
+      .eq('user_id', user.id)
+      .single();
+
+    if (wallet) {
+      await supabase
+        .from('wallets')
+        .update({
+          spending_balance: Number(wallet.spending_balance) + refund,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', user.id);
+
+      // Record the refund transaction for the ledger
+      await supabase.from('transactions').insert({
+        from_user_id: null,
+        to_user_id: user.id,
+        amount: refund,
+        type: 'quest_refund',
+        pot: 'spending',
+        description: 'Refund of unclaimed reward from removed quest',
+      });
+    }
+  }
+
+  revalidatePath('/street');
+  return { success: true, refunded: refund };
+}
+
 // ─── Claim Quest ─────────────────────────────────────────────────────────────
 export async function claimQuest(questId: string) {
   const supabase = createServerSupabase();

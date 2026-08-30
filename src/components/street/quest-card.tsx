@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { claimQuest } from '@/lib/actions/street';
+import { claimQuest, cancelQuest } from '@/lib/actions/street';
 import { executeWithOfflineFallback } from '@/lib/offline/action-wrapper';
 
 interface QuestCardProps {
@@ -53,6 +53,22 @@ export function QuestCard({ quest, userId, onClaimed }: QuestCardProps) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [claimed, setClaimed] = useState(false);
+  const [removed, setRemoved] = useState(false);
+  const [confirmRemove, setConfirmRemove] = useState(false);
+
+  function handleRemove() {
+    setError(null);
+    startTransition(async () => {
+      const result = await cancelQuest(quest.id);
+      if (result.error) {
+        setError(result.error);
+        setConfirmRemove(false);
+      } else {
+        setRemoved(true);
+        onClaimed?.(); // reuse parent refresh callback
+      }
+    });
+  }
 
   const spotsLeft = quest.max_completions - quest.current_completions;
   const isExpiringSoon =
@@ -144,8 +160,42 @@ export function QuestCard({ quest, userId, onClaimed }: QuestCardProps) {
                 Claimed ✓
               </span>
             )}
-            {isOwnQuest && (
-              <span className="text-xs text-muted-foreground">Your quest</span>
+            {isOwnQuest && !removed && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Your quest</span>
+                {quest.status === 'open' && (
+                  confirmRemove ? (
+                    <>
+                      <button
+                        onClick={handleRemove}
+                        disabled={isPending}
+                        className="rounded-md bg-red-600 px-2.5 py-1.5 text-xs font-medium text-white disabled:opacity-50"
+                      >
+                        {isPending ? 'Removing...' : `Confirm remove (+${quest.reward_mly * (quest.max_completions - quest.current_completions)} $MLY back)`}
+                      </button>
+                      <button
+                        onClick={() => setConfirmRemove(false)}
+                        disabled={isPending}
+                        className="rounded-md border px-2.5 py-1.5 text-xs font-medium disabled:opacity-50"
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => setConfirmRemove(true)}
+                      className="rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                    >
+                      Remove &amp; refund
+                    </button>
+                  )
+                )}
+              </div>
+            )}
+            {removed && (
+              <span className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600">
+                Removed — refunded ✓
+              </span>
             )}
           </div>
 
