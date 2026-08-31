@@ -126,7 +126,7 @@ export default function TransparencyPage() {
           </li>
           <li className="flex items-start gap-2">
             <span className="text-teal-500 mt-0.5">•</span>
-            <span><strong>Open source.</strong> All code is publicly auditable on <a href="https://github.com/RealMiLyfe/MiLyfe-Platform-OS" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">GitHub</a>.</span>
+            <span><strong>Open source.</strong> All code is publicly auditable on <a href="https://github.com/RealMiLyfe/MiLyfe-Universal-OS" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:underline">GitHub</a>.</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="text-teal-500 mt-0.5">•</span>
@@ -180,7 +180,7 @@ export default function TransparencyPage() {
           <Vote className="h-4 w-4 inline mr-1.5" aria-hidden="true" />
           View Proposals
         </Link>
-        <a href="https://github.com/RealMiLyfe/MiLyfe-Platform-OS" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-gray-200 dark:border-harbor-700 px-4 py-2.5 text-sm font-medium text-harbor-800 dark:text-white hover:bg-gray-50 dark:hover:bg-harbor-900 transition-colors">
+        <a href="https://github.com/RealMiLyfe/MiLyfe-Universal-OS" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-gray-200 dark:border-harbor-700 px-4 py-2.5 text-sm font-medium text-harbor-800 dark:text-white hover:bg-gray-50 dark:hover:bg-harbor-900 transition-colors">
           <BookOpen className="h-4 w-4 inline mr-1.5" aria-hidden="true" />
           Source Code
         </a>

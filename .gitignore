@@ -73,3 +73,5 @@ temp/
 
 # supabase local
 supabase/.temp/
+.env*
+scripts/set-supabase-keys.sh

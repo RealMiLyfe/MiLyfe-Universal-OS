@@ -215,7 +215,7 @@ export function BountiesView() {
                   </div>
                   <div className="shrink-0">
                     <a
-                      href={`https://github.com/RealMiLyfe/MiLyfe-Platform-OS/issues?q=is%3Aissue+${bounty.id}`}
+                      href={`https://github.com/RealMiLyfe/MiLyfe-Universal-OS/issues?q=is%3Aissue+${bounty.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex"
@@ -258,7 +258,7 @@ export function BountiesView() {
             See all 160 bounties with full descriptions, acceptance criteria, and architecture notes.
           </p>
           <a
-            href="https://github.com/RealMiLyfe/MiLyfe-Platform-OS/blob/main/BOUNTY_ROADMAP.md"
+            href="https://github.com/RealMiLyfe/MiLyfe-Universal-OS/blob/main/BOUNTY_ROADMAP.md"
             target="_blank"
             rel="noopener noreferrer"
           >
