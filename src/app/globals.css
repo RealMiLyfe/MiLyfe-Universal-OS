@@ -11,12 +11,42 @@
     --radius: 12px;
     --glass-bg: rgba(255, 255, 255, 0.6);
     --glass-border: rgba(255, 255, 255, 0.2);
+
+    /* Semantic tokens — space-separated RGB for rgb(var(--x) / <alpha>) syntax.
+       These were missing, which made every modal/overlay transparent + text unreadable. */
+    --background: 255 255 255;        /* white — opaque modal/page surfaces */
+    --foreground: 22 45 85;           /* harbor-900 text */
+    --card: 255 255 255;
+    --card-foreground: 22 45 85;
+    --popover: 255 255 255;
+    --popover-foreground: 22 45 85;
+    --muted: 240 243 247;             /* light gray surface */
+    --muted-foreground: 90 105 130;   /* readable secondary text */
+    --primary: 0 193 174;             /* teal-500 */
+    --primary-foreground: 255 255 255;
+    --border: 224 230 240;
+    --input: 224 230 240;
+    --ring: 0 193 174;
   }
 
   .dark {
     --color-surface: #0F1419;
     --glass-bg: rgba(15, 20, 25, 0.6);
     --glass-border: rgba(255, 255, 255, 0.05);
+
+    --background: 15 20 25;           /* opaque dark surface */
+    --foreground: 237 240 244;
+    --card: 22 29 37;
+    --card-foreground: 237 240 244;
+    --popover: 22 29 37;
+    --popover-foreground: 237 240 244;
+    --muted: 30 38 48;
+    --muted-foreground: 156 168 184;
+    --primary: 0 193 174;
+    --primary-foreground: 15 20 25;
+    --border: 40 50 62;
+    --input: 40 50 62;
+    --ring: 0 193 174;
   }
 
   html {

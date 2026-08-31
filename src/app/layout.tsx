@@ -55,13 +55,17 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { getActiveLanguage } = await import('@/lib/i18n/set-language');
+  const { getLanguage } = await import('@/lib/i18n/languages');
+  const langCode = await getActiveLanguage();
+  const lang = getLanguage(langCode);
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={langCode} dir={lang.rtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"

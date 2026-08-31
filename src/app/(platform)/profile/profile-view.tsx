@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 import { format, formatDistanceToNow } from 'date-fns';
 import { updateProfile } from '@/lib/actions/profile';
+import { LanguageSelector } from '@/components/profile/language-selector';
 import { AvatarUpload } from '@/components/profile/avatar-upload';
 import { StandingRadar } from '@/components/profile/standing-radar';
 import { PrivacyDashboard } from '@/components/profile/privacy-dashboard';
@@ -192,6 +193,7 @@ export function ProfileView({
               className={inputStyles}
             />
           </FormField>
+          <LanguageSelector current={profile?.preferred_language} />
         </div>
       )}
 

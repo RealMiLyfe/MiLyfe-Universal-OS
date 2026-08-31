@@ -39,6 +39,36 @@ export async function updateProfile(input: UpdateProfileInput) {
   return { success: true };
 }
 
+// ─── Update Preferred Language ───────────────────────────────────────────────
+import { isSupportedLanguage } from '@/lib/i18n/languages';
+
+export async function updateLanguage(code: string) {
+  if (!isSupportedLanguage(code)) {
+    return { error: 'Unsupported language' };
+  }
+
+  const supabase = createServerSupabase();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: 'Not authenticated' };
+
+  // Always set the cookie so the choice drives the whole experience immediately,
+  // even before/if the profile column write succeeds.
+  const { setLanguage } = await import('@/lib/i18n/set-language');
+  await setLanguage(code);
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ preferred_language: code, updated_at: new Date().toISOString() })
+    .eq('id', user.id);
+
+  if (error && !/column .*preferred_language.* does not exist/i.test(error.message)) {
+    return { error: error.message };
+  }
+
+  revalidatePath('/profile');
+  return { success: true };
+}
+
 // ─── Upload Avatar ───────────────────────────────────────────────────────────
 export async function uploadAvatar(formData: FormData) {
   const supabase = createServerSupabase();
