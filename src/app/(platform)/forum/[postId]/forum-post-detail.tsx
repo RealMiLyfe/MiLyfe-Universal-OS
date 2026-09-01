@@ -29,7 +29,7 @@ export function ForumPostDetail({ post, replies, userId }: ForumPostDetailProps)
   const [localReplies, setLocalReplies] = useState(replies);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<{ body: string }>({
-    resolver: zodResolver(replySchema),
+    resolver: zodResolver(replySchema) as any,
   });
 
   const author = post.profiles;

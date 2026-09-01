@@ -44,7 +44,7 @@ export function AssessmentReflection({ moduleId, type, onComplete }: AssessmentR
   const prompt = PROMPTS[type] || PROMPTS.reflection;
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
   });
 
   async function onSubmit(data: FormData) {

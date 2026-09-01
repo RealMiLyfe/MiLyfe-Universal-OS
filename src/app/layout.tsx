@@ -67,6 +67,11 @@ export default async function RootLayout({
   return (
     <html lang={langCode} dir={lang.rtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
+        {/* Clear any stored dark-mode preference — light theme only */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          localStorage.removeItem('milyfe-theme');
+          document.documentElement.classList.remove('dark');
+        ` }} />
         <link
           href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
           rel="stylesheet"

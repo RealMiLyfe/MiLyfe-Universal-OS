@@ -224,7 +224,7 @@ export async function completeModule(input: z.infer<typeof completeModuleSchema>
 const submitAssessmentSchema = z.object({
   module_id: z.string().uuid(),
   assessment_type: z.enum(['quiz', 'portfolio', 'reflection', 'project']),
-  data: z.record(z.unknown()),
+  data: z.record(z.string(), z.unknown()),
 });
 
 export async function submitAssessment(input: z.infer<typeof submitAssessmentSchema>) {

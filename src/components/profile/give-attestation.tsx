@@ -39,7 +39,7 @@ export function GiveAttestation({ toUserId, toDisplayName, open, onClose, onSucc
   const [success, setSuccess] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { facet: 'neighbor' },
   });
 

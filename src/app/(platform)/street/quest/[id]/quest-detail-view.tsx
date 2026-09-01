@@ -29,7 +29,7 @@ export function QuestDetailView({ quest, userId, userClaim, allClaims }: QuestDe
   const creator = quest.profiles;
 
   const { register, handleSubmit, formState: { errors } } = useForm<{ evidence_text: string }>({
-    resolver: zodResolver(evidenceSchema),
+    resolver: zodResolver(evidenceSchema) as any,
   });
 
   function handleClaim() {

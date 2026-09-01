@@ -36,7 +36,7 @@ export function SendFlow({ balance, onSuccess, onCancel, prefillUsername, prefil
   const [result, setResult] = useState<{ amount: number; to: string } | null>(null);
 
   const { register, handleSubmit, formState: { errors }, watch } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       toUsername: prefillUsername || '',
       amount: prefillAmount || undefined,

@@ -32,7 +32,7 @@ export function CommentThread({ proposalId, comments, userId }: CommentThreadPro
   const [error, setError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<{ body: string }>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
   });
 
   async function onSubmit(data: { body: string }) {

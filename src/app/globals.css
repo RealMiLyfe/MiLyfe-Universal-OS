@@ -29,40 +29,14 @@
     --ring: 0 193 174;
   }
 
-  .dark {
-    --color-surface: #0F1419;
-    --glass-bg: rgba(15, 20, 25, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.05);
-
-    --background: 15 20 25;           /* opaque dark surface */
-    --foreground: 237 240 244;
-    --card: 22 29 37;
-    --card-foreground: 237 240 244;
-    --popover: 22 29 37;
-    --popover-foreground: 237 240 244;
-    --muted: 30 38 48;
-    --muted-foreground: 156 168 184;
-    --primary: 0 193 174;
-    --primary-foreground: 15 20 25;
-    --border: 40 50 62;
-    --input: 40 50 62;
-    --ring: 0 193 174;
-  }
-
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    @apply bg-surface-light dark:bg-surface-dark text-harbor-900 dark:text-gray-100;
+    @apply bg-white text-harbor-900;
     font-feature-settings: "kern" 1;
-  }
-
-  /* Dark mode depth — subtle radial gradient center */
-  .dark body {
-    background: radial-gradient(ellipse at 50% 0%, #162d55 0%, #0F1419 70%);
-    background-attachment: fixed;
   }
 
   /* Accessibility: minimum touch targets */

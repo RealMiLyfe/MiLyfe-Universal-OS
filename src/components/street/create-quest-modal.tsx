@@ -35,7 +35,7 @@ export function CreateQuestModal({ open, onClose, onSuccess }: CreateQuestModalP
   const [serverError, setServerError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       category: 'community',
       difficulty: 'easy',

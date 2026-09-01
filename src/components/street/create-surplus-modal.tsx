@@ -29,7 +29,7 @@ export function CreateSurplusModal({ open, onClose, onSuccess }: CreateSurplusMo
   const [serverError, setServerError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       category: 'food',
       quantity: '1',

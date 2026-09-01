@@ -29,7 +29,7 @@ export function ProposalEditor({ open, onClose, onSuccess }: ProposalEditorProps
   const [serverError, setServerError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       category: 'general',
       voting_days: 14,

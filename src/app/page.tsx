@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { ArrowRight, Users, Wallet, Shield, Vote, Heart, BookOpen, Sparkles, TrendingUp, Globe, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createServiceSupabase } from '@/lib/supabase/server';
-import { FooterLanguageSelector } from '@/components/i18n/footer-language-selector';
 
 const FEATURES = [
   { icon: Wallet, title: 'Earn $MLY', description: 'Universal basic income for every citizen. Spend, save, or give back.', accent: 'from-mly-400 to-mly-600', bg: 'bg-mly-50 dark:bg-mly-900/20', iconColor: 'text-mly-600 dark:text-mly-400' },
@@ -275,11 +274,10 @@ export default async function LandingPage() {
               </ul>
             </div>
           </div>
-          <div className="mt-10 pt-6 border-t border-gray-100 dark:border-harbor-800 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-            <p className="text-xs text-gray-400 dark:text-gray-500 text-center sm:text-left">
+          <div className="mt-10 pt-6 border-t border-gray-100 text-center">
+            <p className="text-xs text-gray-400 text-center">
               &copy; {new Date().getFullYear()} MiLyfe. Open source. People-owned. Built with $0 for the people.
             </p>
-            <FooterLanguageSelector />
           </div>
         </div>
       </footer>

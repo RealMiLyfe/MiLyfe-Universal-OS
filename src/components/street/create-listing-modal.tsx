@@ -32,7 +32,7 @@ export function CreateListingModal({ open, onClose, onSuccess }: CreateListingMo
   const [images, setImages] = useState<string[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset, watch } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: {
       category: 'goods',
       price_type: 'fixed',
