@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/icon.png" alt="MiLyfe" width="96" height="96" />
+<img src="public/icon-192.png" alt="MiLyfe" width="96" height="96" />
 
 # MiLyfe Universal OS
 
@@ -14,6 +14,10 @@
 [![Built with Next.js](https://img.shields.io/badge/Next.js_14-black?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-teal?style=for-the-badge)](CONTRIBUTING.md)
+
+[![CI](https://github.com/RealMiLyfe/MiLyfe-Universal-OS/actions/workflows/ci.yml/badge.svg)](https://github.com/RealMiLyfe/MiLyfe-Universal-OS/actions/workflows/ci.yml)
+[![Languages](https://img.shields.io/badge/🌍_Languages-14-1e3a6e)](src/lib/i18n/languages.ts)
+[![Free Forever](https://img.shields.io/badge/💛_Free-Forever-f5c518)](https://milyfe.fun)
 
 </div>
 
@@ -59,6 +63,17 @@ Every feature works offline. Every vote is public. No ads. No data extraction. N
 
 ---
 
+## 👋 New here? Start with this
+
+- **Just want to see it?** → [milyfe.fun](https://milyfe.fun) — sign up free, you'll have $MLY in your wallet in 30 seconds.
+- **Want to understand the idea?** → read the [Whitepaper](WHITEPAPER.md) (10 min) or the [Founder Story](docs/planning/MiLyfe_Founder_Story.md) (5 min).
+- **Want to build?** → jump to [Get started](#get-started-in-3-steps), then grab a task from the [bounty board](https://milyfe.fun/bounties).
+- **Want the whole picture?** → the [Ultimate Manual](docs/planning/MiLyfe_Ultimate_Manual.md) is the complete reference.
+
+Everyone is welcome — anyone, anywhere, from day one. That's not a slogan, it's the license.
+
+---
+
 ## The Oath — 24 Immutable Principles
 
 > *"We the People of the United States... do ordain and establish this Constitution."*
@@ -96,7 +111,7 @@ No founder mint. No pre-mine. No APY. No "investment in our team."
 | **Auth** | Supabase Auth | Open source, no vendor lock-in |
 | **Styling** | Tailwind CSS + custom design tokens | Fast, consistent, accessible |
 | **Security** | Zod + DOMPurify + RLS + client-side encryption | Defense in depth |
-| **i18n** | Cookie-based language selector (14 languages) | Universal from day one |
+| **i18n** | Translated message catalogs + language selectors (14 languages, RTL-aware) | Universal from day one |
 | **License** | AGPL-3.0 | Public code, stays public |
 
 Full architecture: [ARCHITECTURE.md](ARCHITECTURE.md)

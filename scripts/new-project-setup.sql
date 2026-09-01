@@ -1022,3 +1022,294 @@ BEGIN
     WHERE id = v_id;
   END IF;
 END $$;
+
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- COMPLETE SCHEMA ADDENDUM
+-- Tables, columns, seeds, and policies that complete the platform so a fresh
+-- setup matches production. Idempotent (CREATE TABLE IF NOT EXISTS / ADD COLUMN
+-- IF NOT EXISTS / DROP POLICY IF EXISTS + CREATE). Safe to re-run.
+-- ═══════════════════════════════════════════════════════════════════════════
+-- ═══════════════════════════════════════════════════════════════════════════
+-- FIX_ALL_BUGS.sql — one-shot, idempotent fix for every bug found in E2E test.
+-- Run this ONCE in the Supabase SQL Editor for project uwozuhmiahytjwfmudia.
+-- Fixes: onboarding (voter_status/interests), quests columns, marketplace,
+--        surplus, quest_claims, delegations, proposal stages, citizen count.
+-- ═══════════════════════════════════════════════════════════════════════════
+
+-- ── 1. PROFILES: onboarding columns (migration 011 + interests + language) ──
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS voter_status TEXT NOT NULL DEFAULT 'unknown';
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS interests TEXT[] NOT NULL DEFAULT '{}';
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS metadata JSONB NOT NULL DEFAULT '{}';
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS preferred_language TEXT NOT NULL DEFAULT 'en';
+
+-- ── 2. QUESTS: existing table is an OLD version — add every missing column ──
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS reward_source TEXT NOT NULL DEFAULT 'creator';
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS time_estimate_minutes INTEGER;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS location_text TEXT;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS latitude DOUBLE PRECISION;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS longitude DOUBLE PRECISION;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS max_completions INTEGER NOT NULL DEFAULT 1;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS current_completions INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS requires_verification BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS verifier_id UUID REFERENCES public.profiles(id);
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ DEFAULT (NOW() + INTERVAL '7 days');
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE public.quests ADD COLUMN IF NOT EXISTS image_urls TEXT[] NOT NULL DEFAULT '{}';
+
+-- ── 3. QUEST_CLAIMS ──
+CREATE TABLE IF NOT EXISTS public.quest_claims (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  quest_id UUID NOT NULL REFERENCES public.quests(id) ON DELETE CASCADE,
+  claimer_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'claimed' CHECK (status IN ('claimed','submitted','verified','rejected')),
+  evidence_text TEXT,
+  evidence_images TEXT[] DEFAULT '{}',
+  submitted_at TIMESTAMPTZ,
+  verified_at TIMESTAMPTZ,
+  verified_by UUID REFERENCES public.profiles(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (quest_id, claimer_id)
+);
+
+-- ── 4. MARKETPLACE_LISTINGS ──
+CREATE TABLE IF NOT EXISTS public.marketplace_listings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  seller_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'goods' CHECK (category IN ('food','services','rides','goods','education','housing','jobs')),
+  price_mly NUMERIC(12,2) NOT NULL DEFAULT 0,
+  price_type TEXT NOT NULL DEFAULT 'fixed' CHECK (price_type IN ('fixed','negotiable','free','trade')),
+  condition TEXT CHECK (condition IN ('new','like_new','good','fair','parts')),
+  location_text TEXT,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
+  images TEXT[] NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','sold','removed')),
+  expires_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- ── 5. SURPLUS_ITEMS ──
+CREATE TABLE IF NOT EXISTS public.surplus_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  donor_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  description TEXT DEFAULT '',
+  category TEXT NOT NULL DEFAULT 'other' CHECK (category IN ('food','goods','clothing','furniture','other')),
+  quantity TEXT NOT NULL,
+  pickup_location TEXT NOT NULL,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
+  images TEXT[] NOT NULL DEFAULT '{}',
+  available_until TIMESTAMPTZ,
+  status TEXT NOT NULL DEFAULT 'available' CHECK (status IN ('available','claimed','expired')),
+  claimed_by UUID REFERENCES public.profiles(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- ── 6. GOVERNANCE: proposal stages (migration 008) + delegations ──
+ALTER TABLE public.proposals ADD COLUMN IF NOT EXISTS stage TEXT NOT NULL DEFAULT 'deliberation'
+  CHECK (stage IN ('draft','deliberation','voting','passed','rejected','enacted'));
+ALTER TABLE public.proposals ADD COLUMN IF NOT EXISTS votes_for INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.proposals ADD COLUMN IF NOT EXISTS votes_against INTEGER NOT NULL DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS public.delegations (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  delegator_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  delegate_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  topic TEXT NOT NULL DEFAULT 'general',
+  expires_at TIMESTAMPTZ,
+  revoked_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE (delegator_id, delegate_id, topic)
+);
+
+-- ── 7. INDEXES ──
+CREATE INDEX IF NOT EXISTS idx_quests_status ON public.quests(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_quests_creator ON public.quests(creator_id);
+CREATE INDEX IF NOT EXISTS idx_quest_claims_quest ON public.quest_claims(quest_id);
+CREATE INDEX IF NOT EXISTS idx_marketplace_status ON public.marketplace_listings(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_surplus_status ON public.surplus_items(status, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_delegations_delegator ON public.delegations(delegator_id);
+
+-- ── 8. ROW-LEVEL SECURITY ──
+ALTER TABLE public.quest_claims ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.marketplace_listings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.surplus_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.delegations ENABLE ROW LEVEL SECURITY;
+
+-- Public read
+DROP POLICY IF EXISTS "read marketplace" ON public.marketplace_listings;
+CREATE POLICY "read marketplace" ON public.marketplace_listings FOR SELECT USING (true);
+DROP POLICY IF EXISTS "read surplus" ON public.surplus_items;
+CREATE POLICY "read surplus" ON public.surplus_items FOR SELECT USING (true);
+DROP POLICY IF EXISTS "read quest_claims" ON public.quest_claims;
+CREATE POLICY "read quest_claims" ON public.quest_claims FOR SELECT USING (true);
+DROP POLICY IF EXISTS "read delegations" ON public.delegations;
+CREATE POLICY "read delegations" ON public.delegations FOR SELECT USING (true);
+
+-- Owner write
+DROP POLICY IF EXISTS "write marketplace" ON public.marketplace_listings;
+CREATE POLICY "write marketplace" ON public.marketplace_listings FOR ALL TO authenticated USING (seller_id = auth.uid()) WITH CHECK (seller_id = auth.uid());
+DROP POLICY IF EXISTS "write surplus" ON public.surplus_items;
+CREATE POLICY "write surplus" ON public.surplus_items FOR ALL TO authenticated USING (donor_id = auth.uid()) WITH CHECK (donor_id = auth.uid());
+DROP POLICY IF EXISTS "write quest_claims" ON public.quest_claims;
+CREATE POLICY "write quest_claims" ON public.quest_claims FOR ALL TO authenticated USING (claimer_id = auth.uid()) WITH CHECK (claimer_id = auth.uid());
+DROP POLICY IF EXISTS "write delegations" ON public.delegations;
+CREATE POLICY "write delegations" ON public.delegations FOR ALL TO authenticated USING (delegator_id = auth.uid()) WITH CHECK (delegator_id = auth.uid());
+
+-- ── 9. STORAGE POLICIES (buckets 'public' + 'quests' created via API) ──
+DROP POLICY IF EXISTS "storage public read" ON storage.objects;
+CREATE POLICY "storage public read" ON storage.objects FOR SELECT USING (bucket_id IN ('public','quests'));
+DROP POLICY IF EXISTS "storage auth upload" ON storage.objects;
+CREATE POLICY "storage auth upload" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id IN ('public','quests'));
+DROP POLICY IF EXISTS "storage owner update" ON storage.objects;
+CREATE POLICY "storage owner update" ON storage.objects FOR UPDATE TO authenticated USING (owner = auth.uid());
+DROP POLICY IF EXISTS "storage owner delete" ON storage.objects;
+CREATE POLICY "storage owner delete" ON storage.objects FOR DELETE TO authenticated USING (owner = auth.uid());
+
+-- ── DONE. Every bug from the E2E test is addressed. ──
+
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- PART 2 — additional gaps found by the FULL platform test
+-- ═══════════════════════════════════════════════════════════════════════════
+
+-- ── SAFETY: actions + journal tables (migration 005 never ran) ──
+CREATE TABLE IF NOT EXISTS public.safety_actions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  type TEXT NOT NULL CHECK (type IN ('leave_now','freeze','unfreeze','hide_location','reveal_location')),
+  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','resolved','expired')),
+  freeze_jars BOOLEAN NOT NULL DEFAULT FALSE,
+  hide_location BOOLEAN NOT NULL DEFAULT FALSE,
+  remove_devices BOOLEAN NOT NULL DEFAULT FALSE,
+  contacts_notified TEXT[] DEFAULT '{}',
+  resolved_at TIMESTAMPTZ,
+  resolved_by UUID REFERENCES public.profiles(id),
+  resolution_notes TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.safety_journal (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  encrypted_content TEXT NOT NULL,
+  content_type TEXT NOT NULL DEFAULT 'note' CHECK (content_type IN ('note','evidence','plan','log')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE public.safety_actions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.safety_journal ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "own safety_actions" ON public.safety_actions;
+CREATE POLICY "own safety_actions" ON public.safety_actions FOR ALL TO authenticated USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
+DROP POLICY IF EXISTS "own safety_journal" ON public.safety_journal;
+CREATE POLICY "own safety_journal" ON public.safety_journal FOR ALL TO authenticated USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
+CREATE INDEX IF NOT EXISTS idx_safety_journal_user ON public.safety_journal(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_safety_actions_user ON public.safety_actions(user_id, created_at DESC);
+
+-- ── FORUM: seed default spaces (empty → forum broken) ──
+INSERT INTO public.forum_spaces (name, slug, description, icon)
+SELECT * FROM (VALUES
+  ('General','general','Open discussion for the community','💬'),
+  ('Governance','governance','Proposals, voting, and civic discussion','🏛️'),
+  ('Economy','economy','$MLY, contribution, and community commerce','💰'),
+  ('Neighborhood','neighborhood','Local, place-based conversation','🏘️'),
+  ('Help','help','Questions and mutual support','🤝')
+) AS v(name,slug,description,icon)
+WHERE NOT EXISTS (SELECT 1 FROM public.forum_spaces);
+
+-- ── VOTER: some code reads voter_registrations; ensure column-based approach works ──
+-- (voter_status column added in PART 1; no separate table needed — safe no-op guard)
+
+
+-- PART 3 — safety_contacts alignment + learn schema reconciliation + seeds
+
+-- ── safety_contacts: add columns the app code uses ──
+ALTER TABLE public.safety_contacts ADD COLUMN IF NOT EXISTS contact_name TEXT;
+ALTER TABLE public.safety_contacts ADD COLUMN IF NOT EXISTS contact_phone TEXT;
+ALTER TABLE public.safety_contacts ADD COLUMN IF NOT EXISTS contact_user_id UUID REFERENCES public.profiles(id) ON DELETE SET NULL;
+ALTER TABLE public.safety_contacts ADD COLUMN IF NOT EXISTS notify_on_timer_expire BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE public.safety_contacts ADD COLUMN IF NOT EXISTS notify_on_leave_now BOOLEAN NOT NULL DEFAULT TRUE;
+UPDATE public.safety_contacts SET contact_name = name WHERE contact_name IS NULL AND name IS NOT NULL;
+UPDATE public.safety_contacts SET contact_phone = phone WHERE contact_phone IS NULL AND phone IS NOT NULL;
+
+-- ── learn_paths: reconcile OLD (001) schema → 003 schema the code expects ──
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS helper_name TEXT NOT NULL DEFAULT 'Guide';
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS color TEXT NOT NULL DEFAULT '#6366f1';
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS target_audience TEXT NOT NULL DEFAULT 'everyone';
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS duration_weeks TEXT NOT NULL DEFAULT 'Self-paced';
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS completion_badge TEXT NOT NULL DEFAULT 'Completion';
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS module_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS enrolled_count INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS sort_order INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.learn_paths ADD COLUMN IF NOT EXISTS metadata JSONB DEFAULT '{}';
+ALTER TABLE public.learn_paths ALTER COLUMN description DROP NOT NULL;
+
+-- ── learn_modules: reconcile → 003 schema ──
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS description TEXT NOT NULL DEFAULT '';
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS type TEXT NOT NULL DEFAULT 'lesson';
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS content_markdown TEXT NOT NULL DEFAULT '';
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS duration_minutes INTEGER NOT NULL DEFAULT 30;
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS sort_order INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS assessment_type TEXT DEFAULT 'completion';
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS offline_available BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE public.learn_modules ADD COLUMN IF NOT EXISTS metadata JSONB DEFAULT '{}';
+-- unique constraint for ON CONFLICT (path_id, slug)
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'learn_modules_path_slug_key') THEN
+    ALTER TABLE public.learn_modules ADD CONSTRAINT learn_modules_path_slug_key UNIQUE (path_id, slug);
+  END IF;
+END $$;
+
+-- ── learn_badges: create (code reads it, missing) ──
+CREATE TABLE IF NOT EXISTS public.learn_badges (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  path_id UUID NOT NULL REFERENCES public.learn_paths(id),
+  badge_name TEXT NOT NULL,
+  badge_description TEXT NOT NULL,
+  badge_icon TEXT NOT NULL DEFAULT '🏅',
+  evidence_summary TEXT,
+  issued_by TEXT NOT NULL DEFAULT 'system',
+  portable BOOLEAN NOT NULL DEFAULT TRUE,
+  earned_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+ALTER TABLE public.learn_badges ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "own learn_badges" ON public.learn_badges;
+CREATE POLICY "own learn_badges" ON public.learn_badges FOR SELECT TO authenticated USING (user_id = auth.uid());
+CREATE INDEX IF NOT EXISTS idx_learn_badges_user ON public.learn_badges(user_id, earned_at DESC);
+
+-- ── SEED paths ──
+INSERT INTO public.learn_paths (slug, title, description, helper_name, icon, color, target_audience, duration_weeks, completion_badge, sort_order) VALUES
+  ('rights-and-papers', 'Rights and Papers', 'Navigate legal systems, understand your rights, prepare documents, and access legal aid resources.', 'Rue', '⚖️', '#dc2626', 'Anyone needing legal navigation', '4-12 weeks', 'Rights Navigator', 1),
+  ('parenting', 'Parenting', 'Build parenting skills, coordinate childcare, find resources, and connect with other parents.', 'Kin', '👨‍👩‍👧', '#ea580c', 'Parents, guardians, caregivers', 'Ongoing', 'Community Parent', 2),
+  ('reentry', 'Reentry', 'Build your path from incarceration to community integration. Housing, work, documents, support.', 'Tide', '🌅', '#0891b2', 'Formerly incarcerated, probation', '12 weeks', 'New Chapter', 3),
+  ('peace', 'Peace', 'Learn conflict resolution, de-escalation, mediation, and community protection through service.', 'Bridge', '🕊️', '#7c3aed', 'Gang/crew members, conflict-involved', '16 weeks', 'Peacemaker', 4),
+  ('food-and-first-aid', 'Food and First Aid', 'Master cooking, food safety, nutrition, basic first aid, and emergency response skills.', 'Terra', '🍎', '#16a34a', 'Everyone (essential skills)', '6 weeks', 'Community First Responder', 5),
+  ('repair', 'Repair', 'Fix things instead of replacing them. Electronics, plumbing, carpentry, bikes, and clothes.', 'Spark', '🔧', '#ca8a04', 'Anyone wanting to fix things', '8 weeks', 'Repair Specialist', 6),
+  ('money-not-casino', 'Money (Not a Casino)', 'Understand money, budgeting, debt, savings, and community economics without the gambling mindset.', 'Nia', '💰', '#059669', 'Everyone (financial literacy)', '4 weeks', 'Money Navigator', 7),
+  ('literacy', 'Read / Write / Numbers / Languages', 'Build reading, writing, math, and language skills at your own pace with patient support.', 'Sage', '📖', '#2563eb', 'Literacy learners, ESL', 'Self-paced', 'Literate', 8),
+  ('the-trade', 'The Trade This Place Lacks', 'Learn a skilled trade that your community needs. Apprenticeship-based, real projects.', 'Forge', '🏗️', '#9333ea', 'Workers, career changers', '12-24 weeks', 'Tradesperson', 9),
+  ('run-a-street', 'How to Run a Street', 'Learn community organizing, governance, facilitation, and stewardship.', 'Vox', '🏘️', '#e11d48', 'Community leaders, organizers', '8 weeks', 'Street Steward', 10)
+ON CONFLICT (slug) DO NOTHING;
+
+-- ── SEED modules for Rights and Papers ──
+INSERT INTO public.learn_modules (path_id, slug, title, description, type, duration_minutes, sort_order, assessment_type) VALUES
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'know-your-rights', 'Know Your Rights', 'Understand your fundamental rights in everyday situations: police encounters, housing, employment, healthcare.', 'lesson', 45, 1, 'completion'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'documents-checklist', 'Documents Checklist', 'What documents you need, how to get them, and how to keep them safe.', 'exercise', 60, 2, 'completion'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'court-preparation', 'Court Preparation', 'What to expect, how to dress, what to say, and your rights in court.', 'lesson', 30, 3, 'completion'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'legal-aid-resources', 'Finding Legal Aid', 'How to find free legal help, what legal aid covers, and when you need a paid lawyer.', 'exercise', 45, 4, 'completion'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'housing-rights', 'Housing Rights', 'Tenant rights, eviction process, fair housing, Section 8, and illegal lockouts.', 'lesson', 60, 5, 'quiz'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'employment-rights', 'Employment Rights', 'Worker rights, wage theft, discrimination, OSHA, unemployment.', 'lesson', 45, 6, 'completion'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'benefits-navigation', 'Benefits Navigation', 'SNAP, Medicaid, SSI/SSDI, TANF, WIC. Eligibility, applications, appeals.', 'exercise', 60, 7, 'portfolio'),
+  ((SELECT id FROM public.learn_paths WHERE slug = 'rights-and-papers'), 'community-project', 'Rights Navigator Project', 'Help one person navigate a legal or documents challenge. Document the process.', 'project', 120, 8, 'project')
+ON CONFLICT (path_id, slug) DO NOTHING;
+
+-- ── update module_count ──
+UPDATE public.learn_paths p SET module_count = (SELECT count(*) FROM public.learn_modules m WHERE m.path_id = p.id);
