@@ -13,6 +13,9 @@ const PUBLIC_ROUTES = [
   '/guidelines',
   '/transparency',
   '/bounties',
+  '/privacy',
+  '/terms',
+  '/security',
 ];
 
 export async function updateSession(request: NextRequest) {

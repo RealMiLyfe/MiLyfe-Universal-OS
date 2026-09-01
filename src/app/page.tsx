@@ -246,7 +246,7 @@ export default async function LandingPage() {
  {/* Footer */}
  <footer className="border-t border-gray-100 bg-white ">
  <div className="max-w-6xl mx-auto px-4 py-12">
- <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+ <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
  {/* Brand */}
  <div className="md:col-span-2">
  <Image src="/logo.png" alt="MiLyfe" width={88} height={32} className="h-8 w-auto max-w-[110px] object-contain mb-4" />
@@ -271,6 +271,14 @@ export default async function LandingPage() {
  <li><a href="https://discord.gg/b4hkHUqU6N" target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 transition-colors">Discord</a></li>
  <li><Link href="/forum" className="hover:text-teal-600 transition-colors">Forum</Link></li>
  <li><a href="mailto:contact@milyfe.fun" className="hover:text-teal-600 transition-colors">Contact</a></li>
+ </ul>
+ </div>
+ <div>
+ <h3 className="text-sm font-semibold text-harbor-800 mb-3">Legal</h3>
+ <ul className="space-y-2 text-sm text-gray-500 ">
+ <li><Link href="/privacy" className="hover:text-teal-600 transition-colors">Privacy</Link></li>
+ <li><Link href="/terms" className="hover:text-teal-600 transition-colors">Terms of Use</Link></li>
+ <li><Link href="/security" className="hover:text-teal-600 transition-colors">Security</Link></li>
  </ul>
  </div>
  </div>
