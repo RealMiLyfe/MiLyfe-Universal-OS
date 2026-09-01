@@ -215,9 +215,10 @@ export default function OnboardingPage() {
               Welcome to MiLyfe!
             </h1>
             <p className="text-sm text-gray-600 mb-4">
-              You&apos;ve received{' '}
+              You&apos;ve received a{' '}
               <span className="font-bold text-amber-600">50 $MLY</span>{' '}
-              — your first week&apos;s basic income. It&apos;s already in your wallet.
+              welcome grant — it&apos;s already in your wallet. Every Monday you&apos;ll also receive{' '}
+              <span className="font-bold text-amber-600">100 $MLY</span> in weekly basic income.
             </p>
             <div className="bg-gray-50 rounded-xl p-4 text-left space-y-2">
               <p className="text-sm font-semibold text-harbor-800">Start here:</p>
