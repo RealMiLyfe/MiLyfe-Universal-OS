@@ -75,3 +75,6 @@ temp/
 supabase/.temp/
 .env*
 scripts/set-supabase-keys.sh
+
+# secret redaction map (never commit)
+.secret-replacements.txt

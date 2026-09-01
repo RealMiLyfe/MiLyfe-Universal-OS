@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# MiLyfe pre-commit hook — blocks secrets from ever being committed.
+# Enabled via:  git config core.hooksPath .githooks   (see scripts/setup-git-hooks.sh)
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+# 1) Block any file that looks like a real env/secret file from being added.
+BLOCKED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '(^|/)\.env($|\.)|\.env\.local$|credentials\.json$|\.pem$|\.p12$|_rsa$|\.key$' | grep -vE '\.(example|template)$' || true)
+if [ -n "$BLOCKED" ]; then
+  echo "🛑 Refusing to commit files that look like secret/env files:"
+  echo "$BLOCKED" | sed 's/^/     /'
+  echo "   These belong in .gitignore, not the repo. Aborting."
+  exit 1
+fi
+
+# 2) Scan staged file CONTENT for secret patterns.
+if [ -x "$REPO_ROOT/scripts/secret-scan.sh" ]; then
+  bash "$REPO_ROOT/scripts/secret-scan.sh" --staged
+else
+  echo "⚠️  scripts/secret-scan.sh missing or not executable — skipping content scan."
+fi

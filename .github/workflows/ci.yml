@@ -51,11 +51,15 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=critical || true
 
-      - name: Check for secrets in code
+      - name: Secret scan (whole tree)
         run: |
-          # Basic secret pattern check
-          if grep -rn "sk_live\|sk_test\|AKIA\|AIza\|ghp_\|gho_\|github_pat" --include="*.ts" --include="*.tsx" --include="*.js" --include="*.json" src/ public/ 2>/dev/null; then
-            echo "ERROR: Potential secrets found in source code!"
+          chmod +x scripts/secret-scan.sh
+          bash scripts/secret-scan.sh --all
+
+      - name: Verify no env/secret files are tracked
+        run: |
+          if git ls-files | grep -E '(^|/)\.env($|\.)|credentials\.json$|\.pem$|_rsa$' | grep -vE '\.(example|template)$'; then
+            echo "ERROR: An env/secret file is tracked by git!"
             exit 1
           fi
-          echo "No secrets detected in source."
+          echo "No secret files tracked."
