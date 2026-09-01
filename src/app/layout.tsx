@@ -62,8 +62,11 @@ export default async function RootLayout({
 }) {
   const { getActiveLanguage } = await import('@/lib/i18n/set-language');
   const { getLanguage } = await import('@/lib/i18n/languages');
+  const { getDictionary } = await import('@/lib/i18n/dictionary');
+  const { I18nProvider } = await import('@/lib/i18n/client');
   const langCode = await getActiveLanguage();
   const lang = getLanguage(langCode);
+  const messages = getDictionary(langCode);
   return (
     <html lang={langCode} dir={lang.rtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head>
@@ -81,7 +84,9 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <body className="font-sans antialiased">
-        {children}
+        <I18nProvider lang={langCode} messages={messages}>
+          {children}
+        </I18nProvider>
       </body>
     </html>
   );

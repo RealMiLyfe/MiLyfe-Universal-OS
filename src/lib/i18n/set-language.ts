@@ -40,8 +40,31 @@ export async function setLanguage(code: string) {
   return { success: true };
 }
 
-/** Read the active language: cookie first, else default. */
+/**
+ * Read the active language. Precedence:
+ *   1. cookie (immediate choice, works logged-out)
+ *   2. signed-in user's saved profile.preferred_language (follows across devices)
+ *   3. default
+ */
 export async function getActiveLanguage(): Promise<string> {
   const fromCookie = cookies().get(LANG_COOKIE)?.value;
-  return isSupportedLanguage(fromCookie) ? (fromCookie as string) : DEFAULT_LANGUAGE;
+  if (isSupportedLanguage(fromCookie)) return fromCookie as string;
+
+  try {
+    const supabase = createServerSupabase();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { data } = await supabase
+        .from('profiles')
+        .select('preferred_language')
+        .eq('id', user.id)
+        .single();
+      const pref = (data as { preferred_language?: string } | null)?.preferred_language;
+      if (isSupportedLanguage(pref)) return pref as string;
+    }
+  } catch {
+    // ignore — fall through to default
+  }
+
+  return DEFAULT_LANGUAGE;
 }

@@ -1,0 +1,77 @@
+import type { Messages } from './en';
+
+// Haitian Creole (Kreyòl Ayisyen)
+const ht: Messages = {
+  common: {
+    signIn: 'Konekte',
+    signUp: 'Enskri',
+    signOut: 'Dekonekte',
+    getStarted: 'Kòmanse',
+    learnMore: 'Aprann plis',
+    cancel: 'Anile',
+    save: 'Sove',
+    back: 'Tounen',
+    loading: 'Ap chaje…',
+    language: 'Lang',
+    chooseLanguage: 'Chwazi lang',
+  },
+  nav: {
+    home: 'Akèy',
+    wallet: 'Bous',
+    street: 'Lari',
+    learn: 'Aprann',
+    govern: 'Gouvène',
+    connect: 'Konekte',
+    profile: 'Pwofil',
+    safety: 'Sekirite',
+  },
+  landing: {
+    tagline: 'Nou menm, Pèp la. Nenpòt moun. Nenpòt kote. Depi premye jou a.',
+    heroTitle: 'Byen komen an, nan men moun ki fè l mache yo',
+    heroSubtitle:
+      'Genyen yon revni debaz chak semèn, gouvène ansanm, aprann gratis, epi bati kominote ou. Pa gen reklam, pa gen vann done, pa gen pyèj.',
+    ctaJoin: 'Antre gratis',
+    ctaExplore: 'Eksplore platfòm nan',
+    featureEarnTitle: 'Genyen $MLY',
+    featureEarnDesc: 'Revni debaz inivèsèl pou chak sitwayen. Depanse, ekonomize, oswa bay tounen.',
+    featureConnectTitle: 'Konekte',
+    featureConnectDesc: 'Vrè relasyon ak vrè vwazen. Se pa moun k ap swiv — se koneksyon.',
+    featureGovernTitle: 'Gouvène ansanm',
+    featureGovernDesc: 'Demokrasi dirèk. Chak vwa konte. Pwopoze, vote, bati.',
+    step1Title: 'Enskri gratis',
+    step1Desc: 'Kreye pwofil sitwayen ou nan 30 segond. Pa gen kat kredi, pa gen pyèj.',
+    step2Title: 'Genyen $MLY depi premye jou a',
+    step2Desc: 'Resevwa yon revni debaz inivèsèl chak semèn. Depanse l, ekonomize l, oswa bay li tounen.',
+    step3Title: 'Bay vil ou fòm',
+    step3Desc: 'Vote sou pwopozisyon, finanse pwojè, bati kominote ou vle wè a.',
+    footerTagline: 'Kòd louvri. Pèp la posede l. Bati ak $0 pou pèp la.',
+  },
+  auth: {
+    welcomeBack: 'Byenveni ankò',
+    createAccount: 'Kreye kont ou',
+    email: 'Imèl',
+    password: 'Modpas',
+    username: 'Non itilizatè',
+    displayName: 'Non ki parèt',
+    noAccount: 'Ou pa gen yon kont?',
+    haveAccount: 'Ou deja gen yon kont?',
+    verifyEmail: 'Tcheke imèl ou pou verifye kont ou.',
+    resend: 'Voye imèl verifikasyon an ankò',
+  },
+  onboarding: {
+    welcomeTitle: 'Byenveni nan MiLyfe',
+    enterMilyfe: 'Antre nan MiLyfe',
+    welcomeGrant: 'Ou resevwa yon don byenveni 50 $MLY — li deja nan bous ou.',
+    weeklyUbi: 'Chak lendi w ap resevwa 100 $MLY tou kòm revni debaz chak semèn.',
+  },
+  legal: {
+    privacy: 'Konfidansyalite',
+    terms: 'Kondisyon Itilizasyon',
+    security: 'Sekirite',
+    platform: 'Platfòm',
+    community: 'Kominote',
+    legal: 'Legal',
+  },
+};
+
+export default ht;

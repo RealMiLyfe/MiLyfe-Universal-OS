@@ -1,0 +1,77 @@
+import type { Messages } from './en';
+
+// Spanish (Español)
+const es: Messages = {
+  common: {
+    signIn: 'Iniciar sesión',
+    signUp: 'Registrarse',
+    signOut: 'Cerrar sesión',
+    getStarted: 'Comenzar',
+    learnMore: 'Saber más',
+    cancel: 'Cancelar',
+    save: 'Guardar',
+    back: 'Atrás',
+    loading: 'Cargando…',
+    language: 'Idioma',
+    chooseLanguage: 'Elegir idioma',
+  },
+  nav: {
+    home: 'Inicio',
+    wallet: 'Billetera',
+    street: 'Calle',
+    learn: 'Aprender',
+    govern: 'Gobernar',
+    connect: 'Conectar',
+    profile: 'Perfil',
+    safety: 'Seguridad',
+  },
+  landing: {
+    tagline: 'Nosotros, el Pueblo. Cualquiera. En cualquier lugar. Desde el primer día.',
+    heroTitle: 'El bien común, en manos de quienes lo hacen funcionar',
+    heroSubtitle:
+      'Gana un ingreso básico semanal, gobierna en comunidad, aprende gratis y construye tu comunidad. Sin anuncios, sin venta de datos, sin trampas.',
+    ctaJoin: 'Únete gratis',
+    ctaExplore: 'Explora la plataforma',
+    featureEarnTitle: 'Gana $MLY',
+    featureEarnDesc: 'Ingreso básico universal para cada ciudadano. Gasta, ahorra o retribuye.',
+    featureConnectTitle: 'Conecta',
+    featureConnectDesc: 'Relaciones reales con vecinos reales. No seguidores — conexiones.',
+    featureGovernTitle: 'Gobiernen juntos',
+    featureGovernDesc: 'Democracia directa. Cada voz cuenta. Propón, vota, construye.',
+    step1Title: 'Regístrate gratis',
+    step1Desc: 'Crea tu perfil de ciudadano en 30 segundos. Sin tarjeta, sin trampas.',
+    step2Title: 'Gana $MLY desde el primer día',
+    step2Desc: 'Recibe un ingreso básico universal cada semana. Gástalo, ahórralo o retribúyelo.',
+    step3Title: 'Da forma a tu ciudad',
+    step3Desc: 'Vota propuestas, financia proyectos, construye la comunidad que quieres ver.',
+    footerTagline: 'Código abierto. En manos del pueblo. Hecho con $0 para el pueblo.',
+  },
+  auth: {
+    welcomeBack: 'Bienvenido de nuevo',
+    createAccount: 'Crea tu cuenta',
+    email: 'Correo electrónico',
+    password: 'Contraseña',
+    username: 'Nombre de usuario',
+    displayName: 'Nombre visible',
+    noAccount: '¿No tienes cuenta?',
+    haveAccount: '¿Ya tienes cuenta?',
+    verifyEmail: 'Revisa tu correo para verificar tu cuenta.',
+    resend: 'Reenviar correo de verificación',
+  },
+  onboarding: {
+    welcomeTitle: 'Bienvenido a MiLyfe',
+    enterMilyfe: 'Entrar a MiLyfe',
+    welcomeGrant: 'Has recibido una donación de bienvenida de 50 $MLY — ya está en tu billetera.',
+    weeklyUbi: 'Cada lunes también recibirás 100 $MLY de ingreso básico semanal.',
+  },
+  legal: {
+    privacy: 'Privacidad',
+    terms: 'Términos de uso',
+    security: 'Seguridad',
+    platform: 'Plataforma',
+    community: 'Comunidad',
+    legal: 'Legal',
+  },
+};
+
+export default es;

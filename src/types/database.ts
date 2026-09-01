@@ -15,6 +15,9 @@ export type Database = {
           bio: string;
           neighborhood: string | null;
           onboarding_complete: boolean;
+          preferred_language: string | null;
+          voter_status: string | null;
+          interests: string[] | null;
           role: 'citizen' | 'moderator' | 'steward' | 'admin';
           metadata: Record<string, unknown>;
           created_at: string;
@@ -28,6 +31,9 @@ export type Database = {
           bio?: string;
           neighborhood?: string | null;
           onboarding_complete?: boolean;
+          preferred_language?: string | null;
+          voter_status?: string | null;
+          interests?: string[] | null;
           role?: 'citizen' | 'moderator' | 'steward' | 'admin';
           metadata?: Record<string, unknown>;
         };

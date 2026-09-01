@@ -11,6 +11,7 @@ import { updateProfile } from '@/lib/actions/profile';
 import { AvatarUpload } from '@/components/profile/avatar-upload';
 import { StandingRadar } from '@/components/profile/standing-radar';
 import { PrivacyDashboard } from '@/components/profile/privacy-dashboard';
+import { LanguageSelector } from '@/components/profile/language-selector';
 import { FormField, inputStyles, textareaStyles } from '@/components/ui/form-field';
 
 interface Props {
@@ -300,7 +301,12 @@ export function ProfileView({
       )}
 
       {/* Privacy tab — PRIVACY DASHBOARD */}
-      {activeTab === 'privacy' && <PrivacyDashboard />}
+      {activeTab === 'privacy' && (
+        <div className="space-y-4">
+          <LanguageSelector current={profile.preferred_language} />
+          <PrivacyDashboard />
+        </div>
+      )}
 
       {/* Sign out */}
       <button

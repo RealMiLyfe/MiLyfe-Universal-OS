@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ArrowRight, Users, Wallet, Shield, Vote, Heart, BookOpen, Sparkles, TrendingUp, Globe, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createServiceSupabase } from '@/lib/supabase/server';
+import { FooterLanguageSelector } from '@/components/i18n/footer-language-selector';
 
 const FEATURES = [
  { icon: Wallet, title: 'Earn $MLY', description: 'Universal basic income for every citizen. Spend, save, or give back.', accent: 'from-mly-400 to-mly-600', bg: 'bg-mly-50 ', iconColor: 'text-mly-600 ' },
@@ -60,6 +61,9 @@ async function getModuleCount() {
 export default async function LandingPage() {
  const { citizens: citizenCount, treasury: treasuryBalance } = await getCitizenCount();
  const moduleCount = await getModuleCount();
+ const { getActiveLanguage } = await import('@/lib/i18n/set-language');
+ const { getDictionary } = await import('@/lib/i18n/dictionary');
+ const t = getDictionary(await getActiveLanguage());
 
  return (
  <div className="min-h-screen bg-surface-light overflow-hidden">
@@ -82,10 +86,10 @@ export default async function LandingPage() {
  </Link>
  <div className="flex items-center gap-3">
  <Link href="/login">
- <Button variant="ghost" size="sm">Sign in</Button>
+ <Button variant="ghost" size="sm">{t.common.signIn}</Button>
  </Link>
  <Link href="/signup">
- <Button variant="harbor" size="sm" className="shadow-lg shadow-harbor-500/20">Join</Button>
+ <Button variant="harbor" size="sm" className="shadow-lg shadow-harbor-500/20">{t.common.signUp}</Button>
  </Link>
  </div>
  </nav>
@@ -282,10 +286,11 @@ export default async function LandingPage() {
  </ul>
  </div>
  </div>
- <div className="mt-10 pt-6 border-t border-gray-100 text-center">
- <p className="text-xs text-gray-400 text-center">
- &copy; {new Date().getFullYear()} MiLyfe. Open source. People-owned. Built with $0 for the people.
+ <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+ <p className="text-xs text-gray-400">
+ &copy; {new Date().getFullYear()} MiLyfe. {t.landing.footerTagline}
  </p>
+ <FooterLanguageSelector />
  </div>
  </div>
  </footer>
