@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createQuest } from '@/lib/actions/street';
 import { FormField, inputStyles, textareaStyles, selectStyles, SubmitButton } from '@/components/ui/form-field';
+import { ImageUpload } from '@/components/street/image-upload';
 
 const schema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(100),
@@ -33,6 +34,7 @@ interface CreateQuestModalProps {
 export function CreateQuestModal({ open, onClose, onSuccess }: CreateQuestModalProps) {
   const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(schema) as any,
@@ -53,11 +55,13 @@ export function CreateQuestModal({ open, onClose, onSuccess }: CreateQuestModalP
         ...data,
         time_estimate_minutes: data.time_estimate_minutes || undefined,
         location_text: data.location_text || undefined,
+        image_urls: images.length ? images : undefined,
       });
       if (result.error) {
         setServerError(result.error);
       } else {
         reset();
+        setImages([]);
         onSuccess?.();
         onClose();
       }
@@ -136,6 +140,13 @@ export function CreateQuestModal({ open, onClose, onSuccess }: CreateQuestModalP
           <FormField label="Location" error={errors.location_text} description="Where does this need to happen?">
             <input {...register('location_text')} placeholder="e.g. Elm Street Park" className={inputStyles} />
           </FormField>
+
+          <div>
+            <label className="text-sm font-medium">Photos <span className="text-muted-foreground font-normal">(optional)</span></label>
+            <div className="mt-1.5">
+              <ImageUpload images={images} onChange={setImages} maxImages={5} />
+            </div>
+          </div>
 
           {serverError && (
             <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{serverError}</p>

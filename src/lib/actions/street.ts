@@ -81,6 +81,7 @@ const createQuestSchema = z.object({
   longitude: z.number().min(-180).max(180).optional(),
   max_completions: z.number().int().positive().max(20).default(1),
   expires_days: z.number().int().positive().max(30).default(7),
+  image_urls: z.array(z.string().url()).max(5).optional(),
 });
 
 export type CreateQuestInput = z.infer<typeof createQuestSchema>;
@@ -122,6 +123,7 @@ export async function createQuest(input: CreateQuestInput) {
       latitude: parsed.data.latitude || null,
       longitude: parsed.data.longitude || null,
       max_completions: parsed.data.max_completions,
+      image_urls: parsed.data.image_urls || [],
       status: 'open',
       requires_verification: true,
       expires_at: new Date(Date.now() + parsed.data.expires_days * 24 * 60 * 60 * 1000).toISOString(),
@@ -408,6 +410,7 @@ const createSurplusSchema = z.object({
   latitude: z.number().min(-90).max(90).optional(),
   longitude: z.number().min(-180).max(180).optional(),
   available_hours: z.number().positive().max(72).default(24),
+  images: z.array(z.string().url()).max(5).optional(),
 });
 
 export type CreateSurplusInput = z.infer<typeof createSurplusSchema>;
@@ -431,6 +434,7 @@ export async function createSurplus(input: CreateSurplusInput) {
       pickup_location: parsed.data.pickup_location,
       latitude: parsed.data.latitude || null,
       longitude: parsed.data.longitude || null,
+      images: parsed.data.images || [],
       available_until: new Date(Date.now() + parsed.data.available_hours * 60 * 60 * 1000).toISOString(),
       status: 'available',
     })

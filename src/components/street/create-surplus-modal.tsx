@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSurplus } from '@/lib/actions/street';
 import { FormField, inputStyles, textareaStyles, selectStyles, SubmitButton } from '@/components/ui/form-field';
+import { ImageUpload } from '@/components/street/image-upload';
 
 const schema = z.object({
   title: z.string().min(3, 'Title required').max(100),
@@ -27,6 +28,7 @@ interface CreateSurplusModalProps {
 export function CreateSurplusModal({ open, onClose, onSuccess }: CreateSurplusModalProps) {
   const [isPending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
     resolver: zodResolver(schema) as any,
@@ -45,11 +47,13 @@ export function CreateSurplusModal({ open, onClose, onSuccess }: CreateSurplusMo
       const result = await createSurplus({
         ...data,
         description: data.description || undefined,
+        images: images.length ? images : undefined,
       });
       if (result.error) {
         setServerError(result.error);
       } else {
         reset();
+        setImages([]);
         onSuccess?.();
         onClose();
       }
@@ -99,6 +103,13 @@ export function CreateSurplusModal({ open, onClose, onSuccess }: CreateSurplusMo
           <FormField label="Pickup Location" error={errors.pickup_location} required description="Where should people come get it?">
             <input {...register('pickup_location')} placeholder="e.g. My porch at 123 Elm St" className={inputStyles} />
           </FormField>
+
+          <div>
+            <label className="text-sm font-medium">Photos <span className="text-muted-foreground font-normal">(optional)</span></label>
+            <div className="mt-1.5">
+              <ImageUpload images={images} onChange={setImages} maxImages={5} />
+            </div>
+          </div>
 
           <FormField label="Available for (hours)" error={errors.available_hours} description="Item expires after this time">
             <select {...register('available_hours')} className={selectStyles}>
