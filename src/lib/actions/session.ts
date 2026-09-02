@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache';
  * Uses Supabase's scope: 'others' to revoke all except current.
  */
 export async function signOutOtherSessions() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -23,7 +23,7 @@ export async function signOutOtherSessions() {
  * Sign out everywhere (including current session).
  */
 export async function signOutEverywhere() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -41,7 +41,7 @@ export async function changePassword(newPassword: string) {
     return { error: 'Password must be at least 8 characters' };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

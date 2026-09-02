@@ -5,7 +5,7 @@ import { ProfileView } from './profile-view';
 export const metadata = { title: 'Profile' };
 
 export default async function ProfilePage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

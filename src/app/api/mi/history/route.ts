@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
  * Mi Chat History — Load previous conversation messages.
  */
 export async function GET(request: Request) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 

@@ -4,7 +4,7 @@ import { AppsView } from './apps-view';
 export const metadata = { title: 'Apps' };
 
 export default async function AppsPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
 
   const { data: apps } = await supabase
     .from('apps')

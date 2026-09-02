@@ -4,11 +4,12 @@ import { ChatThread } from './chat-thread';
 import type { Metadata } from 'next';
 
 interface Props {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: profile } = await supabase
     .from('profiles')
     .select('display_name')
@@ -20,8 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ChatPage({ params }: Props) {
-  const supabase = createServerSupabase();
+export default async function ChatPage(props: Props) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

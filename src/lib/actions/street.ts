@@ -26,7 +26,7 @@ export async function createListing(input: CreateListingInput) {
     return { error: parsed.error.issues.map(i => i.message).join(', ') };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -49,7 +49,7 @@ export async function createListing(input: CreateListingInput) {
 
 // ─── Update Listing Status ───────────────────────────────────────────────────
 export async function updateListingStatus(listingId: string, status: 'active' | 'sold' | 'removed') {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -92,7 +92,7 @@ export async function createQuest(input: CreateQuestInput) {
     return { error: parsed.error.issues.map(i => i.message).join(', ') };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -145,7 +145,7 @@ export async function createQuest(input: CreateQuestInput) {
 
 // ─── Cancel / Remove Quest (creator only) + refund unclaimed escrow ──────────
 export async function cancelQuest(questId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -223,7 +223,7 @@ export async function cancelQuest(questId: string) {
 
 // ─── Claim Quest ─────────────────────────────────────────────────────────────
 export async function claimQuest(questId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -274,7 +274,7 @@ export async function submitQuestEvidence(input: z.infer<typeof submitEvidenceSc
   const parsed = submitEvidenceSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -298,7 +298,7 @@ export async function submitQuestEvidence(input: z.infer<typeof submitEvidenceSc
 
 // ─── Verify Quest (Creator approves/rejects) ─────────────────────────────────
 export async function verifyQuestClaim(claimId: string, approved: boolean, reason?: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -419,7 +419,7 @@ export async function createSurplus(input: CreateSurplusInput) {
   const parsed = createSurplusSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -449,7 +449,7 @@ export async function createSurplus(input: CreateSurplusInput) {
 
 // ─── Claim Surplus Item ──────────────────────────────────────────────────────
 export async function claimSurplus(surplusId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

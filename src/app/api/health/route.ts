@@ -20,7 +20,7 @@ export async function GET() {
 
   // Database connectivity: cheap, RLS-safe probe.
   try {
-    const supabase = createServerSupabase();
+    const supabase = await createServerSupabase();
     const { error } = await supabase.from('profiles').select('id', { head: true, count: 'exact' }).limit(1);
     checks.database = error ? 'down' : 'ok';
     if (error) {

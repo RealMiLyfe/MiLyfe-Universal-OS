@@ -3,11 +3,12 @@ import { redirect, notFound } from 'next/navigation';
 import { PathDetailView } from './path-detail-view';
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: path } = await supabase
     .from('learn_paths')
     .select('title')
@@ -17,8 +18,9 @@ export async function generateMetadata({ params }: PageProps) {
   return { title: path?.title || 'Learn Path' };
 }
 
-export default async function PathDetailPage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function PathDetailPage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

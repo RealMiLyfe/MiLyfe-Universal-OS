@@ -21,7 +21,7 @@ export async function createProposal(input: CreateProposalInput) {
     return { error: parsed.error.issues.map(i => i.message).join(', ') };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -107,7 +107,7 @@ export async function castVote(input: z.infer<typeof castVoteSchema>) {
   const parsed = castVoteSchema.safeParse(input);
   if (!parsed.success) return { error: 'Invalid vote data' };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -198,7 +198,7 @@ export async function castVote(input: z.infer<typeof castVoteSchema>) {
 
 // ─── Close Proposal (auto or manual) ─────────────────────────────────────────
 export async function closeProposal(proposalId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -247,7 +247,7 @@ export async function addProposalComment(input: z.infer<typeof addCommentSchema>
   const parsed = addCommentSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -268,7 +268,7 @@ export async function addProposalComment(input: z.infer<typeof addCommentSchema>
 
 // ─── Advance Proposal Stage ──────────────────────────────────────────────────
 export async function advanceProposalStage(proposalId: string, newStage: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -306,7 +306,7 @@ export async function createDelegation(input: z.infer<typeof delegateSchema>) {
   const parsed = delegateSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -332,7 +332,7 @@ export async function createDelegation(input: z.infer<typeof delegateSchema>) {
 
 // ─── Revoke Delegation ───────────────────────────────────────────────────────
 export async function revokeDelegation(delegationId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

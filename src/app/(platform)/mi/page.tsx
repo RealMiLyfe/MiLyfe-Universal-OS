@@ -5,7 +5,7 @@ import { MiChat } from '@/components/mi/mi-chat';
 export const metadata = { title: 'Mi' };
 
 export default async function MiPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

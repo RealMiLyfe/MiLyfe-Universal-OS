@@ -5,7 +5,7 @@ import { HealthView } from './health-view';
 export const metadata = { title: 'Health' };
 
 export default async function HealthPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

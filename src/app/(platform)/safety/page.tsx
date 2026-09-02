@@ -5,7 +5,7 @@ import { SafetyView } from './safety-view';
 export const metadata = { title: 'Safety' };
 
 export default async function SafetyPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

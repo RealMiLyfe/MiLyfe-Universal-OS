@@ -5,7 +5,7 @@ import { WalletView } from './wallet-view';
 export const metadata = { title: 'Wallet' };
 
 export default async function WalletPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

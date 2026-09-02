@@ -6,7 +6,7 @@ import { TreasuryView } from './treasury-view';
 export const metadata: Metadata = { title: 'Treasury' };
 
 export default async function TreasuryPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -17,7 +17,7 @@ export async function sendMessage(input: SendMessageInput) {
     return { error: parsed.error.issues[0].message };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -52,7 +52,7 @@ export async function sendMessage(input: SendMessageInput) {
 }
 
 export async function markMessagesRead(otherUserId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

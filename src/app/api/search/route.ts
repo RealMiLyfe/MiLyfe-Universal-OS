@@ -10,7 +10,7 @@ import { checkRateLimit, RATE_LIMITS } from '@/lib/security/rate-limit';
  */
 
 export async function GET(request: Request) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 

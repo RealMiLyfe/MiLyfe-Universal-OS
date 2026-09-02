@@ -21,7 +21,7 @@ import type { User } from '@supabase/supabase-js';
 
 type AuthHandler = (
   user: User,
-  supabase: ReturnType<typeof createServerSupabase>
+  supabase: Awaited<ReturnType<typeof createServerSupabase>>
 ) => Promise<NextResponse>;
 
 const ALLOWED_ORIGINS = [
@@ -69,7 +69,7 @@ export async function withAuth(
   }
 
   // Auth check
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user }, error } = await supabase.auth.getUser();
 
   if (error || !user) {

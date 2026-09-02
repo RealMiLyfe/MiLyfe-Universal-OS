@@ -14,7 +14,7 @@ interface SendNotificationInput {
 
 /** Send a notification to a user (server-side) */
 export async function sendNotification({ userId, type, title, body, link }: SendNotificationInput) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
 
   const { error } = await supabase.from('notifications').insert({
     user_id: userId,
@@ -30,7 +30,7 @@ export async function sendNotification({ userId, type, title, body, link }: Send
 
 /** Mark a single notification as read */
 export async function markNotificationRead(notificationId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -45,7 +45,7 @@ export async function markNotificationRead(notificationId: string) {
 
 /** Mark all notifications as read for the current user */
 export async function markAllNotificationsRead() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

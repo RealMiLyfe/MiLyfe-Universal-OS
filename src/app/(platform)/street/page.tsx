@@ -5,7 +5,7 @@ import { StreetView } from './street-view';
 export const metadata = { title: 'Street' };
 
 export default async function StreetPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

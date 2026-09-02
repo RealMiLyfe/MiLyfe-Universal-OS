@@ -3,17 +3,19 @@ import { redirect, notFound } from 'next/navigation';
 import { ForumPostDetail } from './forum-post-detail';
 
 interface PageProps {
-  params: { postId: string };
+  params: Promise<{ postId: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data } = await supabase.from('forum_posts').select('title').eq('id', params.postId).single();
   return { title: data?.title || 'Forum Post' };
 }
 
-export default async function ForumPostPage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function ForumPostPage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

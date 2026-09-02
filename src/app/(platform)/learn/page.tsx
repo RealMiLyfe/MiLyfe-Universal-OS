@@ -5,7 +5,7 @@ import { LearnView } from './learn-view';
 export const metadata = { title: 'Learn' };
 
 export default async function LearnPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

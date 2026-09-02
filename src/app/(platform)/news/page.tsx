@@ -4,7 +4,7 @@ import { NewsView } from './news-view';
 export const metadata = { title: 'News' };
 
 export default async function NewsPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
 
   const [featuredRes, articlesRes] = await Promise.all([
     supabase.from('news_articles')

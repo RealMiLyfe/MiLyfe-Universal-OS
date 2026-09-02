@@ -56,13 +56,10 @@ function emit(level: LogLevel, event: string, fields?: LogFields): void {
 
   const line = safeStringify(record);
   if (level === 'error') {
-    // eslint-disable-next-line no-console
     console.error(line);
   } else if (level === 'warn') {
-    // eslint-disable-next-line no-console
     console.warn(line);
   } else {
-    // eslint-disable-next-line no-console
     console.log(line);
   }
 }

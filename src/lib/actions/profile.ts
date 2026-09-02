@@ -19,7 +19,7 @@ export async function updateProfile(input: UpdateProfileInput) {
     return { error: parsed.error.issues.map(i => i.message).join(', ') };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -47,7 +47,7 @@ export async function updateLanguage(code: string) {
     return { error: 'Unsupported language' };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -71,7 +71,7 @@ export async function updateLanguage(code: string) {
 
 // ─── Upload Avatar ───────────────────────────────────────────────────────────
 export async function uploadAvatar(formData: FormData) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -121,7 +121,7 @@ export async function giveAttestation(input: GiveAttestationInput) {
   const parsed = giveAttestationSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -213,7 +213,7 @@ export async function giveAttestation(input: GiveAttestationInput) {
 
 // ─── Manage Connections ──────────────────────────────────────────────────────
 export async function sendConnectionRequest(toUserId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -245,7 +245,7 @@ export async function sendConnectionRequest(toUserId: string) {
 }
 
 export async function respondToConnection(connectionId: string, accept: boolean) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -277,7 +277,7 @@ export async function completeOnboarding(input: z.infer<typeof onboardingSchema>
   const parsed = onboardingSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

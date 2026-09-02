@@ -18,14 +18,14 @@ export async function setLanguage(code: string) {
     return { error: 'Unsupported language' };
   }
 
-  cookies().set(LANG_COOKIE, code, {
+  (await cookies()).set(LANG_COOKIE, code, {
     path: '/',
     maxAge: 60 * 60 * 24 * 365,
     sameSite: 'lax',
   });
 
   try {
-    const supabase = createServerSupabase();
+    const supabase = await createServerSupabase();
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       await supabase
@@ -47,11 +47,11 @@ export async function setLanguage(code: string) {
  *   3. default
  */
 export async function getActiveLanguage(): Promise<string> {
-  const fromCookie = cookies().get(LANG_COOKIE)?.value;
+  const fromCookie = (await cookies()).get(LANG_COOKIE)?.value;
   if (isSupportedLanguage(fromCookie)) return fromCookie as string;
 
   try {
-    const supabase = createServerSupabase();
+    const supabase = await createServerSupabase();
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase

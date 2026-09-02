@@ -5,7 +5,7 @@ import { WikiView } from './wiki-view';
 export const metadata = { title: 'Wiki' };
 
 export default async function WikiPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

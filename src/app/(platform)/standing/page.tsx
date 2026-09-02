@@ -5,7 +5,7 @@ import { StandingView } from './standing-view';
 export const metadata = { title: 'Standing' };
 
 export default async function StandingPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -3,17 +3,19 @@ import { redirect, notFound } from 'next/navigation';
 import { ListingDetailView } from './listing-detail-view';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data } = await supabase.from('marketplace_listings').select('title').eq('id', params.id).single();
   return { title: data?.title || 'Listing' };
 }
 
-export default async function ListingDetailPage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function ListingDetailPage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

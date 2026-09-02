@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 // ─── Enroll in Path ──────────────────────────────────────────────────────────
 export async function enrollInPath(pathId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -54,7 +54,7 @@ export async function enrollInPath(pathId: string) {
 
 // ─── Start Module ────────────────────────────────────────────────────────────
 export async function startModule(moduleId: string) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -114,7 +114,7 @@ export async function completeModule(input: z.infer<typeof completeModuleSchema>
   const parsed = completeModuleSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -231,7 +231,7 @@ export async function submitAssessment(input: z.infer<typeof submitAssessmentSch
   const parsed = submitAssessmentSchema.safeParse(input);
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -250,7 +250,7 @@ export async function submitAssessment(input: z.infer<typeof submitAssessmentSch
 
 // ─── Update Time Spent ───────────────────────────────────────────────────────
 export async function updateTimeSpent(moduleId: string, additionalMinutes: number) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 

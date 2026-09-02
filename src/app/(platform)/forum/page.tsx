@@ -5,7 +5,7 @@ import { ForumView } from './forum-view';
 export const metadata = { title: 'Forum' };
 
 export default async function ForumPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

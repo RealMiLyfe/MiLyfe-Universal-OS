@@ -10,7 +10,7 @@ import { NextResponse } from 'next/server';
  * - limit: number of results (default 20, max 50)
  */
 export async function GET(request: Request) {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 

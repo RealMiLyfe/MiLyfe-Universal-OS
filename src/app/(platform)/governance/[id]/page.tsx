@@ -5,17 +5,19 @@ import { CommentThread } from '@/components/governance/comment-thread';
 import { VotingLedger } from '@/components/governance/voting-ledger';
 
 interface PageProps {
- params: { id: string };
+ params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
- const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+ const params = await props.params;
+ const supabase = await createServerSupabase();
  const { data } = await supabase.from('proposals').select('title').eq('id', params.id).single();
  return { title: data?.title || 'Proposal' };
 }
 
-export default async function ProposalDetailPage({ params }: PageProps) {
- const supabase = createServerSupabase();
+export default async function ProposalDetailPage(props: PageProps) {
+ const params = await props.params;
+ const supabase = await createServerSupabase();
  const { data: { user } } = await supabase.auth.getUser();
  if (!user) redirect('/login');
 

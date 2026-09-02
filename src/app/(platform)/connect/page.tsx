@@ -5,7 +5,7 @@ import { ConnectView } from './connect-view';
 export const metadata = { title: 'Connect' };
 
 export default async function ConnectPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -13,7 +13,7 @@ export async function claimReward(formData: { rewardId: string }) {
   const parsed = claimRewardSchema.safeParse(formData);
   if (!parsed.success) return { error: 'Invalid reward ID' };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -124,7 +124,7 @@ export async function transferMLY(formData: {
   const parsed = transferSchema.safeParse(formData);
   if (!parsed.success) return { error: 'Invalid transfer data' };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -174,7 +174,7 @@ export async function moveBetweenPots(formData: {
   const { from, to, amount } = parsed.data;
   if (from === to) return { error: 'Source and destination must differ' };
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
@@ -211,7 +211,7 @@ export async function distributeUBI(secret: string) {
     return { error: 'Unauthorized' };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
 
   try {
     const { data: result, error } = await supabase.rpc('execute_weekly_ubi', {

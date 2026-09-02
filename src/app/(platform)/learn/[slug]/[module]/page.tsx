@@ -3,11 +3,12 @@ import { redirect, notFound } from 'next/navigation';
 import { ModuleContentView } from './module-content-view';
 
 interface PageProps {
-  params: { slug: string; module: string };
+  params: Promise<{ slug: string; module: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: mod } = await supabase
     .from('learn_modules')
     .select('title')
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }: PageProps) {
   return { title: mod?.title || 'Module' };
 }
 
-export default async function ModulePage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function ModulePage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

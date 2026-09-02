@@ -5,7 +5,7 @@ import { GovernanceView } from './governance-view';
 export const metadata = { title: 'Governance' };
 
 export default async function GovernancePage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -5,7 +5,7 @@ import { RewardsView } from './rewards-view';
 export const metadata = { title: 'Rewards' };
 
 export default async function RewardsPage() {
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -3,17 +3,19 @@ import { redirect, notFound } from 'next/navigation';
 import { PublicProfileView } from './public-profile-view';
 
 interface PageProps {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data } = await supabase.from('profiles').select('display_name').eq('username', params.username).single();
   return { title: data?.display_name || params.username };
 }
 
-export default async function PublicProfilePage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function PublicProfilePage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

@@ -3,17 +3,19 @@ import { redirect, notFound } from 'next/navigation';
 import { QuestDetailView } from './quest-detail-view';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data } = await supabase.from('quests').select('title').eq('id', params.id).single();
   return { title: data?.title || 'Quest' };
 }
 
-export default async function QuestDetailPage({ params }: PageProps) {
-  const supabase = createServerSupabase();
+export default async function QuestDetailPage(props: PageProps) {
+  const params = await props.params;
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 

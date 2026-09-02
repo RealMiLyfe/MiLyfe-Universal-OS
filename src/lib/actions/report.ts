@@ -28,7 +28,7 @@ export async function submitReport(input: ReportInput) {
     return { error: parsed.error.issues[0].message };
   }
 
-  const supabase = createServerSupabase();
+  const supabase = await createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: 'Not authenticated' };
 
