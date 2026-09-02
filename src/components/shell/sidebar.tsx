@@ -25,7 +25,6 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useAppStore } from '@/lib/store';
-import { NotificationBell } from './notification-bell';
 
 const NAV_ITEMS = [
   { href: '/home', label: 'Home', icon: Home },
@@ -60,11 +59,10 @@ export function Sidebar() {
       aria-label="Main navigation"
     >
       {/* Logo */}
-      <div className="h-14 flex items-center justify-between px-4 border-b border-gray-100">
+      <div className="h-14 flex items-center px-4 border-b border-gray-100">
         <Link href="/home" className="flex items-center gap-2 min-h-0 min-w-0">
           <Image src="/logo.png" alt="MiLyfe" width={88} height={32} priority className="h-8 w-auto max-w-[110px] object-contain" />
         </Link>
-        <NotificationBell />
       </div>
 
       {/* Nav items */}
