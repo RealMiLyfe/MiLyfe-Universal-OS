@@ -27,8 +27,10 @@ export async function GET(request: Request) {
 
   const pattern = `%${q}%`;
 
+  const loose = supabase as unknown as { from: (t: string) => any };
+
   // Parallel search across multiple tables
-  const [profiles, resources, proposals, quests, paths] = await Promise.all([
+  const [profiles, resources, proposals, quests, paths, media, products, groups, blogs] = await Promise.all([
     supabase
       .from('profiles')
       .select('id, username, display_name, avatar_url, neighborhood')
@@ -57,6 +59,10 @@ export async function GET(request: Request) {
       .or(`title.ilike.${pattern},description.ilike.${pattern}`)
       .eq('is_active', true)
       .limit(5),
+    loose.from('media_items').select('id, title, kind').ilike('title', pattern).eq('visibility', 'public').limit(5),
+    loose.from('shop_products').select('id, title, price_mly').ilike('title', pattern).eq('status', 'active').limit(5),
+    loose.from('groups').select('id, name, member_count').ilike('name', pattern).in('privacy', ['public', 'private']).limit(5),
+    loose.from('blog_posts').select('id, slug, title').ilike('title', pattern).eq('published', true).limit(5),
   ]);
 
   // Combine and format results
@@ -117,5 +123,18 @@ export async function GET(request: Request) {
     });
   }
 
-  return NextResponse.json({ results: results.slice(0, 15) });
+  for (const m of media.data || []) {
+    results.push({ id: m.id, type: 'media', title: m.title, subtitle: m.kind, href: `/media/item/${m.id}`, icon: '🎧' });
+  }
+  for (const p of products.data || []) {
+    results.push({ id: p.id, type: 'product', title: p.title, subtitle: `${p.price_mly} $MLY`, href: `/shop/product/${p.id}`, icon: '🛍️' });
+  }
+  for (const g of groups.data || []) {
+    results.push({ id: g.id, type: 'group', title: g.name, subtitle: `${g.member_count} members`, href: `/community/groups/${g.id}`, icon: '👥' });
+  }
+  for (const b of blogs.data || []) {
+    results.push({ id: b.id, type: 'blog', title: b.title, subtitle: 'Blog post', href: `/community/blog/${b.slug}`, icon: '✍️' });
+  }
+
+  return NextResponse.json({ results: results.slice(0, 25) });
 }
