@@ -24,6 +24,7 @@ import {
   Sparkles,
   Music,
   Users2,
+  ShoppingBag,
   Bot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -34,6 +35,7 @@ const NAV_ITEMS = [
   { href: '/wallet', label: 'Pocket', icon: Wallet },
   { href: '/learn', label: 'Learn', icon: GraduationCap },
   { href: '/street', label: 'Street', icon: Store },
+  { href: '/shop', label: 'Shop', icon: ShoppingBag },
   { href: '/media', label: 'Media', icon: Music },
   { href: '/governance', label: 'Voice', icon: Landmark },
   { href: '/mi', label: 'Mi', icon: Bot },
