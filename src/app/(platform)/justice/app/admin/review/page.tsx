@@ -4,6 +4,7 @@ import { ArrowLeft, Gavel, ShieldCheck, Lock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { AGENTS } from '@/lib/justice/agents';
+import { justiceProviderHealth, justiceProviders } from '@/lib/justice/ai';
 
 export const metadata: Metadata = { title: 'Advisory Review — MiJustice' };
 
@@ -72,6 +73,24 @@ export default async function AdminReviewPage() {
           signals) is routed to this queue.
         </p>
       </div>
+
+      <section>
+        <h2 className="section-header border-b-2 border-mly-500 pb-1">AI fleet (self-healing)</h2>
+        <p className="mt-2 text-xs text-gray-500">
+          {justiceProviders().length} provider(s) usable, tried in order with
+          automatic failover. Local Ollama is the keyless fallback.
+        </p>
+        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {justiceProviderHealth().map((p) => (
+            <div key={p.id} className="flex items-center justify-between rounded-lg border border-gray-100 bg-white p-3 shadow-sm">
+              <span className="text-sm text-harbor-800">{p.label}</span>
+              <Badge variant={p.configured ? 'success' : 'secondary'} className="text-[10px]">
+                {p.configured ? (p.keyless ? 'local' : 'ready') : 'off'}
+              </Badge>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section>
         <h2 className="section-header border-b-2 border-mly-500 pb-1">The AI agents you supervise</h2>
