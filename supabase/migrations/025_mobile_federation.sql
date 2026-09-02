@@ -12,7 +12,7 @@ CREATE TABLE public.api_clients (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   owner_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
-  client_id TEXT NOT NULL UNIQUE DEFAULT ('mic_' || encode(gen_random_bytes(9), 'hex')),
+  client_id TEXT NOT NULL UNIQUE DEFAULT ('mic_' || replace(gen_random_uuid()::text, '-', '')),
   scopes TEXT[] NOT NULL DEFAULT '{read}',   -- read, write, media, commerce (NEVER payments/ads)
   redirect_uris TEXT[] NOT NULL DEFAULT '{}',
   active BOOLEAN NOT NULL DEFAULT TRUE,

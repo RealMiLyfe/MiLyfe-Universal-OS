@@ -17,7 +17,7 @@ CREATE TABLE public.stories (
   expires_at TIMESTAMPTZ NOT NULL DEFAULT (NOW() + INTERVAL '24 hours'),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
-CREATE INDEX idx_stories_active ON public.stories(user_id, expires_at) WHERE expires_at > NOW();
+CREATE INDEX idx_stories_active ON public.stories(user_id, expires_at);
 
 CREATE TABLE public.story_views (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
