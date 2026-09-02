@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { ArrowLeft, Upload, Music, Video, Zap, Radio, Link2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { mediaDb } from '@/lib/media/db';
+import { mediaDb, uploadFile } from '@/lib/media/db';
 import { rewardContribution } from '@/lib/economy/reward';
 
 const KINDS = [
@@ -21,20 +21,33 @@ export default function MediaUploadPage() {
   const router = useRouter();
   const [kind, setKind] = useState<string>('audio');
   const [title, setTitle] = useState('');
+  const [mode, setMode] = useState<'file' | 'link'>('file');
   const [sourceType, setSourceType] = useState<string>('youtube');
   const [sourceUrl, setSourceUrl] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const [premium, setPremium] = useState(false);
   const [price, setPrice] = useState('0');
   const [saving, setSaving] = useState(false);
 
   async function publish() {
-    if (!title.trim() || !sourceUrl.trim()) { toast.error('Add a title and a source.'); return; }
+    if (!title.trim()) { toast.error('Add a title.'); return; }
+    if (mode === 'link' && !sourceUrl.trim()) { toast.error('Add a source link.'); return; }
+    if (mode === 'file' && !file) { toast.error('Choose a file to upload.'); return; }
     setSaving(true);
     try {
       const db = mediaDb();
       const { data: userData } = await db.auth.getUser();
       const uid = userData.user?.id;
       if (!uid) { toast.error('Please sign in.'); return; }
+
+      // Resolve the media source: uploaded file OR remote link.
+      let finalSourceType = sourceType;
+      let finalSourceUrl = sourceUrl.trim();
+      if (mode === 'file' && file) {
+        toast.info('Uploading file…');
+        finalSourceUrl = await uploadFile('media', file);
+        finalSourceType = 'hosted';
+      }
 
       // Ensure the creator has a channel.
       let { data: channel } = await db.from('media_channels').select('id').eq('owner_id', uid).maybeSingle();
@@ -50,8 +63,8 @@ export default function MediaUploadPage() {
         uploader_id: uid,
         kind,
         title: title.trim(),
-        source_type: sourceType,
-        source_url: sourceUrl.trim(),
+        source_type: finalSourceType,
+        source_url: finalSourceUrl,
         premium,
         price_mly: premium ? Number(price) || 0 : 0,
         visibility: 'public',
@@ -103,20 +116,42 @@ export default function MediaUploadPage() {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-bold text-harbor-800">Source</label>
-          <div className="mb-2 flex flex-wrap gap-2">
-            {['youtube', 'soundcloud', 'vimeo', 'mp4', 'hls'].map((s) => (
-              <button key={s} onClick={() => setSourceType(s)}
-                className={`rounded-lg border px-2.5 py-1 text-xs font-medium capitalize ${sourceType === s ? 'border-teal-500 bg-teal-50 text-harbor-900' : 'border-gray-200 text-gray-600'}`}>
-                {s}
-              </button>
-            ))}
+          <label className="mb-2 block text-sm font-bold text-harbor-800">Source</label>
+          <div className="mb-3 flex gap-2">
+            <button onClick={() => setMode('file')}
+              className={`inline-flex min-h-[40px] flex-1 items-center justify-center gap-1.5 rounded-lg border text-sm font-medium ${mode === 'file' ? 'border-teal-500 bg-teal-50 text-harbor-900' : 'border-gray-200 text-gray-600'}`}>
+              <Upload className="h-4 w-4" /> Upload file
+            </button>
+            <button onClick={() => setMode('link')}
+              className={`inline-flex min-h-[40px] flex-1 items-center justify-center gap-1.5 rounded-lg border text-sm font-medium ${mode === 'link' ? 'border-teal-500 bg-teal-50 text-harbor-900' : 'border-gray-200 text-gray-600'}`}>
+              <Link2 className="h-4 w-4" /> Link
+            </button>
           </div>
-          <div className="flex items-center gap-2">
-            <Link2 className="h-4 w-4 shrink-0 text-gray-400" />
-            <Input value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)}
-              placeholder={sourceType === 'youtube' ? 'YouTube video ID' : 'Media URL'} />
-          </div>
+
+          {mode === 'file' ? (
+            <label className="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed border-gray-200 p-6 text-center hover:border-teal-300">
+              <Upload className="h-7 w-7 text-teal-500" />
+              <span className="text-sm text-gray-600">{file ? file.name : 'Choose an audio or video file'}</span>
+              <input type="file" accept="audio/*,video/*" className="hidden"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+            </label>
+          ) : (
+            <>
+              <div className="mb-2 flex flex-wrap gap-2">
+                {['youtube', 'soundcloud', 'vimeo', 'mp4', 'hls'].map((s) => (
+                  <button key={s} onClick={() => setSourceType(s)}
+                    className={`rounded-lg border px-2.5 py-1 text-xs font-medium capitalize ${sourceType === s ? 'border-teal-500 bg-teal-50 text-harbor-900' : 'border-gray-200 text-gray-600'}`}>
+                    {s}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <Link2 className="h-4 w-4 shrink-0 text-gray-400" />
+                <Input value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)}
+                  placeholder={sourceType === 'youtube' ? 'YouTube video ID' : 'Media URL'} />
+              </div>
+            </>
+          )}
         </div>
 
         <label className="flex items-center gap-3 rounded-xl border border-gray-200 p-3 text-sm text-harbor-800">

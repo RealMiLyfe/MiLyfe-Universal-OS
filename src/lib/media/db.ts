@@ -11,6 +11,23 @@ export function mediaDb(): LooseClient {
   return createClient() as unknown as LooseClient;
 }
 
+/**
+ * Upload a file to the given storage bucket under the user's own folder
+ * (uid/filename), and return its public URL. Buckets: 'media','shop','avatars'.
+ */
+export async function uploadFile(bucket: 'media' | 'shop' | 'avatars', file: File): Promise<string> {
+  const supabase = createClient();
+  const { data: userData } = await supabase.auth.getUser();
+  const uid = userData.user?.id;
+  if (!uid) throw new Error('not signed in');
+  const ext = file.name.split('.').pop() || 'bin';
+  const path = `${uid}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: false });
+  if (error) throw error;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+  return data.publicUrl;
+}
+
 export interface MediaItem {
   id: string;
   channel_id: string | null;
