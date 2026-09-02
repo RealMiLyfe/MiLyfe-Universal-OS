@@ -108,3 +108,33 @@ self.addEventListener('fetch', (event) => {
     }),
   );
 });
+
+
+// ── Web Push (MiLyfe notifications) ──────────────────────────────────────────
+self.addEventListener('push', (event) => {
+  let data = {};
+  try { data = event.data ? event.data.json() : {}; } catch { data = { title: 'MiLyfe', body: event.data ? event.data.text() : '' }; }
+  const title = data.title || 'MiLyfe';
+  const options = {
+    body: data.body || '',
+    icon: '/icon.png',
+    badge: '/icon.png',
+    // Neutral preview support: caller can send a generic body for shared devices.
+    data: { url: data.url || '/home' },
+    tag: data.tag || undefined,
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || '/home';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      for (const client of clients) {
+        if ('focus' in client) { client.navigate(url); return client.focus(); }
+      }
+      if (self.clients.openWindow) return self.clients.openWindow(url);
+    }),
+  );
+});

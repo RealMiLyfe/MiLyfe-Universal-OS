@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'sonner';
-import { ArrowLeft, Bell } from 'lucide-react';
+import { ArrowLeft, Bell, BellRing } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { trustDb } from '@/lib/trust/db';
+import { enablePush } from '@/lib/notifications/push';
 
 const EVENT_TYPES = [
   { key: 'ubi', label: 'UBI & rewards' },
@@ -55,6 +57,20 @@ export default function NotificationPrefsPage() {
       </Link>
       <h1 className="flex items-center gap-2 text-2xl font-bold text-harbor-800"><Bell className="h-6 w-6 text-teal-600" /> Notifications</h1>
       <p className="text-gray-500">Control what reaches you, and how. Neutral preview hides sensitive text on shared devices.</p>
+
+      <div className="flex items-center justify-between rounded-xl border border-teal-100 bg-teal-50 p-4">
+        <div className="flex items-center gap-2">
+          <BellRing className="h-5 w-5 text-teal-600" />
+          <span className="text-sm text-harbor-800">Get push notifications on this device</span>
+        </div>
+        <Button variant="default" size="sm" onClick={async () => {
+          const r = await enablePush();
+          if (r.ok) toast.success('Push enabled on this device.');
+          else if (r.reason === 'denied') toast.error('Permission denied.');
+          else if (r.reason === 'unsupported') toast.error('This browser does not support push.');
+          else toast.error('Could not enable push.');
+        }}>Enable</Button>
+      </div>
 
       {loading ? <div className="h-40 animate-pulse rounded-xl bg-gray-100" /> : (
         <div className="space-y-2">
