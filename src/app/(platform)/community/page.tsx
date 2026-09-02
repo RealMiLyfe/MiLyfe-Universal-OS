@@ -13,6 +13,19 @@ export default function CommunityPage() {
   const [post, setPost] = useState('');
   const [posting, setPosting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [viewing, setViewing] = useState<Story | null>(null);
+
+  async function openStory(s: Story) {
+    setViewing(s);
+    // Record the view (best-effort).
+    try {
+      const db = socialDb();
+      const { data: userData } = await db.auth.getUser();
+      if (userData.user) {
+        await db.from('story_views').upsert({ story_id: s.id, viewer_id: userData.user.id }, { onConflict: 'story_id,viewer_id' });
+      }
+    } catch { /* ignore */ }
+  }
 
   useEffect(() => {
     (async () => {
@@ -74,14 +87,14 @@ export default function CommunityPage() {
               <div key={i} className="h-16 w-16 shrink-0 animate-pulse rounded-full bg-gray-100" />
             ))
           ) : stories.map((s) => (
-            <div key={s.id} className="flex w-16 shrink-0 flex-col items-center gap-1">
+            <button key={s.id} onClick={() => openStory(s)} className="flex w-16 shrink-0 flex-col items-center gap-1">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-mly-400 p-0.5">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-white text-xs font-bold text-harbor-700">
                   {(s.author?.display_name ?? '?').slice(0, 2).toUpperCase()}
                 </div>
               </div>
               <span className="truncate text-[11px] text-gray-500">{s.author?.display_name?.split(' ')[0] ?? 'You'}</span>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -103,6 +116,29 @@ export default function CommunityPage() {
           </Button>
         </div>
       </div>
+
+      {/* Story viewer */}
+      {viewing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => setViewing(null)}>
+          <div className="w-full max-w-sm overflow-hidden rounded-2xl bg-gradient-to-br from-harbor-700 to-teal-600 p-6 text-white shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
+                {(viewing.author?.display_name ?? '?').slice(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <p className="text-sm font-semibold">{viewing.author?.display_name ?? 'Someone'}</p>
+                <p className="text-[11px] opacity-80">{new Date(viewing.created_at).toLocaleString()}</p>
+              </div>
+              <button onClick={() => setViewing(null)} className="ml-auto text-white/80 hover:text-white" aria-label="Close">✕</button>
+            </div>
+            {viewing.media_url && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={viewing.media_url} alt="" className="mb-3 max-h-80 w-full rounded-xl object-cover" />
+            )}
+            {viewing.caption && <p className="text-lg font-medium leading-snug">{viewing.caption}</p>}
+          </div>
+        </div>
+      )}
 
       {/* Nav tiles */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
