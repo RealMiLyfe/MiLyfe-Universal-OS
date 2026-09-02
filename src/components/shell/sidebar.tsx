@@ -23,6 +23,7 @@ import {
   Scale,
   Sparkles,
   Music,
+  Users2,
   Bot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -37,6 +38,7 @@ const NAV_ITEMS = [
   { href: '/governance', label: 'Voice', icon: Landmark },
   { href: '/mi', label: 'Mi', icon: Bot },
   { href: '/connect', label: 'Connect', icon: Users },
+  { href: '/community', label: 'Community', icon: Users2 },
   { href: '/rewards', label: 'Rewards', icon: Gift },
   { href: '/contributions', label: 'Impact', icon: Sparkles },
   { href: '/standing', label: 'Standing', icon: Star },
