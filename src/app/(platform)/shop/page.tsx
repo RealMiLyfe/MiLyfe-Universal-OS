@@ -81,15 +81,19 @@ export default function ShopPage() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {shown.map((p) => (
             <div key={p.id} className="overflow-hidden rounded-xl border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-500/10">
-              <div className="flex aspect-square items-center justify-center bg-gray-50">
-                {p.image_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={p.image_url} alt="" className="h-full w-full object-cover" />
-                ) : <ShoppingBag className="h-10 w-10 text-gray-300" aria-hidden="true" />}
-              </div>
+              <Link href={`/shop/product/${p.id}`} className="block">
+                <div className="flex aspect-square items-center justify-center bg-gray-50">
+                  {p.image_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.image_url} alt="" className="h-full w-full object-cover" />
+                  ) : <ShoppingBag className="h-10 w-10 text-gray-300" aria-hidden="true" />}
+                </div>
+              </Link>
               <div className="p-2.5">
-                <p className="truncate text-sm font-medium text-harbor-800">{p.title}</p>
-                <p className="truncate text-xs text-gray-500">{p.vendor?.name ?? 'Vendor'}</p>
+                <Link href={`/shop/product/${p.id}`}>
+                  <p className="truncate text-sm font-medium text-harbor-800">{p.title}</p>
+                  <p className="truncate text-xs text-gray-500">{p.vendor?.name ?? 'Vendor'}</p>
+                </Link>
                 <div className="mt-1 flex items-center justify-between">
                   <span className="text-sm font-bold text-teal-600">{p.price_mly} $MLY</span>
                   {p.rating > 0 && <span className="inline-flex items-center gap-0.5 text-xs text-gray-400"><Star className="h-3 w-3 fill-mly-400 text-mly-400" /> {p.rating.toFixed(1)}</span>}

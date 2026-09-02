@@ -36,7 +36,7 @@ export default function EventsPage() {
           {events.map((e) => {
             const d = new Date(e.starts_at);
             return (
-              <div key={e.id} className="flex gap-4 rounded-xl border border-gray-100 bg-white p-4">
+              <Link key={e.id} href={`/community/events/${e.id}`} className="flex gap-4 rounded-xl border border-gray-100 bg-white p-4 transition-transform hover:-translate-y-0.5 hover:shadow-md">
                 <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-lg bg-purple-50 text-purple-700">
                   <span className="text-lg font-bold leading-none">{d.getDate()}</span>
                   <span className="text-[10px] uppercase">{d.toLocaleString('en', { month: 'short' })}</span>
@@ -49,7 +49,7 @@ export default function EventsPage() {
                     {e.location_name && <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" /> {e.location_name}</span>}
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

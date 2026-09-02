@@ -73,14 +73,14 @@ export default function BlogPage() {
         posts.length === 0 ? <p className="text-center text-sm text-gray-500">No posts yet. Write the first.</p> : (
         <div className="space-y-3">
           {posts.map((p) => (
-            <article key={p.id} className="rounded-xl border border-gray-100 bg-white p-4">
+            <Link key={p.id} href={`/community/blog/${p.slug}`} className="block rounded-xl border border-gray-100 bg-white p-4 transition-transform hover:-translate-y-0.5 hover:shadow-md">
               <h2 className="font-bold text-harbor-800">{p.title}</h2>
               <p className="mt-1 line-clamp-3 text-sm text-gray-600 whitespace-pre-wrap">{p.body}</p>
               <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
                 <span>{p.author?.display_name ?? 'Someone'}</span>
                 <span className="inline-flex items-center gap-1"><Heart className="h-3 w-3" /> {p.like_count}</span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       )}

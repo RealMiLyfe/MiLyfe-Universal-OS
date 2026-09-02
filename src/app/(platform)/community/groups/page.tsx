@@ -59,14 +59,14 @@ export default function GroupsPage() {
         groups.length === 0 ? <p className="text-center text-sm text-gray-500">No groups yet. Start one above.</p> : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {groups.map((g) => (
-            <div key={g.id} className="rounded-xl border border-gray-100 bg-white p-4">
+            <Link key={g.id} href={`/community/groups/${g.id}`} className="rounded-xl border border-gray-100 bg-white p-4 transition-transform hover:-translate-y-0.5 hover:shadow-md">
               <div className="mb-1 flex items-center gap-2">
                 {g.privacy === 'public' ? <Globe className="h-4 w-4 text-teal-600" /> : <Lock className="h-4 w-4 text-gray-400" />}
                 <p className="font-bold text-harbor-800">{g.name}</p>
               </div>
               {g.description && <p className="text-sm text-gray-600">{g.description}</p>}
               <p className="mt-1 text-xs text-gray-500">{g.member_count} member{g.member_count === 1 ? '' : 's'}</p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
