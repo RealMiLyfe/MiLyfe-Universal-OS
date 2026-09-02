@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Car, Home, Search, Info, MessageSquare, CheckCircle2, XCircle,
   X, Bell, Camera, ArrowLeft, ShieldAlert,
@@ -9,6 +10,8 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RIGHTS_GUIDES, type RightsGuide } from '@/lib/justice/content';
+import { justiceBrowserDb } from '@/lib/justice/db';
+import type { JusticeRapidContact } from '@/lib/justice/types';
 
 /**
  * Encounter Mode — the panic flow.
@@ -24,6 +27,47 @@ const GUIDES = RIGHTS_GUIDES.filter((g) => ENCOUNTER_SLUGS.includes(g.slug));
 export default function EncounterModePage() {
   const router = useRouter();
   const [selected, setSelected] = useState<RightsGuide | null>(null);
+  const [contacts, setContacts] = useState<JusticeRapidContact[]>([]);
+
+  // Load rapid-response contacts (best-effort; Encounter Mode still works offline).
+  useEffect(() => {
+    (async () => {
+      try {
+        const db = justiceBrowserDb();
+        const { data } = await db.from('justice_rapid_contacts').select('*').order('sort_order', { ascending: true });
+        if (data) setContacts(data);
+      } catch { /* offline / signed-out — panic content still works */ }
+    })();
+  }, []);
+
+  const alertPeople = useCallback(() => {
+    const phones = contacts.map((c) => c.phone).filter(Boolean).join(',');
+    const msg = encodeURIComponent(
+      'I need help. I may be detained or stopped by police/ICE. This is an automated alert from MiJustice.'
+    );
+    // Try to attach location, then open the device SMS composer.
+    const send = (body: string) => {
+      window.location.href = `sms:${phones}?&body=${body}`;
+    };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => send(msg + encodeURIComponent(` My location: https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`)),
+        () => send(msg),
+        { timeout: 4000 }
+      );
+    } else {
+      send(msg);
+    }
+  }, [contacts]);
+
+  const startRecording = useCallback(() => {
+    // Trigger the device camera/recorder via a file input (works offline, no perms drama).
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'video/*,audio/*,image/*';
+    input.capture = 'environment';
+    input.click();
+  }, []);
 
   // Duress: triple-tap the top bar to bail out fast.
   const tapCount = useRef(0);
@@ -131,14 +175,22 @@ export default function EncounterModePage() {
 
       {/* Sticky action bar */}
       <div className="space-y-2 border-t border-gray-100 bg-white p-3 safe-area-bottom">
-        <Button variant="destructive" size="lg" className="w-full" disabled>
-          <Camera className="mr-2 h-5 w-5" /> Record (setup required)
+        <Button variant="destructive" size="lg" className="w-full" onClick={startRecording}>
+          <Camera className="mr-2 h-5 w-5" /> Record Now
         </Button>
-        <Button variant="mly" size="lg" className="w-full" disabled>
-          <Bell className="mr-2 h-5 w-5" /> Alert My People (add contacts first)
-        </Button>
+        {contacts.length > 0 ? (
+          <Button variant="mly" size="lg" className="w-full" onClick={alertPeople}>
+            <Bell className="mr-2 h-5 w-5" /> Alert My People ({contacts.length})
+          </Button>
+        ) : (
+          <Link href="/justice/app/contacts" className="block">
+            <Button variant="mly" size="lg" className="w-full">
+              <Bell className="mr-2 h-5 w-5" /> Add Contacts to Enable Alert
+            </Button>
+          </Link>
+        )}
         <p className="text-center text-[10px] text-gray-400">
-          Recording &amp; alerts activate once you add rapid-response contacts in Settings.
+          Record opens your camera. Alert texts your contacts your location.
         </p>
       </div>
     </div>
