@@ -9,6 +9,7 @@ import { ServiceWorkerRegistrar } from '@/components/shell/sw-registrar';
 import { MiBubble } from '@/components/mi/mi-bubble';
 import { CommandSearch } from '@/components/shell/command-search';
 import { DataCacher } from '@/components/shell/data-cacher';
+import { VibeBar } from '@/components/media/vibe-bar';
 import { Toaster } from 'sonner';
 
 /**
@@ -59,6 +60,9 @@ export default function PlatformLayout({
 
       {/* Data cacher (silently caches critical data to IndexedDB for offline) */}
       <DataCacher />
+
+      {/* Global persistent media player (the Vibe Bar) */}
+      <VibeBar />
 
       {/* Mi ambient bubble */}
       <MiBubble />

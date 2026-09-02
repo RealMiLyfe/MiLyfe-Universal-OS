@@ -22,6 +22,7 @@ import {
   Shield,
   Scale,
   Sparkles,
+  Music,
   Bot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
   { href: '/wallet', label: 'Pocket', icon: Wallet },
   { href: '/learn', label: 'Learn', icon: GraduationCap },
   { href: '/street', label: 'Street', icon: Store },
+  { href: '/media', label: 'Media', icon: Music },
   { href: '/governance', label: 'Voice', icon: Landmark },
   { href: '/mi', label: 'Mi', icon: Bot },
   { href: '/connect', label: 'Connect', icon: Users },
