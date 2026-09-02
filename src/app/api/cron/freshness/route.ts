@@ -1,5 +1,6 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 import { generateVerificationQuest } from '@/lib/mi-source';
 
@@ -88,6 +89,12 @@ export async function GET(request: Request) {
       }
     }
   }
+
+  await logAudit(null, 'resource.freshness_sweep', 'community_resources', null, {
+    marked_stale: markedStale,
+    quests_created: questsCreated,
+    total_checked: staleResources.length,
+  });
 
   return NextResponse.json({
     marked_stale: markedStale,

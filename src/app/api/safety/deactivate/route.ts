@@ -1,4 +1,5 @@
 import { createServerSupabase } from '@/lib/supabase/server';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 export async function POST() {
@@ -20,6 +21,8 @@ export async function POST() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  await logAudit(user.id, 'safety.deactivate', 'safety_actions', null, {});
 
   return NextResponse.json({ success: true });
 }

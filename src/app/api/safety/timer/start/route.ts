@@ -1,17 +1,33 @@
 import { createServerSupabase } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
+import { checkRateLimit, RATE_LIMITS } from '@/lib/security/rate-limit';
+
+const timerStartSchema = z.object({
+  destination: z.string().trim().max(200).optional().nullable(),
+  minutes: z.number().int('Duration must be a whole number').min(1, 'Invalid duration').max(180, 'Invalid duration'),
+});
 
 export async function POST(request: Request) {
   const supabase = createServerSupabase();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const body = await request.json();
-  const { destination, minutes } = body;
+  const rl = await checkRateLimit(user.id, 'safety-timer-start', RATE_LIMITS.safety);
+  if (!rl.success) return rl.error!;
 
-  if (!minutes || minutes < 1 || minutes > 180) {
-    return NextResponse.json({ error: 'Invalid duration' }, { status: 400 });
+  let input: z.infer<typeof timerStartSchema>;
+  try {
+    const body = await request.json();
+    input = timerStartSchema.parse(body);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return NextResponse.json({ error: err.issues[0].message }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
+
+  const { destination, minutes } = input;
 
   // Cancel any existing active timer
   await supabase

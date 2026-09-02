@@ -30,16 +30,18 @@ Verified gaps (the actual blockers):
 ### Phase 0 — Roadmap + baseline (this doc)
 - [x] Capture verified findings and success criteria
 
-### Phase 1 — Fix CI + typecheck script
-- [ ] Add `typecheck` script to package.json
-- [ ] Rewrite ci.yml to use npm and target milyfe-platform
-- [ ] Make lint run non-interactively (committed eslint config)
-- [ ] Success: `npm run typecheck && npm run lint && npm test && npm run build` all pass locally
+### Phase 1 — Fix CI + typecheck script (DONE)
+- [x] Add `typecheck` script to package.json
+- [x] Rewrite ci.yml to use npm and target milyfe-platform
+- [x] Make lint run non-interactively (committed .eslintrc.json)
+- [x] Success: typecheck + lint (0 errors) + test (30/30) + build all pass locally
+- Note: platform CI also upgraded (added lint+test steps, pinned actions to v4)
 
-### Phase 2 — Validation + audit logging
-- [ ] Add Zod validation to state-mutating API routes lacking it
-- [ ] Ensure audit logging on privileged/service-role mutations
-- [ ] Success: typecheck + tests still green
+### Phase 2 — Validation + audit logging (DONE)
+- [x] **Fixed latent bug**: `audit_log` table was referenced by code but had NO migration — every audit insert was silently failing. Added migration `014_audit_log.sql` (append-only, RLS: own + admin read, service-role write).
+- [x] Added Zod validation + rate limiting to `safety/contacts` (POST/DELETE) and `safety/timer/start`
+- [x] Added audit logging to all 5 cron routes (ubi, decay, proposals, freshness, timers) and safety leave-now / deactivate
+- [x] Success: typecheck 0, lint 0 errors, tests 30/30
 
 ### Phase 3 — Test coverage on critical paths
 - [ ] Tests for cron auth, CSRF/withAuth logic, rate-limit
@@ -60,3 +62,5 @@ Verified gaps (the actual blockers):
 
 ## Progress Log
 - 2026-09-02: Phase 0 started. Baseline captured.
+- 2026-09-02: Phase 1 complete. Both CI workflows fixed; full pipeline green locally. Committed.
+- 2026-09-02: Phase 2 complete. audit_log migration added (fixed silent-failure bug), validation + audit logging expanded. Committed.

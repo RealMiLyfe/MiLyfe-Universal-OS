@@ -1,4 +1,5 @@
 import { createServerSupabase, createServiceSupabase } from '@/lib/supabase/server';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -33,6 +34,10 @@ export async function POST(request: Request) {
   const adminSupabase = createServiceSupabase();
   await adminSupabase.auth.admin.signOut(user.id, 'others').catch((err) => {
     console.error('Failed to revoke sessions:', err);
+  });
+
+  await logAudit(user.id, 'safety.leave_now', 'safety_actions', data.id, {
+    contacts_notified: notifyContacts.length,
   });
 
   return NextResponse.json({ success: true, action_id: data.id });

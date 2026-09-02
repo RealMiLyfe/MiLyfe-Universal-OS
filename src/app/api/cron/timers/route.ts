@@ -1,5 +1,6 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 /**
@@ -77,6 +78,13 @@ export async function GET(request: Request) {
 
       escalated++;
     }
+  }
+
+  if (escalated > 0) {
+    await logAudit(null, 'safety.timer_escalation', 'walk_home_timers', null, {
+      escalated,
+      total_expired: expiredTimers.length,
+    });
   }
 
   return NextResponse.json({

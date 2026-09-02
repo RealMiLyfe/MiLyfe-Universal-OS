@@ -1,5 +1,6 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 /**
@@ -28,6 +29,11 @@ export async function GET(request: Request) {
     });
 
     if (!rpcError && rpcResult && (rpcResult as any).success) {
+      await logAudit(null, 'ubi.distribute', 'community_treasury', null, {
+        method: 'rpc_atomic',
+        amount_per_member: WEEKLY_UBI_AMOUNT,
+        ...(rpcResult as any),
+      });
       return NextResponse.json({
         success: true,
         method: 'rpc_atomic',
@@ -140,6 +146,14 @@ export async function GET(request: Request) {
       })
       .eq('id', treasuryData.id);
   }
+
+  await logAudit(null, 'ubi.distribute', 'community_treasury', null, {
+    method: 'batch_fallback',
+    distributed,
+    errors,
+    total_eligible: eligibleWallets.length,
+    amount_per_member: WEEKLY_UBI_AMOUNT,
+  });
 
   return NextResponse.json({
     success: true,

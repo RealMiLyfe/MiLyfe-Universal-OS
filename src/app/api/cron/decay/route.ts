@@ -1,5 +1,6 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 /**
@@ -77,6 +78,13 @@ export async function GET(request: Request) {
       errors++;
     }
   }
+
+  await logAudit(null, 'standing.decay', 'standing', null, {
+    decayed,
+    errors,
+    total_eligible: standings.length,
+    decay_rate: DAILY_DECAY_RATE,
+  });
 
   return NextResponse.json({
     decayed,

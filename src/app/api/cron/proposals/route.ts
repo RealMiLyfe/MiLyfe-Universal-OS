@@ -1,5 +1,6 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
+import { logAudit } from '@/lib/security/audit';
 import { NextResponse } from 'next/server';
 
 /**
@@ -21,6 +22,10 @@ export async function GET(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  await logAudit(null, 'proposal.close', 'proposals', null, {
+    ...(data as any),
+  });
 
   return NextResponse.json({
     ...(data as any),
