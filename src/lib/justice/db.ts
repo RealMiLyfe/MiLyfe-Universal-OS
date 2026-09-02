@@ -1,17 +1,17 @@
 /**
- * MiJustice Supabase access.
+ * MiJustice Supabase access (BROWSER / client components).
  *
  * The core `Database` type covers the MVP schema and does not include the
  * justice_* tables. To query them without polluting that hand-maintained type,
- * we wrap the existing clients and expose them loosely typed for justice tables.
- * Row shapes are enforced at the call site via the interfaces in ./types.
+ * we wrap the browser client loosely typed for justice tables. Row shapes are
+ * enforced at the call site via the interfaces in ./types.
+ *
+ * NOTE: this file must NOT import the server client (next/headers), or it would
+ * pull server-only APIs into client bundles. Server access lives in ./db-server.
  */
 import { createClient } from '@/lib/supabase/client';
-import { createServerSupabase } from '@/lib/supabase/server';
 
-// A minimal structural type for the query surface we use. This intentionally
-// bypasses the generated Database typing for the justice_* namespace.
-type LooseClient = {
+export type LooseClient = {
   from: (table: string) => any;
   rpc: (fn: string, args?: Record<string, unknown>) => any;
   auth: { getUser: () => Promise<{ data: { user: { id: string } | null } }> };
@@ -19,9 +19,4 @@ type LooseClient = {
 
 export function justiceBrowserDb(): LooseClient {
   return createClient() as unknown as LooseClient;
-}
-
-export async function justiceServerDb(): Promise<LooseClient> {
-  const supabase = await createServerSupabase();
-  return supabase as unknown as LooseClient;
 }
