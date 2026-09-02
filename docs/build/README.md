@@ -2,6 +2,22 @@
 
 The coherent build design + session handoff for this codebase. Read in order.
 
+> ## ⚠️ Reconciliation note (read first)
+> Docs **00–04 are the original architecture design from an earlier session.**
+> Their *intent, philosophy, and design direction are correct and still hold*
+> (surface-don't-redesign, stay uniform with the platform, local-first, $MLY-only,
+> no ads, no dark theme). **But their factual snapshots predate the 9-phase +
+> gap-closing build** done later. Specifically, in 00–04 treat these as stale:
+> - Table/route/test counts ("48 tables", "~30 routes", "55 tests") — actual is
+>   now **27 migrations, 77 platform routes, 60 tests** (see SESSION-RECAP.md).
+> - "To-build / surface in v1" items (sync chip, receipt sheet, lock chips,
+>   instance badge, Chamber decoupling) — **several are already built.** Check
+>   SESSION-RECAP.md before rebuilding anything.
+>
+> **Authoritative current state = `SESSION-RECAP.md` + `05-WHATS-LEFT.md`.**
+> When 00–04 and the recap disagree on *what exists*, the recap wins. Do not bend
+> the built platform to match a stale snapshot; extend the platform as it is.
+
 ## Design
 - **00-BUILD-DESIGN.md** — master synthesis: fractal, ground truth, OS stack,
   phases, dependency order.

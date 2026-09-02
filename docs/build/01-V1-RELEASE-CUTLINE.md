@@ -1,5 +1,11 @@
 # v1 Release Cut-Line — "The Sovereign Single Instance"
 
+> ⚠️ **Snapshot note:** Original design from an earlier session; direction holds.
+> Some items marked "ship in v1" / "cut the cord" are **already done** in the later
+> build (Stripe/processor traces removed, app is sovereign, receipts/encryption
+> shipped). Verify against `SESSION-RECAP.md` before treating anything here as
+> outstanding work.
+
 > The exact ship/defer list for the first public release, plus the file-by-file work to decouple the
 > downloadable platform from the private Hyperbolic Time Chamber. Companion to `00-BUILD-DESIGN.md`.
 

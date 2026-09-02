@@ -1,5 +1,9 @@
 # Device Contribution & Auto-Provisioning — Design Spec
 
+> ⚠️ **Snapshot note:** Original design from an earlier session. This is v3
+> design-only and does not conflict with the built platform — it layers on top.
+> Current build state: `SESSION-RECAP.md` / `05-WHATS-LEFT.md`.
+
 > The one layer whose ingredients were scattered across the architecture with no unified spec. This
 > document unifies them. It turns "everyone downloads an isolated island" into "everyone's device
 > strengthens a shared mesh — and gets paid for it." Companion to `00-BUILD-DESIGN.md`.

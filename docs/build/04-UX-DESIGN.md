@@ -1,5 +1,11 @@
 # UX Design — Surfacing the Architecture, Uniform with the Platform
 
+> ⚠️ **Snapshot note:** Original design from an earlier session; the "stay uniform,
+> surface-don't-redesign" rule is exactly right and still governs. But some items
+> listed as "surface in v1" are **already built** (DesktopHeader, ReceiptCard,
+> /account/activity, encryption, grouped nav). Check `SESSION-RECAP.md` before
+> building any of these so you extend rather than duplicate.
+
 > How the four strengths (local-first, secure, provable, sovereign) become **felt** in the interface.
 > Companion to `00-BUILD-DESIGN.md`.
 >

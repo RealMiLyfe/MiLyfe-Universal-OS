@@ -1,5 +1,12 @@
 # MiLyfe — Complete Build Design
 
+> ⚠️ **Snapshot note:** This is the original architecture design from an earlier
+> session. Its direction still holds, but its counts ("48 tables", "~30 routes",
+> "55 tests") and "built vs. design-only" lists predate the later 9-phase +
+> gap-closing build. For current state see `SESSION-RECAP.md` / `05-WHATS-LEFT.md`
+> (now 27 migrations, 77 routes, 60 tests). When this doc and the recap disagree
+> on what exists, the recap wins.
+
 > Master synthesis of the full architecture. Companion docs:
 > - `01-V1-RELEASE-CUTLINE.md` — what ships in v1, file-by-file decoupling
 > - `02-DEVICE-CONTRIBUTION-SPEC.md` — the missing device-reward layer

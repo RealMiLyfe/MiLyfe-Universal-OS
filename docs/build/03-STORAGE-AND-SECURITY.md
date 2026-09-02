@@ -1,5 +1,10 @@
 # Storage & Security — Design
 
+> ⚠️ **Snapshot note:** Original design from an earlier session; the model holds.
+> Counts ("48 tables, 108 policies") predate the later build (now 27 migrations,
+> many more tables). CRDT/key-recovery gaps noted here are still accurate v2 items.
+> Current state: `SESSION-RECAP.md` / `05-WHATS-LEFT.md`.
+
 > How MiLyfe persists data locally **and** on the network, and how security is woven through every
 > layer. Companion to `00-BUILD-DESIGN.md`. Hard requirement: everything must save on the user's own
 > hardware **and** on the network.
