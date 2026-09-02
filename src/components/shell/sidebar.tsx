@@ -30,31 +30,48 @@ import {
 import { cn } from '@/lib/utils/cn';
 import { useAppStore } from '@/lib/store';
 
-const NAV_ITEMS = [
-  { href: '/home', label: 'Home', icon: Home },
-  { href: '/wallet', label: 'Pocket', icon: Wallet },
-  { href: '/learn', label: 'Learn', icon: GraduationCap },
-  { href: '/street', label: 'Street', icon: Store },
-  { href: '/shop', label: 'Shop', icon: ShoppingBag },
-  { href: '/media', label: 'Media', icon: Music },
-  { href: '/governance', label: 'Voice', icon: Landmark },
-  { href: '/mi', label: 'Mi', icon: Bot },
-  { href: '/connect', label: 'Connect', icon: Users },
-  { href: '/community', label: 'Community', icon: Users2 },
-  { href: '/rewards', label: 'Rewards', icon: Gift },
-  { href: '/contributions', label: 'Impact', icon: Sparkles },
-  { href: '/standing', label: 'Standing', icon: Star },
-  { href: '/news', label: 'News', icon: Newspaper },
-  { href: '/forum', label: 'Forum', icon: MessageCircle },
-  { href: '/health', label: 'Health', icon: Heart },
-  { href: '/safety', label: 'Safety', icon: Shield },
-  { href: '/justice/app/home', label: 'Justice', icon: Scale },
-  { href: '/treasury', label: 'Treasury', icon: Landmark },
-  { href: '/transparency', label: 'Transparency', icon: BookOpen },
-  { href: '/wiki', label: 'Wiki', icon: BookOpen },
-  { href: '/profile', label: 'Profile', icon: User },
-  { href: '/bounties', label: 'Bounties', icon: Trophy },
-  { href: '/apps', label: 'Apps', icon: Grid3X3 },
+// Grouped nav — keeps ~24 destinations navigable without a wall of items.
+const NAV_GROUPS: { title: string | null; items: { href: string; label: string; icon: typeof Home }[] }[] = [
+  { title: null, items: [
+    { href: '/home', label: 'Home', icon: Home },
+    { href: '/mi', label: 'Mi', icon: Bot },
+  ]},
+  { title: 'Money', items: [
+    { href: '/wallet', label: 'Pocket', icon: Wallet },
+    { href: '/rewards', label: 'Rewards', icon: Gift },
+    { href: '/contributions', label: 'Impact', icon: Sparkles },
+    { href: '/treasury', label: 'Treasury', icon: Landmark },
+  ]},
+  { title: 'Create & Learn', items: [
+    { href: '/learn', label: 'Learn', icon: GraduationCap },
+    { href: '/media', label: 'Media', icon: Music },
+  ]},
+  { title: 'Commerce', items: [
+    { href: '/street', label: 'Street', icon: Store },
+    { href: '/shop', label: 'Shop', icon: ShoppingBag },
+  ]},
+  { title: 'Community', items: [
+    { href: '/community', label: 'Community', icon: Users2 },
+    { href: '/connect', label: 'Connect', icon: Users },
+    { href: '/forum', label: 'Forum', icon: MessageCircle },
+    { href: '/news', label: 'News', icon: Newspaper },
+    { href: '/governance', label: 'Voice', icon: Landmark },
+  ]},
+  { title: 'Care & Justice', items: [
+    { href: '/health', label: 'Health', icon: Heart },
+    { href: '/safety', label: 'Safety', icon: Shield },
+    { href: '/justice/app/home', label: 'Justice', icon: Scale },
+  ]},
+  { title: 'You', items: [
+    { href: '/standing', label: 'Standing', icon: Star },
+    { href: '/profile', label: 'Profile', icon: User },
+  ]},
+  { title: 'More', items: [
+    { href: '/transparency', label: 'Transparency', icon: BookOpen },
+    { href: '/wiki', label: 'Wiki', icon: BookOpen },
+    { href: '/bounties', label: 'Bounties', icon: Trophy },
+    { href: '/apps', label: 'Apps', icon: Grid3X3 },
+  ]},
 ];
 
 export function Sidebar() {
@@ -73,27 +90,34 @@ export function Sidebar() {
         </Link>
       </div>
 
-      {/* Nav items */}
-      <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-0.5">
-        {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
-          const isActive = pathname === href || pathname.startsWith(href + '/');
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px]',
-                isActive
-                  ? 'bg-teal-50 text-teal-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-harbor-800'
-              )}
-              aria-current={isActive ? 'page' : undefined}
-            >
-              <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
-              <span>{label}</span>
-            </Link>
-          );
-        })}
+      {/* Nav items (grouped) */}
+      <nav className="flex-1 overflow-y-auto py-3 px-2">
+        {NAV_GROUPS.map((group, gi) => (
+          <div key={gi} className={gi > 0 ? 'mt-3' : ''}>
+            {group.title && (
+              <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">{group.title}</p>
+            )}
+            <div className="space-y-0.5">
+              {group.items.map(({ href, label, icon: Icon }) => {
+                const isActive = pathname === href || pathname.startsWith(href + '/');
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={cn(
+                      'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[40px]',
+                      isActive ? 'bg-teal-50 text-teal-700' : 'text-gray-600 hover:bg-gray-50 hover:text-harbor-800'
+                    )}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                    <span>{label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       {/* User footer */}
