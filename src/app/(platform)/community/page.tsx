@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { Plus, Users, CalendarDays, PenSquare, ImagePlus, Send, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { socialDb, type Story } from '@/lib/social/db';
+import { rewardContribution } from '@/lib/economy/reward';
 
 export default function CommunityPage() {
   const [stories, setStories] = useState<Story[]>([]);
@@ -35,8 +36,11 @@ export default function CommunityPage() {
       // Quick post -> a text story (10-second content).
       const { error } = await db.from('stories').insert({ user_id: uid, kind: 'text', caption: post.trim() });
       if (error) throw error;
+      const awarded = await rewardContribution(db as never, {
+        kind: 'post', surface: 'community', facet: 'neighbor', title: 'Shared a community post', mly: 5,
+      });
       setPost('');
-      toast.success('Posted!');
+      toast.success(awarded > 0 ? `Posted! +${awarded} $MLY.` : 'Posted!');
       const { data } = await db.from('stories')
         .select('*, author:profiles!stories_user_id_fkey(username, display_name, avatar_url)')
         .order('created_at', { ascending: false }).limit(20);

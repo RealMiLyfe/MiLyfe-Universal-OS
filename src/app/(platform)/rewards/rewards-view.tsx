@@ -11,6 +11,9 @@ import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
 import type { Tables } from '@/types/database';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { WAYS_TO_CONTRIBUTE } from '@/lib/economy/data';
+import { ArrowRight } from 'lucide-react';
 
 interface Props {
  userId: string;
@@ -120,6 +123,32 @@ export function RewardsView({ userId, pendingRewards: initialPending, claimedRew
  ))}
  </ul>
  )}
+ </CardContent>
+ </Card>
+
+ {/* Earn — ways to earn $MLY */}
+ <Card>
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2">
+ <Sparkles className="h-4 w-4 text-teal-500" aria-hidden="true" />
+ Ways to Earn
+ </CardTitle>
+ </CardHeader>
+ <CardContent>
+ <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+ {WAYS_TO_CONTRIBUTE.map((w) => (
+ <Link key={w.title} href={w.href} className="flex items-center justify-between rounded-lg border border-gray-100 p-3 transition-colors hover:bg-gray-50">
+ <div className="min-w-0">
+ <p className="truncate text-sm font-medium text-harbor-800">{w.title}</p>
+ <p className="text-xs text-gray-500 capitalize">{w.facet}</p>
+ </div>
+ <div className="flex shrink-0 items-center gap-1">
+ <Badge variant="mly">+{w.mly}</Badge>
+ <ArrowRight className="h-4 w-4 text-gray-300" />
+ </div>
+ </Link>
+ ))}
+ </div>
  </CardContent>
  </Card>
 

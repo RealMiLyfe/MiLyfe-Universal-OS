@@ -80,6 +80,37 @@ export function TreasuryView({ treasury, transactions, weeklyStats }: Props) {
  </div>
  </div>
 
+ {/* Treasury health / runway */}
+ {(() => {
+ const weeklyUbiCost = (treasury?.citizen_count || 0) * 100;
+ const runwayWeeks = weeklyUbiCost > 0 ? Math.floor(balance / weeklyUbiCost) : Infinity;
+ const healthy = runwayWeeks >= 26 || !isFinite(runwayWeeks);
+ const okay = runwayWeeks >= 8;
+ const pct = Math.min(100, isFinite(runwayWeeks) ? (runwayWeeks / 52) * 100 : 100);
+ return (
+ <div className="rounded-xl border border-gray-100 bg-white p-6">
+ <div className="mb-2 flex items-center justify-between">
+ <h2 className="font-semibold text-harbor-800">Treasury Health</h2>
+ <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${healthy ? 'bg-green-100 text-green-700' : okay ? 'bg-mly-100 text-mly-800' : 'bg-red-100 text-red-700'}`}>
+ {healthy ? 'Healthy' : okay ? 'Watch' : 'Low'}
+ </span>
+ </div>
+ <p className="text-sm text-gray-600">
+ {isFinite(runwayWeeks)
+ ? `At current UBI, the treasury funds about ${runwayWeeks} more week${runwayWeeks === 1 ? '' : 's'}.`
+ : 'No active UBI burn yet — runway is effectively unlimited.'}
+ </p>
+ <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-gray-100">
+ <div className={`h-full rounded-full ${healthy ? 'bg-green-500' : okay ? 'bg-mly-500' : 'bg-red-500'}`} style={{ width: `${pct}%` }} />
+ </div>
+ <div className="mt-2 grid grid-cols-2 gap-3 text-xs text-gray-500">
+ <span>Weekly UBI cost: <span className="font-medium text-harbor-800">{weeklyUbiCost.toLocaleString()} $MLY</span></span>
+ <span className="text-right">Runway: <span className="font-medium text-harbor-800">{isFinite(runwayWeeks) ? `${runwayWeeks} wks` : '∞'}</span></span>
+ </div>
+ </div>
+ );
+ })()}
+
  {/* How treasury grows */}
  <div className="rounded-xl border border-gray-100 bg-white p-6">
  <h2 className="font-semibold text-harbor-800 mb-3">How the Treasury Operates</h2>
