@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { LegalDisclaimer } from '@/components/justice/legal-disclaimer';
 import { justiceBrowserDb } from '@/lib/justice/db';
+import { logAgentAction, requiresHumanReview } from '@/lib/justice/agents';
 import type { DefenderIntake, DetectedViolation } from '@/lib/justice/defender';
 import type { Confidence } from '@/lib/justice/types';
 
@@ -70,6 +71,19 @@ export function DefenderReport({
         const { error: vErr } = await db.from('justice_violations').insert(rows);
         if (vErr) throw vErr;
       }
+
+      // Audit log for the agent action (harm-vs-help metric).
+      const citationsChecked = violations.reduce((n, v) => n + v.citations.length, 0);
+      await logAgentAction(db as never, {
+        case_id: caseRow.id,
+        agent_role: 'constitutional_scanner',
+        action: 'defender_scan',
+        citations_checked: citationsChecked,
+        citations_dropped: 0,
+        flags: [],
+        confidence,
+        human_review_required: requiresHumanReview(confidence, []),
+      });
 
       setSaved(true);
       toast.success('Saved to your cases.');
