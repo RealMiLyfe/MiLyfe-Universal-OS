@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { socialDb } from '@/lib/social/db';
 import { gradeQuiz, type Question, type GradeResult } from '@/lib/learn/quiz';
+import { rewardContribution } from '@/lib/economy/reward';
 
 export default function QuizPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -48,7 +49,13 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
         });
       }
     } catch { /* attempt logging best-effort */ }
-    if (r.passed) toast.success(`Passed with ${r.score}%!`);
+    if (r.passed) {
+      const awarded = await rewardContribution(socialDb() as never, {
+        kind: 'quiz_pass', surface: 'learn', facet: 'teacher',
+        title: `Passed quiz: ${quiz?.title ?? ''}`, mly: 20, reference: id,
+      });
+      toast.success(awarded > 0 ? `Passed with ${r.score}%! +${awarded} $MLY.` : `Passed with ${r.score}%!`);
+    }
     else if (r.needsManual) toast.info('Submitted — an instructor will grade the written parts.');
     else toast.error(`Scored ${r.score}%. Try again.`);
   }

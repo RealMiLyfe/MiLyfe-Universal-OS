@@ -8,6 +8,7 @@ import { ArrowLeft, Upload, Music, Video, Zap, Radio, Link2 } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { mediaDb } from '@/lib/media/db';
+import { rewardContribution } from '@/lib/economy/reward';
 
 const KINDS = [
   { key: 'audio', label: 'Audio', icon: Music },
@@ -57,7 +58,12 @@ export default function MediaUploadPage() {
         status: 'ready',
       });
       if (error) throw error;
-      toast.success('Published! The vibe is live.');
+      // Reward the creator ($MLY + Maker standing) — auto-wired economy.
+      const awarded = await rewardContribution(db as never, {
+        kind: 'media_upload', surface: 'media', facet: 'maker',
+        title: `Shared media: ${title.trim()}`, mly: 25,
+      });
+      toast.success(awarded > 0 ? `Published! +${awarded} $MLY earned.` : 'Published! The vibe is live.');
       router.push('/media');
     } catch {
       toast.error('Could not publish right now.');

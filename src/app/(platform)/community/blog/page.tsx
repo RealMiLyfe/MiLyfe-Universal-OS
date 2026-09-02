@@ -7,6 +7,7 @@ import { ArrowLeft, PenSquare, Plus, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { socialDb, type BlogPost } from '@/lib/social/db';
+import { rewardContribution } from '@/lib/economy/reward';
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -39,8 +40,11 @@ export default function BlogPage() {
         author_id: uid, slug, title: title.trim(), body: body.trim(), published: true, published_at: new Date().toISOString(),
       });
       if (error) throw error;
+      const awarded = await rewardContribution(socialDb() as never, {
+        kind: 'blog', surface: 'community', facet: 'maker', title: `Published: ${title.trim()}`, mly: 15,
+      });
       setTitle(''); setBody(''); setComposing(false);
-      toast.success('Published!');
+      toast.success(awarded > 0 ? `Published! +${awarded} $MLY.` : 'Published!');
       load();
     } catch { toast.error('Could not publish.'); }
     finally { setSaving(false); }
