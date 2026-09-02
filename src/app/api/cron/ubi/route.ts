@@ -1,6 +1,7 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
 import { logAudit } from '@/lib/security/audit';
+import { captureError, log } from '@/lib/observability/logger';
 import { NextResponse } from 'next/server';
 
 /**
@@ -40,8 +41,9 @@ export async function GET(request: Request) {
         ...(rpcResult as any),
       });
     }
-  } catch {
-    // Fall back to direct batch handler if RPC is pending migration
+  } catch (err) {
+    // RPC unavailable or failed — fall back to direct batch handler, but record why.
+    captureError(err, { route: '/api/cron/ubi', stage: 'rpc_atomic', fallback: 'batch' });
   }
 
   // Fallback: Direct batch distribution
@@ -56,6 +58,7 @@ export async function GET(request: Request) {
     .or(`last_ubi_at.is.null,last_ubi_at.lt.${sixDaysAgo}`);
 
   if (fetchError) {
+    captureError(fetchError, { route: '/api/cron/ubi', stage: 'fetch_eligible' });
     return NextResponse.json({ error: fetchError.message }, { status: 500 });
   }
 
@@ -154,6 +157,8 @@ export async function GET(request: Request) {
     total_eligible: eligibleWallets.length,
     amount_per_member: WEEKLY_UBI_AMOUNT,
   });
+
+  log.info('cron.ubi.completed', { distributed, errors, total_eligible: eligibleWallets.length });
 
   return NextResponse.json({
     success: true,

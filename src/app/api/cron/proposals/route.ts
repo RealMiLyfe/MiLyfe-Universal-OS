@@ -1,6 +1,7 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
 import { logAudit } from '@/lib/security/audit';
+import { captureError } from '@/lib/observability/logger';
 import { NextResponse } from 'next/server';
 
 /**
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
   const { data, error } = await supabase.rpc('close_expired_proposals');
 
   if (error) {
+    captureError(error, { route: '/api/cron/proposals', stage: 'close_expired_proposals' });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 

@@ -50,11 +50,12 @@ Verified gaps (the actual blockers):
 - [x] Suite grew 30 -> 50 tests, all green
 - Note: withAuth not unit-tested here because it imports next/headers (needs route-level/integration harness); its CSRF + auth logic is covered indirectly and remains a Phase-4+ integration candidate.
 
-### Phase 4 — Observability + operational hardening
-- [ ] Pluggable structured logger + error capture used by API/cron
-- [ ] Health check endpoint
-- [ ] Document required env vars
-- [ ] Success: typecheck + tests green
+### Phase 4 — Observability + operational hardening (DONE)
+- [x] `src/lib/observability/logger.ts`: structured single-line JSON logger + `captureError` with pluggable, Sentry-ready `registerErrorSink` (no hard dependency). LOG_LEVEL aware.
+- [x] Wired `captureError`/`log` into cron routes (ubi RPC-fallback + 500 paths, decay, proposals) — previously errors were swallowed silently.
+- [x] `GET /api/health` — unauthenticated up/down probe with DB connectivity check (200 ok / 503 degraded).
+- [x] Documented LOG_LEVEL + Sentry sink in .env.local.example.
+- [x] Added logger tests (5). Success: typecheck 0, lint 0, tests 55/55, build 0.
 
 ### Phase 5 — Reconcile docs + final verification
 - [ ] Fix incorrect status docs (table counts, bad versions, missing file refs)
@@ -66,3 +67,4 @@ Verified gaps (the actual blockers):
 - 2026-09-02: Phase 1 complete. Both CI workflows fixed; full pipeline green locally. Committed.
 - 2026-09-02: Phase 2 complete. audit_log migration added (fixed silent-failure bug), validation + audit logging expanded. Committed.
 - 2026-09-02: Phase 3 complete. Added 20 tests for crypto, cron auth, rate limiting (30 -> 50). Committed.
+- 2026-09-02: Phase 4 complete. Structured logger + error capture + /api/health. Tests 50 -> 55. Committed.

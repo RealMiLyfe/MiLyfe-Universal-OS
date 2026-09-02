@@ -1,6 +1,7 @@
 import { createServiceSupabase } from '@/lib/supabase/server';
 import { isAuthorizedCronRequest } from '@/lib/security/cron';
 import { logAudit } from '@/lib/security/audit';
+import { captureError } from '@/lib/observability/logger';
 import { NextResponse } from 'next/server';
 
 /**
@@ -34,6 +35,7 @@ export async function GET(request: Request) {
     .lt('last_decay_at', oneDayAgo);
 
   if (fetchError) {
+    captureError(fetchError, { route: '/api/cron/decay', stage: 'fetch_standings' });
     return NextResponse.json({ error: fetchError.message }, { status: 500 });
   }
 
