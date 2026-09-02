@@ -20,6 +20,7 @@ import {
   GraduationCap,
   Store,
   Shield,
+  Scale,
   Bot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -40,6 +41,7 @@ const NAV_ITEMS = [
   { href: '/forum', label: 'Forum', icon: MessageCircle },
   { href: '/health', label: 'Health', icon: Heart },
   { href: '/safety', label: 'Safety', icon: Shield },
+  { href: '/justice/app/home', label: 'Justice', icon: Scale },
   { href: '/treasury', label: 'Treasury', icon: Landmark },
   { href: '/transparency', label: 'Transparency', icon: BookOpen },
   { href: '/wiki', label: 'Wiki', icon: BookOpen },
