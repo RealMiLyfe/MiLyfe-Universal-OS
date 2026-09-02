@@ -39,17 +39,17 @@ export default function CaseWorkspacePage({ params }: { params: Promise<{ id: st
   }, [id]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
 
       <div>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="page-title">{caseRow?.title || 'Case'}</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">{caseRow?.title || 'Case'}</h1>
           {caseRow && <Badge variant="harbor">{caseRow.status}</Badge>}
         </div>
-        <p className="page-subtitle">Your private case workspace</p>
+        <p className="text-gray-500">Your private case workspace</p>
       </div>
 
       <LegalDisclaimer />
@@ -118,7 +118,7 @@ export default function CaseWorkspacePage({ params }: { params: Promise<{ id: st
           )}
 
           {tab === 'filings' && (
-            <div className="rounded-xl border border-gray-100 bg-surface-light p-5 text-sm text-gray-600">
+            <div className="rounded-xl border border-gray-100 bg-gray-50 p-5 text-sm text-gray-600">
               <FileText className="mb-2 h-6 w-6 text-harbor-400" />
               <p className="font-medium text-harbor-800">No filings yet.</p>
               <p className="mt-1">

@@ -52,7 +52,7 @@ export default function DefenderPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -60,9 +60,9 @@ export default function DefenderPage() {
       <div>
         <div className="flex items-center gap-2">
           <Scale className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Defend Your Rights</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Defend Your Rights</h1>
         </div>
-        <p className="page-subtitle">Answer a few questions. We check every relevant amendment.</p>
+        <p className="text-gray-500">Answer a few questions. We check every relevant amendment.</p>
       </div>
 
       <LegalDisclaimer />

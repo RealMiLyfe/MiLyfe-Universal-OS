@@ -32,7 +32,7 @@ export default function CoalitionPage() {
   }, {});
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -40,9 +40,9 @@ export default function CoalitionPage() {
       <div>
         <div className="flex items-center gap-2">
           <Handshake className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Coalition Engine</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Coalition Engine</h1>
         </div>
-        <p className="page-subtitle">United we are unstoppable. One hub, many allies.</p>
+        <p className="text-gray-500">United we are unstoppable. One hub, many allies.</p>
       </div>
 
       <LegalDisclaimer />
@@ -54,7 +54,7 @@ export default function CoalitionPage() {
       ) : (
         Object.entries(byType).map(([type, list]) => (
           <section key={type}>
-            <h2 className="section-header border-b-2 border-mly-500 pb-1">{TYPE_LABEL[type] ?? type}</h2>
+            <h2 className="mb-3 font-semibold text-harbor-800">{TYPE_LABEL[type] ?? type}</h2>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {list.map((p) => (
                 <div key={p.id} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">

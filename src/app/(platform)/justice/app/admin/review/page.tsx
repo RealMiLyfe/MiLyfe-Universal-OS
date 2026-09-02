@@ -27,7 +27,7 @@ export default async function AdminReviewPage() {
 
   if (!isBoard) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 animate-fade-in">
         <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
           <ArrowLeft className="h-4 w-4" /> MiJustice
         </Link>
@@ -56,10 +56,10 @@ export default async function AdminReviewPage() {
       <div>
         <div className="flex items-center gap-2">
           <Gavel className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Advisory Review Console</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Advisory Review Console</h1>
           <Badge variant="mly">Board</Badge>
         </div>
-        <p className="page-subtitle">Agents draft and check. You hold the sign-off.</p>
+        <p className="text-gray-500">Agents draft and check. You hold the sign-off.</p>
       </div>
 
       <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
@@ -75,7 +75,7 @@ export default async function AdminReviewPage() {
       </div>
 
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">AI fleet (self-healing)</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">AI fleet (self-healing)</h2>
         <p className="mt-2 text-xs text-gray-500">
           {justiceProviders().length} provider(s) usable, tried in order with
           automatic failover. Local Ollama is the keyless fallback.
@@ -93,7 +93,7 @@ export default async function AdminReviewPage() {
       </section>
 
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">The AI agents you supervise</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">The AI agents you supervise</h2>
         <div className="mt-4 space-y-2">
           {AGENTS.map((a) => (
             <div key={a.role} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
@@ -105,7 +105,7 @@ export default async function AdminReviewPage() {
         </div>
       </section>
 
-      <div className="rounded-xl border border-gray-100 bg-surface-light p-4 text-sm text-gray-600">
+      <div className="rounded-xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-600">
         <p className="font-medium text-harbor-800">Review queue</p>
         <p className="mt-1">
           The pending-template and flagged-output queues populate as templates are

@@ -4,10 +4,9 @@ import {
   Scale, ShieldAlert, BookOpen, Unlock, Home as HomeIcon, Users, Eraser,
   Megaphone, Mountain, Handshake, Banknote, GraduationCap, Coins, DoorClosed,
   Eye, Baby, HeartPulse, Medal, Users2, Rainbow, Stethoscope, ClipboardCheck,
-  Landmark, Siren, Globe, ArrowRight,
+  Landmark, Siren, Globe,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { LegalDisclaimer } from '@/components/justice/legal-disclaimer';
 import { StatusBadge } from '@/components/justice/module-scaffold';
 import { MODULES, type ModuleDef } from '@/lib/justice/data';
@@ -39,42 +38,44 @@ function moduleHref(m: ModuleDef): string {
 
 export default function JusticeHomePage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
+      {/* Greeting */}
       <div>
-        <div className="flex items-center gap-2">
-          <h1 className="page-title">MiJustice</h1>
-          <Badge variant="live">Duval County</Badge>
-        </div>
-        <p className="page-subtitle">The People&rsquo;s Constitutional War Room</p>
+        <h1 className="text-2xl font-bold text-harbor-800">The War Room ✊</h1>
+        <p className="text-gray-500">Constitutional tools for the people. Duval County.</p>
       </div>
 
       <LegalDisclaimer />
 
-      {/* Quick actions */}
+      {/* Glass stat / quick-action row — matches dashboard */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <QuickAction href="/justice/app/encounter" icon={ShieldAlert} label="Encounter Mode" urgent />
-        <QuickAction href="/justice/app/defender" icon={Scale} label="Defend a Case" />
-        <QuickAction href="/justice/rights" icon={BookOpen} label="Know Your Rights" />
-        <QuickAction href="/justice/app/tracker" icon={Users} label="Impact Tracker" />
+        <QuickAction href="/justice/app/encounter" icon={ShieldAlert} label="Encounter Mode"
+          tint="from-mly-50/80 to-mly-100/40 border-mly-200/50" ic="text-mly-600" />
+        <QuickAction href="/justice/app/defender" icon={Scale} label="Defend a Case"
+          tint="from-teal-50/80 to-teal-100/40 border-teal-200/50" ic="text-teal-600" />
+        <QuickAction href="/justice/rights" icon={BookOpen} label="Know Your Rights"
+          tint="from-harbor-50/80 to-harbor-100/40 border-harbor-200/50" ic="text-harbor-600" />
+        <QuickAction href="/justice/app/tracker" icon={Users} label="Impact Tracker"
+          tint="from-purple-50/80 to-purple-100/40 border-purple-200/50" ic="text-purple-600" />
       </div>
 
-      {/* All tools, grouped */}
+      {/* Modules, grouped as a bento grid */}
       {GROUPS.map(({ key, label }) => {
         const mods = MODULES.filter((m) => m.group === key);
         if (mods.length === 0) return null;
         return (
           <section key={key}>
-            <h2 className="section-header border-b-2 border-mly-500 pb-1">{label}</h2>
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <h2 className="mb-3 font-semibold text-harbor-800">{label}</h2>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {mods.map((m) => {
                 const Icon = ICONS[m.icon] ?? Scale;
                 return (
                   <Link
                     key={m.slug}
                     href={moduleHref(m)}
-                    className="flex items-start gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+                    className="group flex items-start gap-3 rounded-xl border border-gray-100 bg-white p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-teal-500/10"
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-50">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-teal-50">
                       <Icon className="h-5 w-5 text-teal-600" aria-hidden="true" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -84,7 +85,6 @@ export default function JusticeHomePage() {
                       </div>
                       <p className="text-sm text-gray-500">{m.tagline}</p>
                     </div>
-                    <ArrowRight className="h-5 w-5 shrink-0 self-center text-gray-300" aria-hidden="true" />
                   </Link>
                 );
               })}
@@ -93,8 +93,10 @@ export default function JusticeHomePage() {
         );
       })}
 
-      <div className="rounded-xl border border-teal-100 bg-teal-50 p-4 text-center">
-        <p className="text-sm text-harbor-800">
+      {/* Community pulse card — matches dashboard */}
+      <div className="relative overflow-hidden rounded-xl border border-gray-100 bg-gradient-to-r from-harbor-50/80 via-teal-50/30 to-mly-50/50 p-5 text-center backdrop-blur-sm">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,193,174,0.05)_1px,transparent_0)] bg-[size:24px_24px]" aria-hidden="true" />
+        <p className="relative text-sm text-harbor-800">
           MiJustice is part of MiLyfe &mdash; owned by the people. 100% free, open source.
         </p>
       </div>
@@ -103,24 +105,20 @@ export default function JusticeHomePage() {
 }
 
 function QuickAction({
-  href, icon: Icon, label, urgent,
+  href, icon: Icon, label, tint, ic,
 }: {
   href: string;
   icon: LucideIcon;
   label: string;
-  urgent?: boolean;
+  tint: string;
+  ic: string;
 }) {
   return (
     <Link
       href={href}
-      className={
-        'flex flex-col items-center justify-center gap-2 rounded-xl border p-4 text-center shadow-sm transition-all hover:shadow-md ' +
-        (urgent
-          ? 'border-mly-300 bg-mly-50 hover:bg-mly-100'
-          : 'border-gray-100 bg-white hover:bg-gray-50')
-      }
+      className={`group relative overflow-hidden rounded-xl border bg-gradient-to-br ${tint} p-4 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg`}
     >
-      <Icon className={'h-6 w-6 ' + (urgent ? 'text-mly-600' : 'text-teal-600')} aria-hidden="true" />
+      <Icon className={`mx-auto mb-1.5 h-5 w-5 ${ic}`} aria-hidden="true" />
       <span className="text-xs font-semibold text-harbor-800">{label}</span>
     </Link>
   );

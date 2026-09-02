@@ -24,7 +24,7 @@ export default function ClassActionsPage() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -32,18 +32,18 @@ export default function ClassActionsPage() {
       <div>
         <div className="flex items-center gap-2">
           <Scale className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Class Action War Room</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Class Action War Room</h1>
         </div>
-        <p className="page-subtitle">Not one lawsuit. A machine that files them all.</p>
+        <p className="text-gray-500">Not one lawsuit. A machine that files them all.</p>
       </div>
 
       <LegalDisclaimer />
 
       <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">How a class action gets certified</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">How a class action gets certified</h2>
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {RULE23.map((r) => (
-            <div key={r} className="rounded-lg bg-surface-light p-3 text-center">
+            <div key={r} className="rounded-lg bg-gray-50 p-3 text-center">
               <p className="text-sm font-bold text-harbor-800">{r}</p>
             </div>
           ))}
@@ -52,7 +52,7 @@ export default function ClassActionsPage() {
       </div>
 
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">The People vs. The United States</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">The People vs. The United States</h2>
         {loading ? (
           <div className="mt-4 h-24 animate-pulse rounded-xl bg-gray-100" />
         ) : (

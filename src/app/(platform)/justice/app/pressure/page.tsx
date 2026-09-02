@@ -57,7 +57,7 @@ export default function PressurePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -65,16 +65,16 @@ export default function PressurePage() {
       <div>
         <div className="flex items-center gap-2">
           <Megaphone className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Political Pressure Engine</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Political Pressure Engine</h1>
         </div>
-        <p className="page-subtitle">When the courts won&rsquo;t listen, the people make them listen.</p>
+        <p className="text-gray-500">When the courts won&rsquo;t listen, the people make them listen.</p>
       </div>
 
       <LegalDisclaimer />
 
       {/* Petitions */}
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">Petitions</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">Petitions</h2>
         {loading ? (
           <div className="mt-4 h-24 animate-pulse rounded-xl bg-gray-100" />
         ) : (
@@ -112,7 +112,7 @@ export default function PressurePage() {
 
       {/* Legislative demands */}
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">The 18 Legislative Demands</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">The 18 Legislative Demands</h2>
         <div className="mt-4 space-y-2">
           {LEGISLATIVE_DEMANDS.map((d, i) => (
             <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-100 bg-white p-3 shadow-sm">

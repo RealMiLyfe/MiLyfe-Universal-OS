@@ -58,7 +58,7 @@ export default function RapidContactsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -66,9 +66,9 @@ export default function RapidContactsPage() {
       <div>
         <div className="flex items-center gap-2">
           <Bell className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Rapid-Response Contacts</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Rapid-Response Contacts</h1>
         </div>
-        <p className="page-subtitle">Who gets alerted when you use Encounter Mode.</p>
+        <p className="text-gray-500">Who gets alerted when you use Encounter Mode.</p>
       </div>
 
       <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">

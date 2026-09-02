@@ -16,7 +16,7 @@ const STEPS = [
 
 export default function ExpungementPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -24,16 +24,16 @@ export default function ExpungementPage() {
       <div>
         <div className="flex flex-wrap items-center gap-2">
           <Eraser className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">Clear Your Record</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Clear Your Record</h1>
           <Badge variant="mly">Florida / Duval</Badge>
         </div>
-        <p className="page-subtitle">Florida sealing &amp; expungement, step by step.</p>
+        <p className="text-gray-500">Florida sealing &amp; expungement, step by step.</p>
       </div>
 
       <LegalDisclaimer />
 
       <div className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">Statutes that govern this</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">Statutes that govern this</h2>
         <ul className="mt-3 space-y-2 text-sm text-harbor-800">
           <li className="flex items-start gap-2">
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-teal-600" />
@@ -47,7 +47,7 @@ export default function ExpungementPage() {
       </div>
 
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">The four steps</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">The four steps</h2>
         <div className="mt-4 space-y-3">
           {STEPS.map((s) => (
             <div key={s.n} className="flex items-start gap-3 rounded-xl border border-gray-100 bg-white p-4 shadow-sm">

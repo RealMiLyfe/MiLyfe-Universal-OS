@@ -25,7 +25,7 @@ export default function IceShieldPage() {
   const complete = CHECKS.every((c) => answers[c.key] != null);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <Link href="/justice/app/home" className="inline-flex items-center gap-1 text-sm text-teal-600 hover:underline">
         <ArrowLeft className="h-4 w-4" /> MiJustice
       </Link>
@@ -33,10 +33,10 @@ export default function IceShieldPage() {
       <div>
         <div className="flex flex-wrap items-center gap-2">
           <Home className="h-6 w-6 text-harbor-800" />
-          <h1 className="page-title">ICE Defense Shield</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">ICE Defense Shield</h1>
           <Badge variant="mly">Preview</Badge>
         </div>
-        <p className="page-subtitle">Nobody gets disappeared. Check the warrant. Know your rights.</p>
+        <p className="text-gray-500">Nobody gets disappeared. Check the warrant. Know your rights.</p>
       </div>
 
       <LegalDisclaimer />

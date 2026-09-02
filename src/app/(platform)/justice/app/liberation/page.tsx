@@ -18,7 +18,7 @@ export default function LiberationPage() {
   return (
     <ModuleScaffold module={m}>
       <section>
-        <h2 className="section-header border-b-2 border-mly-500 pb-1">The four layers</h2>
+        <h2 className="mb-3 font-semibold text-harbor-800">The four layers</h2>
         <div className="mt-4 space-y-3">
           {LAYERS.map((l) => {
             const Icon = l.icon;

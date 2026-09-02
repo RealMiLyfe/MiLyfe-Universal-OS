@@ -95,13 +95,13 @@ export function DefenderReport({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="page-title">Constitutional Analysis</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Constitutional Analysis</h1>
           <Badge variant="live">DRAFT — Not Legal Advice</Badge>
         </div>
-        <p className="page-subtitle">{intake.charges || 'Your case'} &middot; {intake.jurisdiction}</p>
+        <p className="text-gray-500">{intake.charges || 'Your case'} &middot; {intake.jurisdiction}</p>
       </div>
 
       <LegalDisclaimer />
@@ -111,7 +111,7 @@ export function DefenderReport({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-500">Possible issues found</p>
-            <p className="stat-number text-gradient-teal">{violations.length}</p>
+            <p className="text-2xl font-bold tabular-nums text-teal-600">{violations.length}</p>
           </div>
           <Badge variant={CONFIDENCE_VARIANT[confidence]}>{CONFIDENCE_LABEL[confidence]}</Badge>
         </div>
