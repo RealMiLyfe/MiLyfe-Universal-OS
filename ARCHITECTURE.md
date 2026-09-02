@@ -27,7 +27,7 @@ Every architectural decision is subordinate to openness, resilience, and the peo
                                                    ┌──────────▼──────────▼──────┐
                                                    │  Supabase (PostgreSQL)      │
                                                    │  uwozuhmiahytjwfmudia       │
-                                                   │  25 tables, 106 RLS policies│
+                                                   │  48 tables, 108 RLS policies│
                                                    └────────────────────────────┘
 ```
 
@@ -68,9 +68,9 @@ Every architectural decision is subordinate to openness, resilience, and the peo
 
 ### Database
 
-- **25 tables** covering profiles, wallets, transactions, governance, forum, learning, quests, marketplace, safety, health, news, connections, and more.
-- **106 Row-Level Security policies** — access is enforced at the database, not just the application layer. User data is only accessible to the user and people they explicitly share with.
-- **13 migrations** — schema is versioned, reproducible, and idempotent.
+- **48 tables** covering profiles, wallets, transactions, governance, forum, learning, quests, marketplace, safety, health, news, connections, audit log, and more.
+- **108 Row-Level Security policies** — access is enforced at the database, not just the application layer. User data is only accessible to the user and people they explicitly share with.
+- **14 migrations** — schema is versioned, reproducible, and idempotent.
 - **Client-side encryption** for the safety journal — the server stores only ciphertext. The private key never leaves the user's device.
 
 ### Security posture

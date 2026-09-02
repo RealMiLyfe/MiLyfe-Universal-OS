@@ -41,8 +41,8 @@ Built with **$0 in outside capital** over **11 years** of independent work. Not 
 |---|---|
 | **Cost to build** | $0 (every tool is free and open source) |
 | **Time** | 11 years |
-| **Routes** | 35 production routes |
-| **Database** | 25 tables · 106 Row-Level Security policies |
+| **Routes** | 38 pages · 20 API routes |
+| **Database** | 48 tables · 108 Row-Level Security policies |
 | **Corporate equivalent** | ~$3M+ |
 | **Live at** | [milyfe.fun](https://milyfe.fun) |
 
@@ -133,7 +133,7 @@ cp .env.local.example .env.local
 npm install && npm run dev
 ```
 
-**Database setup:** copy the contents of `scripts/new-project-setup.sql` into your Supabase SQL Editor and run it. It creates all 25 tables, RLS policies, triggers, and seeds the treasury.
+**Database setup:** apply the migrations in `supabase/migrations/` (the canonical, versioned schema — 48 tables, 108 RLS policies). The `scripts/new-project-setup.sql` bundle is a convenience snapshot; when in doubt, the numbered migrations are the source of truth.
 
 Full setup: [CONTRIBUTING.md](CONTRIBUTING.md)
 

@@ -57,10 +57,19 @@ Verified gaps (the actual blockers):
 - [x] Documented LOG_LEVEL + Sentry sink in .env.local.example.
 - [x] Added logger tests (5). Success: typecheck 0, lint 0, tests 55/55, build 0.
 
-### Phase 5 — Reconcile docs + final verification
-- [ ] Fix incorrect status docs (table counts, bad versions, missing file refs)
-- [ ] Full build + typecheck + lint + test
-- [ ] Mark roadmap 100%
+### Phase 5 — Reconcile docs + final verification (DONE)
+- [x] Corrected README.md + ARCHITECTURE.md: "25 tables / 106 policies / 35 routes" -> accurate **48 tables · 108 RLS policies · 38 pages · 20 API routes · 14 migrations**.
+- [x] Clarified DB setup: migrations are the source of truth (new-project-setup.sql was a stale 42-table snapshot).
+- [x] Correction to my own earlier critique: **Next.js 16 DOES exist** (latest 16.3.4). POST_AUDIT_ACTIONS.md was accurate; left unchanged.
+- [x] Final verification: typecheck 0, lint 0 errors, tests 55/55, build 0.
+
+## Final Status: 100% — all phases complete
+
+Numbers now reproducible from the repo:
+- Tests: 55 passing (was 30)
+- API routes: 20; pages: 38
+- DB: 48 tables, 108 RLS policies, 14 migrations (added audit_log)
+- CI: both workflows enforce typecheck + lint + test + build (were broken/partial)
 
 ## Progress Log
 - 2026-09-02: Phase 0 started. Baseline captured.
@@ -68,3 +77,4 @@ Verified gaps (the actual blockers):
 - 2026-09-02: Phase 2 complete. audit_log migration added (fixed silent-failure bug), validation + audit logging expanded. Committed.
 - 2026-09-02: Phase 3 complete. Added 20 tests for crypto, cron auth, rate limiting (30 -> 50). Committed.
 - 2026-09-02: Phase 4 complete. Structured logger + error capture + /api/health. Tests 50 -> 55. Committed.
+- 2026-09-02: Phase 5 complete. Docs reconciled to real counts; final verify green. Roadmap 100%.
