@@ -16,6 +16,7 @@ export function LegalPage({ markdown }: { markdown: string }) {
             <span className="text-lg">MiLyfe</span>
           </Link>
           <nav className="flex gap-4 text-sm text-muted-foreground">
+            <Link href="/receipts" className="hover:text-foreground">Receipts</Link>
             <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
             <Link href="/terms" className="hover:text-foreground">Terms</Link>
             <Link href="/security" className="hover:text-foreground">Security</Link>

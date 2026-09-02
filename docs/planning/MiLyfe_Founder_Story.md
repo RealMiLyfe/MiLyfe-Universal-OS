@@ -1,6 +1,8 @@
 # The MiLyfe Story
 ## From Trash Cans to City Hall
 
+> **The proof is public.** The work was built in the open and timestamped on a blockchain in 2017. See [**The Receipts**](https://milyfe.fun/receipts) — verify it yourself.
+
 ---
 
 ## THE TIMELINE

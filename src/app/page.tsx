@@ -271,6 +271,7 @@ export default async function LandingPage() {
  <div>
  <h3 className="text-sm font-semibold text-harbor-800 mb-3">Community</h3>
  <ul className="space-y-2 text-sm text-gray-500 ">
+ <li><Link href="/receipts" className="hover:text-teal-600 transition-colors">The Receipts</Link></li>
  <li><a href="https://github.com/RealMiLyfe/MiLyfe-Universal-OS" target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 transition-colors inline-flex items-center gap-1"><Github className="h-3.5 w-3.5" /> Source Code</a></li>
  <li><a href="https://discord.gg/b4hkHUqU6N" target="_blank" rel="noopener noreferrer" className="hover:text-teal-600 transition-colors">Discord</a></li>
  <li><Link href="/forum" className="hover:text-teal-600 transition-colors">Forum</Link></li>
