@@ -18,7 +18,7 @@ Every architectural decision is subordinate to openness, resilience, and the peo
 ┌─────────────────────────────┐  ┌──────────────────────┐  ┌──────────────────────────┐
 │  milyfe.fun                 │  │  mijaxx.fun           │  │  campaign-api.milyfe.fun │
 │  Civic Platform             │  │  Mayor Campaign Site  │  │  War Room API            │
-│  Next.js 14 + Supabase      │  │  Static HTML/CSS/JS   │  │  FastAPI + Python        │
+│  Next.js 16 + Supabase      │  │  Static HTML/CSS/JS   │  │  FastAPI + Python        │
 │  Vercel (global edge)       │  │  Cloudflare Tunnel    │  │  Cloudflare Tunnel       │
 └─────────────────────────────┘  └──────────────────────┘  └──────────────────────────┘
               │                              │                           │
@@ -35,7 +35,7 @@ Every architectural decision is subordinate to openness, resilience, and the peo
 
 ## 1. Civic Platform (`milyfe.fun`)
 
-**Framework:** Next.js 14 (App Router) + React 18 + TypeScript  
+**Framework:** Next.js 16 (App Router) + React 19 + TypeScript  
 **Hosting:** Vercel (global edge deployment)  
 **Database/Auth:** Supabase (PostgreSQL + Row-Level Security + Supabase Auth)
 

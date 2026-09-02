@@ -78,3 +78,26 @@ Numbers now reproducible from the repo:
 - 2026-09-02: Phase 3 complete. Added 20 tests for crypto, cron auth, rate limiting (30 -> 50). Committed.
 - 2026-09-02: Phase 4 complete. Structured logger + error capture + /api/health. Tests 50 -> 55. Committed.
 - 2026-09-02: Phase 5 complete. Docs reconciled to real counts; final verify green. Roadmap 100%.
+
+## Phase 6 — Dependency security + Next.js 16 upgrade (DONE, 2026-09-02)
+
+Goal: make it work, secure, and optimal — not just "builds".
+
+- Dependency vulnerabilities: **13 (1 critical, 6 high) -> 4 low**.
+  - vitest 2 -> 4 removed the critical + dev-only vite/esbuild advisories.
+  - Next.js 14 -> 16 + React 18 -> 19 removed the shipped-code Next/postcss highs.
+  - Remaining 4 low are the `cookie` transitive dep under supabase; the only fix
+    upgrades supabase to a version that reintroduces `never` type regressions, so
+    supabase is pinned at the known-good 2.45.4 / 0.5.1.
+- Breaking changes handled: async `cookies()` (createServerSupabase now async;
+  await added at all 94 call sites / 52 files), `next lint` removal (moved to
+  eslint 9 flat config), framer-motion bumped for React 19 peer support.
+- Runtime verified against a running production server (Next 16.3.4):
+  - `/` -> 200; `/api/health` -> 503 "degraded" with placeholder DB (probe works);
+  - protected API -> 401; cron without/with-wrong secret -> 401; correct secret
+    passes auth (500 only due to placeholder DB); CSRF/unauth POST rejected;
+    security headers (HSTS, X-Frame-Options DENY, nosniff, Referrer-Policy) present.
+- Final gate (fresh `npm ci`): typecheck 0, lint 0 errors, tests 55/55, build 0.
+
+Note/correction: Next.js 16 DOES exist (16.3.4 installed). My first-message claim
+that "there is no Next.js 16" was based on stale knowledge and was wrong.

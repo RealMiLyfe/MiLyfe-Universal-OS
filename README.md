@@ -106,7 +106,7 @@ No founder mint. No pre-mine. No APY. No "investment in our team."
 
 | Layer | Choice | Why |
 |---|---|---|
-| **App** | Next.js 14 (App Router) + React 18 + TypeScript | Production-ready, self-hostable |
+| **App** | Next.js 16 (App Router) + React 19 + TypeScript | Production-ready, self-hostable |
 | **Database** | PostgreSQL via Supabase | RLS at the DB, not the app layer |
 | **Auth** | Supabase Auth | Open source, no vendor lock-in |
 | **Styling** | Tailwind CSS + custom design tokens | Fast, consistent, accessible |
