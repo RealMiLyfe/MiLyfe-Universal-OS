@@ -10,6 +10,34 @@ import { mediaDb, toTrack, type MediaItem } from '@/lib/media/db';
 
 const GENRES = ['Pop', 'Hip-Hop', 'R&B', 'Gospel', 'Jazz', 'Rock', 'Electronic', 'Podcast', 'Talk'];
 
+/**
+ * Built-in demo media so the Media page and the global Vibe Bar are visible
+ * before any real content exists (or before migrations run). Real, freely
+ * hosted samples. Replaced by real DB media once creators upload.
+ */
+const DEMO_MEDIA: MediaItem[] = [
+  {
+    id: 'demo-audio-1', channel_id: null, kind: 'audio', title: 'Sample Vibe (Demo)',
+    description: null, cover_url: null, source_type: 'mp4',
+    source_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+    duration_seconds: 372, genres: ['Demo'], tags: [], visibility: 'public',
+    premium: false, price_mly: 0, play_count: 0, like_count: 0, status: 'ready', channelName: 'MiLyfe Radio',
+  },
+  {
+    id: 'demo-audio-2', channel_id: null, kind: 'audio', title: 'Evening Set (Demo)',
+    description: null, cover_url: null, source_type: 'mp4',
+    source_url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    duration_seconds: 425, genres: ['Demo'], tags: [], visibility: 'public',
+    premium: false, price_mly: 0, play_count: 0, like_count: 0, status: 'ready', channelName: 'MiLyfe Radio',
+  },
+  {
+    id: 'demo-video-1', channel_id: null, kind: 'video', title: 'Welcome to MiLyfe (Demo)',
+    description: null, cover_url: null, source_type: 'youtube', source_url: 'aqz-KE-bpKQ',
+    duration_seconds: 60, genres: ['Demo'], tags: [], visibility: 'public',
+    premium: false, price_mly: 0, play_count: 0, like_count: 0, status: 'ready', channelName: 'MiLyfe Radio',
+  },
+];
+
 export default function MediaHomePage() {
   const { playTrack } = useAppStore();
   const [items, setItems] = useState<MediaItem[]>([]);
@@ -25,7 +53,8 @@ export default function MediaHomePage() {
       const mapped: MediaItem[] = (data ?? []).map((d: MediaItem & { media_channels?: { name: string } }) => ({
         ...d, channelName: d.media_channels?.name,
       }));
-      setItems(mapped);
+      // Fall back to built-in demo media so the page + Vibe Bar are never empty.
+      setItems(mapped.length > 0 ? mapped : DEMO_MEDIA);
       setLoading(false);
     })();
   }, []);
