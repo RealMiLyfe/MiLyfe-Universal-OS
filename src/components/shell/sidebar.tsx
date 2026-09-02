@@ -21,6 +21,7 @@ import {
   Store,
   Shield,
   Scale,
+  Sparkles,
   Bot,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -35,6 +36,7 @@ const NAV_ITEMS = [
   { href: '/mi', label: 'Mi', icon: Bot },
   { href: '/connect', label: 'Connect', icon: Users },
   { href: '/rewards', label: 'Rewards', icon: Gift },
+  { href: '/contributions', label: 'Impact', icon: Sparkles },
   { href: '/standing', label: 'Standing', icon: Star },
   { href: '/news', label: 'News', icon: Newspaper },
   { href: '/forum', label: 'Forum', icon: MessageCircle },
