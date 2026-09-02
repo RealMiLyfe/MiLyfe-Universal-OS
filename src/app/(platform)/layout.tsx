@@ -10,6 +10,7 @@ import { MiBubble } from '@/components/mi/mi-bubble';
 import { CommandSearch } from '@/components/shell/command-search';
 import { DataCacher } from '@/components/shell/data-cacher';
 import { VibeBar } from '@/components/media/vibe-bar';
+import { InstallPrompt } from '@/components/shell/install-prompt';
 import { Toaster } from 'sonner';
 
 /**
@@ -63,6 +64,9 @@ export default function PlatformLayout({
 
       {/* Global persistent media player (the Vibe Bar) */}
       <VibeBar />
+
+      {/* PWA install prompt */}
+      <InstallPrompt />
 
       {/* Mi ambient bubble */}
       <MiBubble />
