@@ -9,7 +9,7 @@ const receipts = `# The Receipts
 
 Long before it was called MiLyfe, the mission was already written down: a people-owned platform of modules, a marketplace with no middlemen, decisions made by community consensus, open source — built to **give people back their time.**
 
-I posted it publicly on the Steemit blockchain as I built it, under my early handle **@dealfinder2010** — signed with my name, Carnell Lee. I sold both of my cars, worked out of a small office every single day, and documented the whole thing in the open. Those posts are still there, timestamped on-chain. Read them:
+I posted it publicly on the Steemit blockchain as I built it, signed with my name, Carnell Lee. I sold both of my cars, worked out of a small office every single day, and documented the whole thing in the open. Those posts are still there, timestamped on-chain. Read them:
 
 - [**YuRight — the vision and direction**](https://steemit.com/blockchain/@dealfinder2010/come-be-a-part-of-the-journey-open-this-to-catch-up-on-the-now-please-share-and-upvote-thanks) — a platform of modules, an on-demand marketplace that removes the middlemen, and a decentralized app "controlled by a consensus vote based on the contribution of the contributors... because *The People* are the ones making the decision." Open source. Non-profit. Signed *Carnell Lee.*
 - [**Quantum Economic Development w/ a User Interface**](https://steemit.com/blockchain/@dealfinder2010/yuright-quantum-economic-development-w-a-user-interface) — the platform-of-apps concept, modules and libraries, GitHub links, the whole idea: *"advance the industry by giving people back time."*
