@@ -30,6 +30,9 @@ The coherent build design + session handoff for this codebase. Read in order.
 - **05-WHATS-LEFT.md** — what remains (ops + human gates; NOT unbuilt features).
 - **06-DEPLOY-CHECKLIST.md** — launch runbook: env vars, DB, cron registration,
   deploy + domain, and the human/legal + external-infra gates.
+- **07-INFRA-PILLARS-DESIGN.md** — design (not yet built) for the four core-infra
+  pillars an audit found buggy/missing: offline-sync replay fix, Mi AI fleet
+  unification, mesh networking (WebRTC/CRDT), and E2EE messaging.
 - **SESSION-RECAP.md** — everything built this session (paste as "what we did").
 - **NEXT-SESSION-PROMPT.md** — (1) paste-ready prompt to continue here;
   (2) generic build spec + tech/components for another agent to build generically.
