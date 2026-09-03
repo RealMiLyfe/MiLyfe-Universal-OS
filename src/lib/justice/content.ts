@@ -163,7 +163,7 @@ export const JUSTICE_MODULES: JusticeModule[] = [
   { slug: 'defender', title: 'Constitutional Defender', tagline: 'Scan a charge against the Constitution.', icon: 'Scale', phase: 'coming_soon', group: 'defense' },
   { slug: 'liberation', title: 'Liberation Engine', tagline: 'Fight to free the wrongly held.', icon: 'Unlock', phase: 'coming_soon', group: 'liberation' },
   { slug: 'ice-shield', title: 'ICE Defense Shield', tagline: 'Warrant checker + rapid response.', icon: 'Home', phase: 'coming_soon', group: 'defense' },
-  { slug: 'class-actions', title: 'Class Action War Room', tagline: 'Match your case to the fight.', icon: 'Users', phase: 'coming_soon', group: 'liberation' },
+  { slug: 'class-actions', title: 'Class Actions', tagline: 'Match your case to the fight.', icon: 'Users', phase: 'coming_soon', group: 'liberation' },
   { slug: 'expungement', title: 'Clear Your Record', tagline: 'Florida sealing & expungement help.', icon: 'Eraser', phase: 'coming_soon', group: 'liberation' },
   { slug: 'pressure', title: 'Political Pressure', tagline: 'Petitions, scorecards, demands.', icon: 'Megaphone', phase: 'coming_soon', group: 'pressure' },
 ];

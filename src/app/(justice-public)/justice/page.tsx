@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { JUSTICE_MODULES, LAUNCH_COVERAGE } from '@/lib/justice/content';
 
 export const metadata: Metadata = {
-  title: 'MiJustice — The People\u2019s Constitutional War Room',
+  title: 'MiJustice — The People\u2019s Constitutional Defense',
   description:
     'A free, open-source, AI-powered constitutional justice OS. Know your rights, defend your case, and connect to free legal help. Part of MiLyfe. 100% free.',
 };
@@ -42,7 +42,7 @@ export default function JusticeLandingPage() {
       <header className="relative overflow-hidden bg-gradient-to-br from-teal-50/80 via-white to-mly-50/50 px-4 py-16 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,193,174,0.06)_1px,transparent_0)] bg-[size:24px_24px]" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl">
-          <Link href="/" className="mx-auto mb-5 block w-fit" aria-label="MiLyfe home">
+          <Link href="/" className="mx-auto mb-2 block w-fit" aria-label="MiLyfe home">
             <Image
               src="/logo.png"
               alt="MiLyfe"
@@ -52,11 +52,9 @@ export default function JusticeLandingPage() {
               className="mx-auto h-10 w-auto object-contain"
             />
           </Link>
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/20">
-            <Scale className="h-10 w-10 text-white" aria-hidden="true" />
-          </div>
+          <p className="mb-6 text-2xl font-bold tracking-tight text-harbor-800">MiJustice</p>
           <span className="inline-block rounded-full border border-teal-200/60 bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-teal-700 backdrop-blur-sm">
-            The People&rsquo;s Constitutional War Room &middot; Free Forever
+            The People&rsquo;s Constitutional Defense &middot; Free Forever
           </span>
           <h1 className="mt-5 text-3xl font-bold leading-tight text-harbor-800 md:text-5xl">
             The System Isn&rsquo;t Broken.{' '}
@@ -69,7 +67,7 @@ export default function JusticeLandingPage() {
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/login?next=/justice/app/home">
-              <Button variant="harbor" size="lg" className="w-full sm:w-auto">Enter the War Room</Button>
+              <Button variant="harbor" size="lg" className="w-full sm:w-auto">Enter MiJustice</Button>
             </Link>
             <Link href="/signup?next=/justice/app/home">
               <Button variant="outline" size="lg" className="w-full sm:w-auto">Create a Free Account</Button>
@@ -183,7 +181,7 @@ export default function JusticeLandingPage() {
         <section className="rounded-xl border border-teal-200/50 bg-gradient-to-br from-teal-50/80 to-teal-100/40 p-8 text-center backdrop-blur-sm">
           <h2 className="text-2xl font-bold text-harbor-800">Ready to Remember Who You Are?</h2>
           <p className="mx-auto mt-2 max-w-xl text-gray-600">
-            One MiLyfe login opens the whole war room. No cost. No gatekeeping.
+            One MiLyfe login opens every MiJustice tool. No cost. No gatekeeping.
           </p>
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/signup?next=/justice/app/home"><Button variant="harbor" size="lg" className="w-full sm:w-auto">Get Started Free</Button></Link>

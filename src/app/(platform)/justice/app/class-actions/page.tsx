@@ -32,7 +32,7 @@ export default function ClassActionsPage() {
       <div>
         <div className="flex items-center gap-2">
           <Scale className="h-6 w-6 text-harbor-800" />
-          <h1 className="text-2xl font-bold text-harbor-800">Class Action War Room</h1>
+          <h1 className="text-2xl font-bold text-harbor-800">Class Actions</h1>
         </div>
         <p className="text-gray-500">Not one lawsuit. A machine that files them all.</p>
       </div>

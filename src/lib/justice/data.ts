@@ -31,7 +31,7 @@ export const MODULES: ModuleDef[] = [
   { slug: 'sovereignty', num: 4, title: 'Native Sovereignty', tagline: 'The only true birthright; the supreme treaties.', icon: 'Mountain', group: 'network', status: 'coming_soon',
     purpose: 'Document and litigate treaty violations; tribal sovereignty predates and is acknowledged by the Constitution.',
     does: ['Document broken treaties', 'Connect to tribal legal orgs (NARF)', 'Amplify tribal voices', 'Public education on true history'] },
-  { slug: 'class-actions', num: 5, title: 'Class Action War Room', tagline: 'Match your case to the fight.', icon: 'Users', group: 'liberation', status: 'preview',
+  { slug: 'class-actions', num: 5, title: 'Class Actions', tagline: 'Match your case to the fight.', icon: 'Users', group: 'liberation', status: 'preview',
     purpose: 'Not one lawsuit — a machine that files them all. Match your story to the right class action.',
     does: ['Categorize your case', 'Check Rule 23 factors', 'Build evidence packages', 'Coordinate all 20 lawsuits'] },
   { slug: 'knowledge', num: 6, title: "The People's Knowledge Base", tagline: 'You are the power. Remember it.', icon: 'BookOpen', group: 'knowledge', status: 'available',

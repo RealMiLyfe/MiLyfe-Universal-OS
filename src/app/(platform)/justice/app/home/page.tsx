@@ -13,7 +13,7 @@ import { MODULES, type ModuleDef } from '@/lib/justice/data';
 
 export const metadata: Metadata = {
   title: 'MiJustice',
-  description: 'The People\u2019s Constitutional War Room.',
+  description: 'The People\u2019s Constitutional Defense.',
 };
 
 const ICONS: Record<string, LucideIcon> = {
@@ -41,7 +41,7 @@ export default function JusticeHomePage() {
     <div className="space-y-6 animate-fade-in">
       {/* Greeting */}
       <div>
-        <h1 className="text-2xl font-bold text-harbor-800">The War Room ✊</h1>
+        <h1 className="text-2xl font-bold text-harbor-800">MiJustice ✊</h1>
         <p className="text-gray-500">Constitutional tools for the people. Duval County.</p>
       </div>
 

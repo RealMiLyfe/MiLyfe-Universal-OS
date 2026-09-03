@@ -369,12 +369,12 @@ export async function completeOnboarding(input: z.infer<typeof onboardingSchema>
   revalidatePath('/treasury');
   revalidatePath('/profile');
 
-  // Notify war room of new citizen (fire and forget — never blocks onboarding)
+  // Notify the campaign intake of a new citizen (fire and forget — never blocks onboarding)
   try {
-    const warRoomUrl = process.env.WAR_ROOM_INTAKE_URL;
+    const intakeUrl = process.env.WAR_ROOM_INTAKE_URL;
     const intakeSecret = process.env.WAR_ROOM_INTAKE_SECRET;
-    if (warRoomUrl) {
-      fetch(warRoomUrl, {
+    if (intakeUrl) {
+      fetch(intakeUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -387,7 +387,7 @@ export async function completeOnboarding(input: z.infer<typeof onboardingSchema>
           voter_status: parsed.data.voter_status || 'unknown',
           source: 'platform',
         }),
-      }).catch(() => {}); // Never fail onboarding because of war room
+      }).catch(() => {}); // Never fail onboarding because of the campaign intake
     }
   } catch {}
 
