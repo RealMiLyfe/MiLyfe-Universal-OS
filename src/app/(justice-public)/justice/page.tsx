@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Scale, Shield, BookOpen, Gift, Lock, Globe, ArrowRight, Check, Users,
 } from 'lucide-react';
@@ -41,6 +42,16 @@ export default function JusticeLandingPage() {
       <header className="relative overflow-hidden bg-gradient-to-br from-teal-50/80 via-white to-mly-50/50 px-4 py-16 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,193,174,0.06)_1px,transparent_0)] bg-[size:24px_24px]" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl">
+          <Link href="/" className="mx-auto mb-5 block w-fit" aria-label="MiLyfe home">
+            <Image
+              src="/logo.png"
+              alt="MiLyfe"
+              width={120}
+              height={44}
+              priority
+              className="mx-auto h-10 w-auto object-contain"
+            />
+          </Link>
           <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 shadow-lg shadow-teal-500/20">
             <Scale className="h-10 w-10 text-white" aria-hidden="true" />
           </div>
