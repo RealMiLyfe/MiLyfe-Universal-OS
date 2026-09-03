@@ -264,6 +264,7 @@ export default async function LandingPage() {
  <ul className="space-y-2 text-sm text-gray-500 ">
  <li><Link href="/transparency" className="hover:text-teal-600 transition-colors">Transparency</Link></li>
  <li><Link href="/governance" className="hover:text-teal-600 transition-colors">Governance</Link></li>
+ <li><Link href="/justice" className="hover:text-teal-600 transition-colors">MiJustice</Link></li>
  <li><Link href="/wiki" className="hover:text-teal-600 transition-colors">Wiki</Link></li>
  <li><Link href="/safety" className="hover:text-teal-600 transition-colors">Safety</Link></li>
  </ul>

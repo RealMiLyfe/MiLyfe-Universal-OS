@@ -1,12 +1,16 @@
 import { Sidebar } from '@/components/shell/sidebar';
 import { BottomNav } from '@/components/shell/bottom-nav';
 import { TopBar } from '@/components/shell/top-bar';
+import { DesktopHeader } from '@/components/shell/desktop-header';
+import { RightRail } from '@/components/shell/right-rail';
 import { AuthProvider } from '@/components/shell/auth-provider';
 import { OfflineIndicator } from '@/components/ui/offline-indicator';
 import { ServiceWorkerRegistrar } from '@/components/shell/sw-registrar';
 import { MiBubble } from '@/components/mi/mi-bubble';
 import { CommandSearch } from '@/components/shell/command-search';
 import { DataCacher } from '@/components/shell/data-cacher';
+import { VibeBar } from '@/components/media/vibe-bar';
+import { InstallPrompt } from '@/components/shell/install-prompt';
 import { Toaster } from 'sonner';
 
 /**
@@ -28,17 +32,25 @@ export default function PlatformLayout({
       {/* Service worker registration */}
       <ServiceWorkerRegistrar />
 
-      {/* Mobile top bar */}
+      {/* Mobile top bar (< md) */}
       <TopBar />
 
-      {/* Desktop sidebar */}
+      {/* Desktop sidebar (md+) */}
       <Sidebar />
 
-      {/* Main content area */}
-      <div className="min-h-screen pt-14 md:pt-0 pb-20 md:pb-4 md:ml-56 lg:ml-60">
+      {/* Desktop header (md+) — fills the top strip */}
+      <DesktopHeader />
+
+      {/* Contextual right rail (lg+) — fills the right side */}
+      <RightRail />
+
+      {/* Main content area.
+          Left offset for sidebar (md+), top offset for header (md+) or mobile
+          top bar (< md), right offset for the right rail (lg+). */}
+      <div className="min-h-screen pt-14 pb-20 md:pb-4 md:ml-56 lg:ml-60 lg:mr-72 xl:mr-80">
         <main
           id="main-content"
-          className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6"
+          className="mx-auto max-w-2xl px-4 py-4 md:px-6 md:py-6 lg:max-w-3xl"
         >
           {children}
         </main>
@@ -49,6 +61,12 @@ export default function PlatformLayout({
 
       {/* Data cacher (silently caches critical data to IndexedDB for offline) */}
       <DataCacher />
+
+      {/* Global persistent media player (the Vibe Bar) */}
+      <VibeBar />
+
+      {/* PWA install prompt */}
+      <InstallPrompt />
 
       {/* Mi ambient bubble */}
       <MiBubble />

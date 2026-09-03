@@ -80,7 +80,7 @@
 
   /* Section header with left accent border */
   .section-header {
-    @apply text-lg font-semibold text-harbor-800 dark:text-white pl-3 border-l-3 border-teal-500;
+    @apply text-lg font-semibold text-harbor-800 dark:text-white pl-3 border-l-[3px] border-teal-500;
   }
 
   /* Stat numbers */
