@@ -1,0 +1,55 @@
+name: Scheduled Crons
+
+# External scheduler for sub-daily cron routes that the Vercel Hobby plan
+# cannot run more than once/day. Each route is idempotent, so overlap is safe.
+# Requires repo secrets:
+#   CRON_SECRET  — same value as the Vercel production env var
+#   APP_URL      — production origin (e.g. https://milyfe.fun); falls back below
+
+on:
+  schedule:
+    # Every 5 minutes — walk-home safety timer escalation (time-critical).
+    - cron: '*/5 * * * *'
+    # Top of every hour — story expiry + proposal auto-close.
+    - cron: '0 * * * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: scheduled-crons
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit scheduled cron routes
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          APP_URL: ${{ secrets.APP_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET:-}" ]; then
+            echo "::error::CRON_SECRET repo secret is not set"; exit 1
+          fi
+          BASE="${APP_URL:-https://milyfe.fun}"
+          MINUTE="$(date -u +%M)"
+
+          hit () {
+            local path="$1"
+            local code
+            code=$(curl -sS -m 30 -o /tmp/body.txt -w '%{http_code}' \
+              -H "Authorization: Bearer ${CRON_SECRET}" \
+              "${BASE}${path}") || { echo "curl failed for ${path}"; return 1; }
+            echo "${path} -> ${code}"
+            head -c 300 /tmp/body.txt || true; echo
+            case "$code" in 2*) : ;; *) echo "::error::${path} returned ${code}"; return 1 ;; esac
+          }
+
+          # Safety timers run on every invocation (5-min cadence).
+          hit /api/cron/timers
+
+          # Hourly work only when this run landed on the top-of-hour tick.
+          if [ "${MINUTE}" = "00" ]; then
+            hit /api/cron/stories-expire
+            hit /api/cron/proposals
+          fi
