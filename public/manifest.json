@@ -4,9 +4,15 @@
   "description": "One signup, one profile, your whole life together — community-owned, free forever.",
   "start_url": "/home",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#6366f1",
+  "background_color": "#ffffff",
+  "theme_color": "#00C1AE",
   "orientation": "portrait-primary",
+  "shortcuts": [
+    { "name": "Encounter Mode", "short_name": "Rights", "url": "/justice/app/encounter" },
+    { "name": "Media", "short_name": "Media", "url": "/media" },
+    { "name": "Pocket", "short_name": "Pocket", "url": "/wallet" },
+    { "name": "Talk to a person", "short_name": "Help", "url": "/help" }
+  ],
   "icons": [
     {
       "src": "/icons/icon-192.png",

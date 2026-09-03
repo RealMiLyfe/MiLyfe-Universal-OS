@@ -4,6 +4,7 @@ import { createServerSupabase } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { sanitizeRichText } from '@/lib/security/sanitize';
+import { rewardContribution } from '@/lib/economy/reward';
 
 // ─── Create Proposal ─────────────────────────────────────────────────────────
 const createProposalSchema = z.object({
@@ -184,15 +185,20 @@ export async function castVote(input: z.infer<typeof castVoteSchema>) {
     }
   }
 
-  // Boost voice standing for voting
-  if (standing) {
-    await supabase
-      .from('standing')
-      .update({ voice: Math.min(100, (standing.voice || 0) + 0.5) })
-      .eq('user_id', user.id);
-  }
+  // Record the contribution, pay $MLY (gated by the verification ladder), and
+  // bump the Voice facet — best-effort; never blocks or fails the vote.
+  await rewardContribution(supabase as never, {
+    kind: 'vote',
+    surface: 'voice',
+    facet: 'voice',
+    title: 'Cast a governance vote',
+    mly: 2,
+    facetPoints: 0.5,
+    reference: parsed.data.proposal_id,
+  });
 
   revalidatePath('/governance');
+  revalidatePath('/rewards');
   return { success: true };
 }
 

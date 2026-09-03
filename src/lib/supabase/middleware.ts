@@ -17,7 +17,16 @@ const PUBLIC_ROUTES = [
   '/terms',
   '/security',
   '/receipts',
+  // MiJustice public (educational) tier — must work signed-out and offline.
+  // The operational OS lives under /justice/app/** and is NOT listed, so the
+  // gate below bounces signed-out users there to /login.
+  '/justice',
+  '/justice/rights',
+  '/justice/about',
 ];
+
+// Public MiJustice route prefixes (rights guides have dynamic sub-paths).
+const PUBLIC_PREFIXES = ['/justice/rights/'];
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -70,6 +79,7 @@ export async function updateSession(request: NextRequest) {
   // Allow public routes and auth endpoints
   if (
     PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith('/auth')) ||
+    PUBLIC_PREFIXES.some(prefix => pathname.startsWith(prefix)) ||
     pathname.startsWith('/api')
   ) {
     return supabaseResponse;

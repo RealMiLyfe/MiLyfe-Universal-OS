@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAppStore } from '@/lib/store';
 
 /**
  * Command Search — Global search accessible via Cmd+K / Ctrl+K.
@@ -19,7 +20,12 @@ interface SearchResult {
 }
 
 export function CommandSearch() {
-  const [open, setOpen] = useState(false);
+  // Search visibility is shared via the store so the header/top-bar pills can
+  // open it too, while Cmd+K still works globally.
+  const { searchOpen: open, toggleSearch } = useAppStore();
+  const setOpen = useCallback((next: boolean) => {
+    useAppStore.setState({ searchOpen: next });
+  }, []);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -32,13 +38,13 @@ export function CommandSearch() {
     function handleKeyDown(e: KeyboardEvent) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        setOpen(prev => !prev);
+        toggleSearch();
       }
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') useAppStore.setState({ searchOpen: false });
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [toggleSearch]);
 
   // Focus input when opened
   useEffect(() => {

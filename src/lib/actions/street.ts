@@ -389,6 +389,47 @@ export async function verifyQuestClaim(claimId: string, approved: boolean, reaso
         .update({ current_completions: questData.current_completions + 1 })
         .eq('id', claim.quest_id);
     }
+
+    // Record the claimer's contribution + bump their Helper facet. The $MLY
+    // reward is already paid above (escrow), so this only logs the contribution
+    // and nudges standing — best-effort, never blocks the verification.
+    try {
+      const { data: verStatus } = await supabase
+        .from('mi_verification_status')
+        .select('level_rank')
+        .eq('user_id', claim.claimer_id)
+        .maybeSingle();
+      const claimerVerified = ((verStatus as { level_rank?: number } | null)?.level_rank ?? 0) >= 1;
+
+      await supabase.from('contributions').insert({
+        user_id: claim.claimer_id,
+        kind: 'quest',
+        surface: 'street',
+        facet: 'helper',
+        title: 'Completed a community quest',
+        mly_reward: reward,
+        facet_points: 2,
+        verification: claimerVerified ? 'auto' : 'pending',
+        status: 'paid',
+        reference: claim.quest_id,
+        verified_at: new Date().toISOString(),
+        paid_at: new Date().toISOString(),
+      });
+
+      const { data: claimerStanding } = await supabase
+        .from('standing')
+        .select('id, helper')
+        .eq('user_id', claim.claimer_id)
+        .maybeSingle();
+      if (claimerStanding) {
+        await supabase
+          .from('standing')
+          .update({ helper: Number((claimerStanding as { helper?: number }).helper ?? 0) + 2 })
+          .eq('id', (claimerStanding as { id: string }).id);
+      }
+    } catch {
+      // never break verification over a standing/contribution write
+    }
   } else {
     await supabase
       .from('quest_claims')
