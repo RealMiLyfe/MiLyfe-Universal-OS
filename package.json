@@ -16,7 +16,7 @@
   "dependencies": {
     "@ai-sdk/openai": "^4.0.47",
     "@assistant-ui/react": "^0.15.16",
-    "@assistant-ui/react-ai-sdk": "^1.4.7",
+    "@assistant-ui/react-ai-sdk": "^1.4.9",
     "@hookform/resolvers": "^5.9.1",
     "@livekit/components-react": "^2.9.24",
     "@livekit/components-styles": "^1.2.0",
