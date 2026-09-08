@@ -36,8 +36,11 @@
     for (var i = 0; i < bases.length; i++) {
       var base = bases[i];
       var url = base.replace(/\/$/, '') + path;
+      var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      var timer = controller ? setTimeout(function () { controller.abort(); }, 4000) : null;
       try {
-        var res = await fetch(url, Object.assign({ headers: { Accept: 'application/json' } }, opts || {}));
+        var res = await fetch(url, Object.assign({ headers: { Accept: 'application/json' }, signal: controller ? controller.signal : undefined }, opts || {}));
+        if (timer) clearTimeout(timer);
         if (res.ok) return await res.json();
         // 4xx is a real answer from the API — don't try other bases.
         if (res.status >= 400 && res.status < 500) {
