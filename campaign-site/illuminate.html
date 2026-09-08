@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illuminate — accountability, in public · MiJaxx</title>
+  <meta name="description" content="Illuminate: the MiJaxx accountability dashboard. Petition progress, milestone countdowns, and the $0 budget — everything public, updated live." />
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="/">
+        <img src="/assets/img/logo.png" alt="MiLyfe" />
+        <span>MiJaxx<span class="sub">MiLyfe for Mayor</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/platform.html">Platform</a></li>
+        <li><a href="/promise.html">The Promise</a></li>
+        <li><a href="/illuminate.html" class="active">Illuminate</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a class="nav-cta" href="/get-involved.html">Get Involved</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <div class="container">
+      <span class="kicker" style="display:inline-block;padding:6px 14px;border-radius:999px;background:var(--harbor-800);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;">Illuminate</span>
+      <h1>Accountability, in public.</h1>
+      <p>Everything the campaign owes you, on one page, updated live. No back rooms. No dark money. If it isn't here, it isn't the proof.</p>
+    </div>
+  </header>
+
+  <section style="padding-top:44px;">
+    <div class="container" data-live>
+      <div class="section-head">
+        <span class="eyebrow">The race to 1,000</span>
+        <h2>Petition progress</h2>
+      </div>
+      <div class="grid grid-4" style="margin-bottom:22px;">
+        <div class="stat stat-light"><div class="num"><span data-count="petition">—</span></div><div class="label">Signatures</div></div>
+        <div class="stat stat-light"><div class="num"><span data-count="target">—</span></div><div class="label">Target</div></div>
+        <div class="stat stat-light"><div class="num gold"><span data-count="remaining">—</span></div><div class="label">Remaining</div></div>
+        <div class="stat stat-light"><div class="num"><span data-count="days">—</span></div><div class="label">Days left</div></div>
+      </div>
+      <div class="card">
+        <div class="progress-row"><span class="pct"><span data-count="pct">—</span></span><span class="of">of 1,000 verified signatures · deadline Dec 14, 2026</span></div>
+        <div class="progress" data-progress="petition"><div class="bar" style="width:0%"></div></div>
+        <p class="small muted mt-2"><span class="live-dot"></span>Live · <span class="offline-note"><strong>Live data temporarily offline.</strong> The dashboard is up; numbers return when the campaign API reconnects.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Milestone countdown</span>
+        <h2>Every date, every step — public.</h2>
+      </div>
+      <div class="card" data-board>
+        <div data-board-miles>
+          <!-- populated live; static fallback below -->
+          <div class="milestone done"><span class="dot"></span><span class="date">Jul 29, 2026</span><span class="what">Registered to vote — to put his own name on the ballot</span></div>
+          <div class="milestone"><span class="dot"></span><span class="date">Dec 14, 2026</span><span class="what">Petition signature deadline (target: 1,000 verified)</span></div>
+          <div class="milestone"><span class="dot"></span><span class="date">Jan 11–15, 2027</span><span class="what">Qualifying window</span></div>
+          <div class="milestone"><span class="dot"></span><span class="date">Mar 9, 2027</span><span class="what">Primary election</span></div>
+          <div class="milestone"><span class="dot"></span><span class="date">May 18, 2027</span><span class="what">General election (if runoff)</span></div>
+          <div class="milestone"><span class="dot"></span><span class="date">Jul 1, 2027</span><span class="what">Mayor takes office</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The money</span>
+        <h2>The $0 budget, itemized.</h2>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Where a normal campaign gets its money</h3>
+          <p>Donors. PACs. Outside capital. Every dollar is a leash. Jacksonville's own budget shows the same logic at city scale — reaction first, people last.</p>
+          <div class="budget-bar">
+            <div class="seg seg-reaction" style="width:53%">Public safety · reaction · ~52–55%</div>
+            <div class="seg seg-rest" style="width:47%">Public health · prevention · 3–4%</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Where this campaign gets its money</h3>
+          <p>Nowhere. Total outside capital raised to date: <strong>$0.00</strong>. Everything — the platform, the site, the API, the infrastructure — is built on free, open-source tools and run on will.</p>
+          <div class="stats" style="grid-template-columns:repeat(2,1fr);">
+            <div class="stat stat-light"><div class="num">$0.00</div><div class="label">Outside capital</div></div>
+            <div class="stat stat-light"><div class="num">11 yrs</div><div class="label">Of work</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="center mt-4">
+        <p class="small muted">Every transaction in the platform treasury is a public receipt. Verify any of it: <a href="https://milyfe.fun/receipts">milyfe.fun/receipts</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark">
+    <div class="container center">
+      <h2 style="font-size:1.6rem;letter-spacing:-.02em;">We keep the books in public.</h2>
+      <p style="max-width:600px;margin:14px auto 28px;">This page is the campaign's promise that it will run the city the same way: open code, public votes, receipts for everything. Hold us to it.</p>
+      <a class="btn btn-primary" href="/get-involved.html">Help us get there — sign</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="cols">
+        <div>
+          <div class="brand"><img src="/assets/img/logo.png" alt="" /> MiJaxx</div>
+          <p class="small">The people-owned civic platform, running for Mayor of Jacksonville.</p>
+        </div>
+        <div>
+          <h4>Campaign</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/promise.html">The Promise</a></li>
+            <li><a href="/platform.html">Platform</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Get involved</h4>
+          <ul>
+            <li><a href="/get-involved.html">Sign the petition</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/get-milyfe.html">Get MiLyfe</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fine">
+        <span>© 2026 MiJaxx · MiLyfe for Mayor</span>
+        <span>Built with $0 + 11 years · 100% open source</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

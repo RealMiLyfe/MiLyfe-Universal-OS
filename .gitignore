@@ -78,3 +78,10 @@ scripts/set-supabase-keys.sh
 
 # secret redaction map (never commit)
 .secret-replacements.txt
+
+# campaign site + api (mijaxx.fun / get.milyfe.fun / campaign-api.milyfe.fun)
+campaign-site/.venv/
+campaign-api/.venv/
+campaign-api/data/
+__pycache__/
+*.pyc
