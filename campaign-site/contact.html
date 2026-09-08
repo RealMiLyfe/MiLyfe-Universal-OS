@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — reach the campaign · MiJaxx</title>
+  <meta name="description" content="Contact the MiJaxx campaign. A real human reads every message." />
+  <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="nav-logo" href="/">
+        <img src="/assets/img/logo.png" alt="MiLyfe" />
+        <span>MiJaxx<span class="sub">MiLyfe for Mayor</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/platform.html">Platform</a></li>
+        <li><a href="/promise.html">The Promise</a></li>
+        <li><a href="/illuminate.html">Illuminate</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/contact.html" class="active">Contact</a></li>
+        <li><a class="nav-cta" href="/get-involved.html">Get Involved</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-head">
+    <div class="container">
+      <span class="kicker" style="display:inline-block;padding:6px 14px;border-radius:999px;background:var(--harbor-800);color:#fff;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;">Contact</span>
+      <h1>Talk to a human.</h1>
+      <p>No bots. No phone tree. Every message is read by the team, and press gets a straight answer.</p>
+    </div>
+  </header>
+
+  <section style="padding-top:40px;">
+    <div class="container">
+      <div class="grid grid-2" style="align-items:start;">
+        <form id="contact-form" class="form-card" style="margin:0;">
+          <h3>Send a message</h3>
+          <p class="form-sub">Questions, press, press inquiries, concerns, or just to say hi.</p>
+          <div class="field">
+            <label for="cf-name">Your name</label>
+            <input id="cf-name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="cf-email">Email</label>
+            <input id="cf-email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="cf-topic">Topic</label>
+            <select id="cf-topic" name="topic">
+              <option>General</option>
+              <option>Press</option>
+              <option>Volunteering</option>
+              <option>Petition question</option>
+              <option>Concern / complaint</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" name="message" required></textarea>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Send message</button>
+          <div class="form-status" role="status"></div>
+        </form>
+        <div>
+          <div class="card">
+            <h3>Email</h3>
+            <p>Prefer email? Reach the campaign directly at <a href="mailto:mi@milyfe.fun"><strong>mi@milyfe.fun</strong></a>.</p>
+          </div>
+          <div class="card mt-3">
+            <h3>Want to do more than ask?</h3>
+            <p>The fastest way to be part of this is still the petition — thirty seconds, real impact.</p>
+            <div class="mt-2"><a class="btn btn-dark btn-block" href="/get-involved.html">Sign the petition</a></div>
+          </div>
+          <div class="card mt-3">
+            <h3>Press note</h3>
+            <p>All claims on this site are verifiable: the platform is public code, the treasury runs on public receipts (<a href="https://milyfe.fun/receipts">milyfe.fun/receipts</a>), and the campaign's numbers are on <a href="/illuminate.html">Illuminate</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="cols">
+        <div>
+          <div class="brand"><img src="/assets/img/logo.png" alt="" /> MiJaxx</div>
+          <p class="small">The people-owned civic platform, running for Mayor of Jacksonville.</p>
+        </div>
+        <div>
+          <h4>Campaign</h4>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/promise.html">The Promise</a></li>
+            <li><a href="/illuminate.html">Illuminate</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Get involved</h4>
+          <ul>
+            <li><a href="/get-involved.html">Sign the petition</a></li>
+            <li><a href="/get-milyfe.html">Get MiLyfe</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="fine">
+        <span>© 2026 MiJaxx · MiLyfe for Mayor</span>
+        <span>Built with $0 + 11 years · 100% open source</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
