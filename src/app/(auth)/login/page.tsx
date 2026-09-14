@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { SIGNUPS_ENABLED } from '@/lib/launch';
 
 export default function LoginPage() {
  const router = useRouter();
@@ -139,10 +140,21 @@ export default function LoginPage() {
  </form>
 
  <p className="text-center text-sm text-gray-500">
+ {SIGNUPS_ENABLED ? (
+ <>
  New to MiLyfe?{' '}
  <Link href="/signup" className="text-teal-600 hover:underline font-medium">
  Create an account
  </Link>
+ </>
+ ) : (
+ <>
+ New to MiLyfe?{' '}
+ <Link href="/signup" className="text-teal-600 hover:underline font-medium">
+ Signups are opening soon
+ </Link>
+ </>
+ )}
  </p>
  </div>
  );

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { SIGNUPS_ENABLED, FORGE_COHORT } from '@/lib/launch';
 
 export default function SignupPage() {
  const router = useRouter();
@@ -108,6 +109,69 @@ export default function SignupPage() {
  {resending ? 'Resending...' : 'Resend Confirmation Email'}
  </Button>
  </div>
+ </div>
+ );
+ }
+
+ // ── Launch gate ────────────────────────────────────────────────────────────
+ // Public signups are closed until MiForge fills its founding cohort.
+ // See src/lib/launch.ts. Reopen with NEXT_PUBLIC_SIGNUPS_ENABLED=true.
+ if (!SIGNUPS_ENABLED) {
+ return (
+ <div className="space-y-6">
+ <div className="text-center">
+ <Image src="/logo.png" alt="MiLyfe" width={88} height={32} priority className="h-10 w-auto max-w-[120px] object-contain mx-auto mb-4" />
+ <span className="inline-flex items-center rounded-full bg-harbor-50 px-3 py-1 text-xs font-semibold text-harbor-700 ring-1 ring-inset ring-harbor-200">
+ Coming soon
+ </span>
+ <h1 className="text-2xl font-bold text-harbor-800 mt-3">
+ MiLyfe is coming to Jacksonville
+ </h1>
+ <p className="text-sm text-gray-500 mt-2 max-w-sm mx-auto">
+ We are opening in order, so the first citizens walk into a city that already
+ works. Right now we are seating the founding {FORGE_COHORT.total.toLocaleString()} businesses
+ on MiForge. When those spots fill, MiLyfe opens to everyone.
+ </p>
+ </div>
+
+ <div className="rounded-lg border border-gray-200 bg-white p-4 space-y-3">
+ <div className="flex items-start gap-3">
+ <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-harbor-100 text-xs font-bold text-harbor-700">1</span>
+ <div>
+ <p className="text-sm font-medium text-harbor-800">Founding businesses first</p>
+ <p className="text-xs text-gray-500">
+ {FORGE_COHORT.pro.toLocaleString()} Pro and {FORGE_COHORT.daily.toLocaleString()} Daily spots on MiForge — bookkeeping,
+ daily reports, and matched community credits.
+ </p>
+ </div>
+ </div>
+ <div className="flex items-start gap-3">
+ <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-harbor-100 text-xs font-bold text-harbor-700">2</span>
+ <div>
+ <p className="text-sm font-medium text-harbor-800">Then MiLyfe opens</p>
+ <p className="text-xs text-gray-500">
+ Citizens join, earn their weekly share, and govern their street. Free, forever.
+ </p>
+ </div>
+ </div>
+ </div>
+
+ <div className="pt-2 space-y-3">
+ <a href="https://mijaxx.fun" className="block">
+ <Button variant="harbor" size="lg" className="w-full">
+ See what we are building
+ </Button>
+ </a>
+ <Link href="/login">
+ <Button variant="outline" size="sm" className="w-full text-xs">
+ Already a citizen? Sign in
+ </Button>
+ </Link>
+ </div>
+
+ <p className="text-center text-xs text-gray-400">
+ We the People · Jacksonville, Florida
+ </p>
  </div>
  );
  }
