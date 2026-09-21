@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root { color-scheme: light dark; }
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+.breathe { animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .breathe { animation: none; } }
+.celebrate { animation: pop .6s ease-out; }
+@keyframes pop { 0% { transform: scale(.9); } 60% { transform: scale(1.05); } 100% { transform: scale(1); } }

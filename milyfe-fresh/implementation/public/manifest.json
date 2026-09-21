@@ -1,0 +1,10 @@
+{
+  "name": "MiLyfe Tree V1",
+  "short_name": "MiLyfe",
+  "description": "One signup, one profile, your whole life together.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#047857",
+  "icons": []
+}
