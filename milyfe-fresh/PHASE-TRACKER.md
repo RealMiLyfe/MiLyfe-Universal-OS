@@ -13,7 +13,7 @@
 | 5 — Lifestyle | MiCare, MiHealth, MiPlace, MiEducation full specs | `APPROVED` | Improves daily life; no professional overclaim; no sensitive-data exposure | `branches/lifestyle/` (MiCare, MiHealth, MiPlace, MiEducation + LIFESTYLE-GATES)|
 | 6 — Finance | MiForge, MiMarket, MiMoney, MiWork full specs + crypto rail V2 | `APPROVED` | Value circulates; no fake balances, hidden fees, unverified rewards, unsupported claims | `branches/finance/` (MiForge, MiMarket, MiMoney, MiWork + V2 rail + FINANCE-GATES)|
 | 7 — Cross-branch | 8 journeys, handoffs, permissions, receipts, failure/rollback | `APPROVED` | Branches cooperate without merging authorities | `journeys/` (8 journeys + 12 handoffs + failure/rollback laws)|
-| 8 — Brand/public/legal | Brand, story, white paper, terms, disclosures, U.S. legal + financial review | `APPROVED` | Public claims accurate, sourced, owned, accessible, reviewed | `brand-public-legal/` (12 docs; legal/financial OPINIONS still human-supplied, see LEGAL-REVIEW-REQUESTS)|
+| 8 — Brand/public/legal | Brand, story, white paper, terms, disclosures, U.S. legal + financial review | `APPROVED` | Public claims accurate, sourced, owned, accessible, reviewed | `brand-public-legal/` (12 docs; risk/disclosure/partner reviews still human-supplied, see LEGAL-REVIEW-REQUESTS)|
 | 9 — Security/agent/release | Threat model, data flows, secrets, agents, tests, incident, backup, SBOM, release, rollback | `APPROVED` | Future build testable, publishable, monitorable, rollback-safe | `security-agent-release/` (threat model, flows, policy, agents, injection defense, test matrix, incident, backup, SBOM, release, rollback, evidence register)|
 | 10 — Build readiness | Doc register, owners, ADRs, contract registry, risks, repo plan, slice plan, synthetic data, pilot, locked capabilities | `APPROVED` | **Human approval to leave design phase** | `build-readiness/` (register, ADRs proposed, contracts, risks, repo plan, slice plan, synthetic data, pilot, locked caps; OWNERS still TBD-human)|
 | 11 — Implementation | Repo bootstrap, kernel slice, MiOnboard, trunk contracts, first branch slice, tests + security evidence | `IN_DESIGN` (blocked until Phase 10) | Tuesday tests proven offline | `implementation/` slice 0–3 extended: tsc clean, 56/56 vitest, next build 18 routes, rails-gate PASS, kernel ~500 lines, RLS×25 (shops added); slice 4 (Tuesday proofs vs live backend) + pilot PENDING|
@@ -32,7 +32,7 @@ Gates 1–9 must pass for each phase's scope before the next phase begins; Gate 
 | 151-feature `ULTIMATE_FEATURE_LIST` (or confirmation the Manual replaces it) | Phase 2 (trunk mapping) | PENDING |
 | Founder-story confirmation (is `docs/planning/MiLyfe_Founder_Story.md` complete?) | Phase 8 | PENDING |
 | Owner/steward assignments | Phase 10 | PENDING |
-| U.S. legal review + U.S. financial review (qualified opinions) | Phase 8 | PENDING |
+| Risk/disclosure/partner reviews for external touchpoints | Phase 8 | PENDING (never a gate on existence or internal MLY) |
 | Test/security evidence (from real runs) | Phase 11 | PENDING |
 | GitHub settings (branch protection, secrets, scanning) | Phase 10/11 | PENDING |
 
@@ -56,7 +56,7 @@ Every phase/item carries EACH of these states separately. One state never implie
 | Implemented | working code exists for the stated scope |
 | Tested | automated + manual tests exist AND have been run with linked evidence |
 | Security-reviewed | independent security review completed with findings tracked (not just self-tests) |
-| Legally reviewed | qualified legal/financial/tax/professional review completed where the activity requires it |
+| Legally reviewed | risk/disclosure/partner/professional review completed for the external touchpoints that require it |
 | Piloted | run with real people in the pilot scope with evidence |
 | Released | shipped to members through the release workflow with receipts |
 | Locked | intentionally gated; activation needs named reviews + evidence + human approval |
@@ -77,7 +77,7 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 - Full 12-OS tree: Not fully implemented
 - Real-person Tuesday test: Not completed
 - Independent security evidence: Not completed
-- Legal and financial review: Not completed
+- Risk/disclosure/partner reviews for external touchpoints: Not completed (internal activity not gated on them)
 - Production brand assets: Not completed
 - Public monetary rails: Locked
 - Public launch: Not approved yet

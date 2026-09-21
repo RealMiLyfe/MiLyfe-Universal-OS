@@ -2,14 +2,24 @@
 
 **Status:** `READY_FOR_REVIEW`. MiMoney is the sole authoritative $MLY ledger. No parallel ledger. No negative ever.
 
-## value states (only these; always labeled)
+## value states — nine labels (human-directed 2026-09-21; nothing else may be shown)
 
-`projected` (never spendable, never shown as balance) → `pending` (in-flight, earmarked) → `settled` (final, spendable) · `rewarded` (settled via verified contribution) · `disputed` (frozen slice, export still works) · `reversed` (corrected via due process, original preserved).
+| # | Label | Meaning | Spendable? |
+|---|---|---|---|
+| 1 | Projected | not real yet | NEVER — never shown as balance |
+| 2 | Pending | in-flight, earmarked for a specific move | No |
+| 3 | Verified | underlying facts checked (contribution confirmed, confirmations met, work approved) but not yet settled | No |
+| 4 | Settled | final | Yes |
+| 5 | Allocated | earmarked from a treasury/pot for an approved purpose; allocator still owns it | No (by recipient) |
+| 6 | Rewarded | settled via verified contribution under approved rules | Yes |
+| 7 | Reinvested | circulated back into commons/place (round-ups, donations, returned share) | Yes, by receiving treasury rules |
+| 8 | Reserved | held in reserve or policy hold | No, except by reserve policy + approval |
+| 9 | Disputed / Reversed | frozen slice under dispute (export still works) / corrected via due process, original preserved | No — reversed amounts are void |
 
 ```ts
 const Posting = z.object({ id: z.string().uuid(), at: z.string().datetime(),
   entries: z.array(z.object({ account: z.string(), entity: MiIdRef, delta: z.string() })), // sum == 0, no account < 0
-  state: z.enum(["pending","settled","rewarded","disputed","reversed"]),
+  state: MoneyState, // nine labels: projected/pending/verified/settled/allocated/rewarded/reinvested/reserved/disputed/reversed
   purpose: z.string(), approval: z.string(), receipt: z.string() });
 ```
 
@@ -21,4 +31,4 @@ const Posting = z.object({ id: z.string().uuid(), at: z.string().datetime(),
 - `finance_cards`: id, entity, form factor (digital-nfc/ble/qr; plastic later), key ref, limits, status, receipts.
 - `transfers`: atomic MiMoney postings (transfer_mly semantics: row-lock, positive-only, no self-send, sufficient balance, receipt). Circuit breaker: >34% treasury spend → 48h cooldown + 80% supermajority. Issuance split default 70% place / 30% commons. Earn caps/week.
 
-Rules: every mutation human-signed or human-approved-policy-executed; every mutation balanced + receipted; rewards need verified contribution + approved rules; treasury explicit/auditable; USD-facing/reverse rails locked (MiScale) until review + H.
+Rules: every mutation human-signed or human-approved-policy-executed; every mutation balanced + receipted; rewards need verified contribution + approved rules; treasury explicit/auditable; USD-facing/reverse rails locked (MiScale) until risk/disclosure/partner review + evidence + H. Internal MLY activity is never gated on outside permission.

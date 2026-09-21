@@ -27,7 +27,7 @@ Cash enters through **trusted nodes**: approved people, businesses, devices, and
 
 - A trusted node is a registered MiID entity with a scoped cash-intake capability, approval record, limits, audit trail, and revocation path (Authority Matrix governs grant/revoke).
 - Cash-intake lifecycle: `intent → in-person handoff → dual confirmation (node + member) → credited(settled)` with receipts to both parties.
-- No anonymous intake above the human-approved threshold; thresholds and KYC/AML treatment are Phase 8 legal-review items and stay conservative until then.
+- No anonymous intake above the human-approved threshold; thresholds stay conservative, and risk/disclosure review informs partner-facing cash-threshold policy.
 - Entity: `cash_exchanges` (exchange id, node ref, member ref, fiat amount, $MLY credited, confirmations, receipts). Full schema in Phase 6.
 
 ## 4. The $MLY ledger (sole)
@@ -42,7 +42,7 @@ Cash enters through **trusted nodes**: approved people, businesses, devices, and
 - Members swap $MLY out through **community nodes**: peer-to-peer, in person (e.g., meet at the library).
 - Swap lifecycle: `listing → match → meet → dual confirmation → settled`, with receipts and dispute path via MiResolve.
 - Entity: `swap_listings` (listing id, maker ref, offer, terms, meeting policy, status, receipts). Full schema in Phase 6.
-- No automated USD redemption rail in V1 — reverse/$MLY-out rails remain locked capabilities until Phase 8 review + human approval.
+- No automated USD redemption rail in V1 — reverse/MLY-out rails remain locked capabilities until risk/disclosure/partner review + evidence + human approval.
 
 ## 6. Own cards — digital NFC first, plastic later
 

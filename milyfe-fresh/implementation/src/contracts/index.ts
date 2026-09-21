@@ -72,7 +72,13 @@ export const MiScopeGrant = z.object({
 });
 export type MiScopeGrant = z.infer<typeof MiScopeGrant>;
 
-export const MoneyState = z.enum(['projected', 'pending', 'settled', 'rewarded', 'disputed', 'reversed']);
+// Nine value labels (human-directed 2026-09-21). Disputed + reversed share label 9.
+export const VALUE_STATES = [
+  'projected', 'pending', 'verified', 'settled', 'allocated',
+  'rewarded', 'reinvested', 'reserved', 'disputed', 'reversed',
+] as const;
+export type ValueState = (typeof VALUE_STATES)[number];
+export const MoneyState = z.enum(VALUE_STATES);
 
 export const Posting = z.object({
   id: z.uuid(),

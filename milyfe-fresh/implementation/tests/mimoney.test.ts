@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyCredit, applyDebit, breakerTrips, canDebit, runwayMonths, splitIssuance, supermajorityNeeded, totalBalance, zeroBalances } from '@/finance/mimoney';
+import { allowedTransition, applyCredit, applyDebit, breakerTrips, canDebit, isSpendable, runwayMonths, splitIssuance, supermajorityNeeded, totalBalance, zeroBalances } from '@/finance/mimoney';
 
 describe('MiMoney ledger math', () => {
   it('no-negative: cannot debit below zero, zero/negative amounts rejected', () => {
@@ -31,6 +31,21 @@ describe('MiMoney ledger math', () => {
     expect(runwayMonths('1200', '100')).toContain('12 months');
     expect(runwayMonths('0', '100')).toContain('0 months');
     expect(runwayMonths('500', '0')).toContain('holds');
+  });
+  it('nine labels: only settled/rewarded/reinvested are spendable', () => {
+    expect(isSpendable('settled')).toBe(true);
+    expect(isSpendable('rewarded')).toBe(true);
+    expect(isSpendable('reinvested')).toBe(true);
+    for (const s of ['projected', 'pending', 'verified', 'allocated', 'reserved', 'disputed', 'reversed'] as const) {
+      expect(isSpendable(s)).toBe(false);
+    }
+  });
+  it('transitions: verified → settled/allocated/reserved; reversed is terminal', () => {
+    expect(allowedTransition('verified', 'settled')).toBe(true);
+    expect(allowedTransition('verified', 'allocated')).toBe(true);
+    expect(allowedTransition('projected', 'settled')).toBe(false);
+    expect(allowedTransition('reversed', 'settled')).toBe(false);
+    expect(allowedTransition('disputed', 'reversed')).toBe(true);
   });
   it('balances total honestly', () => {
     expect(totalBalance({ ...zeroBalances(), spending: '3', community: '7' })).toBe('10');

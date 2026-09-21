@@ -68,4 +68,4 @@ The final record includes text, approvals, dissent, evidence, effective date, ve
 
 - **Review type:** read-through for coherence, terminology, and cross-reference integrity. No substantive amendment (substantive changes require the ratification procedure + human approval).
 - **Outcome:** text adopted as Tree V1 roots draft. Findings and companion artifacts: `RIGHTS-MAP.md`, `HUMAN-AI-AUTHORITY-RULES.md`, `EXTERNAL-LAW-BOUNDARY.md`, `CONSTITUTIONAL-TERMINOLOGY-REVIEW.md`.
-- **Status:** `READY_FOR_REVIEW` — human + legal review still required before adoption (see Phase 8 for legal opinions, which must be supplied, not fabricated).
+- **Status:** `READY_FOR_REVIEW` — human review still required before adoption; outside risk/disclosure review where relevant (see Phase 8; must be supplied, not fabricated).

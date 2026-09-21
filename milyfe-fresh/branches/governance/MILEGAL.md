@@ -2,7 +2,7 @@
 
 **Status:** `READY_FOR_REVIEW`. **Plain value:** understand legal papers, get routed to a real lawyer, and never be fooled by AI pretending to be one. Fail-closed: if unsure, it blocks and routes to a human.
 **Sources:** Governance Branch design §3 · Foundation V2 §7
-**V2 variance V1:** legal-document provenance below is retained as subordinate detail of contracts + holds, pending human confirmation (see `../../FOUNDATION-DELTAS-V2.md`). Trunk-wide MiSource provenance is unchanged. · External-Law Boundary · Manual MiLegal default-deny, jurisdiction profiles, Part Eight (courts/agencies rows).
+**V2 V1 CONFIRMED KEPT (2026-09-21):** legal paper trails stay as transparent records, provenance, contracts, receipts, and evidence. They are not permission gates for MiLyfe to exist or for participants to voluntarily use MLY. Trunk-wide MiSource provenance is unchanged. · External-Law Boundary · Manual MiLegal default-deny, jurisdiction profiles, Part Eight (courts/agencies rows).
 
 - **Purpose:** neutral legal infrastructure — information, contracts, jurisdiction profiles, professional routing, legal holds, review workflows, external legal relationship records.
 - **Users:** members facing papers/deadlines/forms, shops (compliance), builders (capability enablement), stewards (holds/reviews).

@@ -1,6 +1,6 @@
 # Foundation Deltas V2 — adopting `UPDATED-TREE-FOUNDATION-DESIGN.md`
 
-**Status:** `READY_FOR_REVIEW`. V2 (human-supplied 2026-09-21) is now the current design direction. V1 source copies stay verbatim as the historical record; everything derived now follows V2.
+**Status:** `APPROVED as current direction` (human, 2026-09-21). V1 source copies stay verbatim as history only — not the active source of truth; everything derived follows V2.
 
 ## Adopted as-is (no conflict)
 
@@ -20,15 +20,15 @@
 - **Final position (§12):** complete-tree release, MLY stays MLY, people stay the source. Consistent with release law. No change needed.
 - **Term:** canonical unit name is now **MLY**; `$MLY` stays as the display ticker. → Terminology review updated.
 
-## Variances (kept as subordinate detail, flagged for human confirmation)
+## Variances — all three CONFIRMED KEPT (human, 2026-09-21)
 
-Our detailed specs contain three items the V2 authority lists don't name. Nothing is deleted; each is marked "retained pending confirmation" in its spec. If you say cut them, they're cut.
+Our detailed specs contained three items the V2 authority lists don't name. Human decision: keep all three, with the framings below.
 
 | # | Item | Where we kept it | V2 says | Disposition |
 |---|---|---|---|---|
-| V1 | Legal document provenance | `MILEGAL.md` owns provenance chain | MiLegal list names contracts/holds/records, not provenance | Retained as subordinate detail of contracts + holds. Trunk-wide MiSource provenance unchanged. |
-| V2 | Community resolution | `MIRESOLVE.md` owns community-level resolution | MiResolve list names restorative processes, not community resolution | Retained as the community-room form of restorative processes. |
-| V3 | Incarceration access + reentry packs | `MIJUSTICE.md` owns incarceration access | MiJustice list names court support/redress, not incarceration | Retained as subordinate detail of court support. |
+| V1 | Legal paper trails | `MILEGAL.md` | Not named in V2 list | KEPT as transparent records, provenance, contracts, receipts, evidence. NOT permission gates for existence or voluntary MLY use. |
+| V2 | Community fix-it rooms | `MIRESOLVE.md` (Governance) | Not named in V2 list | KEPT: everyday disputes, corrections, appeals, service failures, marketplace disputes, restorative processes. |
+| V3 | Jail/reentry support | `MIJUSTICE.md` | Not named in V2 list | KEPT as rights, reentry, family, legal-access, education, work, reintegration support. MiLyfe claims NO authority over incarceration itself. |
 
 Also retained: MiMoney "balances/postings/settlement" wording in our spec (V2 names "pending and settled states" — same meaning, reconciled in `MIMONEY.md` header note).
 

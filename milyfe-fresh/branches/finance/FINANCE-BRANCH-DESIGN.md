@@ -58,5 +58,5 @@ Finance receives identity, business nodes, permissions, data spaces, device capa
 - Merchant and provider terms exist
 - Refunds and disputes work
 - Reserves and reconciliation exist
-- USD-facing rails remain locked until reviewed
+- USD-facing rails remain locked until risk/disclosure/partner review + evidence + human approval (outside touchpoints only)
 - Contributors receive verified receipts

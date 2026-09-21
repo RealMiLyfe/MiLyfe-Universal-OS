@@ -24,6 +24,12 @@ describe('sandbox: synthetic MiMoney states', () => {
     expect(p.state).toBe('projected');
     expect(ledger.balance('alice')).toBe('0');
   });
+  it('lifecycle transitions enforced, illegal jumps rejected', () => {
+    const ledger = new SyntheticLedger();
+    expect(ledger.move('pending', 'verified', 'ok').state).toBe('verified');
+    expect(() => ledger.move('projected', 'settled', 'skip')).toThrow('ILLEGAL_TRANSITION_PROJECTED_TO_SETTLED');
+    expect(() => ledger.move('reversed', 'settled', 'resurrect')).toThrow();
+  });
   it('real paths refuse synthetic artifacts', () => {
     const ledger = new SyntheticLedger();
     const r = ledger.faucet('alice', '10');
@@ -46,12 +52,12 @@ describe('sandbox: MiForge', () => {
 });
 
 describe('sandbox: MiMarket', () => {
-  it('orders run projected-hold → synthetic-complete, never real settlement', () => {
+  it('orders run pending → settled (synthetic), never real settlement', () => {
     const listing = createListing('bob', 'Bike repair', '50');
     const order = placeOrderSandbox(listing, 'alice');
-    expect(order.state).toBe('projected-hold');
+    expect(order.state).toBe('pending');
     const done = fulfillOrderSandbox(order);
-    expect(done.order.state).toBe('synthetic-complete');
+    expect(done.order.state).toBe('settled');
     expect(done.receipt.synthetic).toBe(true);
     expect(() => refuseSyntheticInRealPath(done.receipt, 'money.settle')).toThrow();
   });

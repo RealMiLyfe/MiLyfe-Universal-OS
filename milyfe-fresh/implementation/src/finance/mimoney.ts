@@ -1,5 +1,7 @@
 // MiMoney: sole-ledger math. Pure functions (tested) + thin API callers.
 // Money moves only via server RPC + human signature. Units: integer minor units as string.
+// Nine value labels: projected/pending/verified/settled/allocated/rewarded/reinvested/reserved/disputed/reversed.
+import type { ValueState } from '@/contracts';
 
 export type Pot = 'spending' | 'savings' | 'community';
 
@@ -61,6 +63,30 @@ export function runwayMonths(reservesMinor: string, monthlyBurnMinor: string): s
   if (reserves <= 0n) return '0 months — reserves empty';
   const months = Number(reserves / burn);
   return `${months} month${months === 1 ? '' : 's'} at current burn`;
+}
+
+export function isSpendable(state: ValueState): boolean {
+  // Spendable: settled, rewarded, reinvested (by holder / receiving-treasury rules).
+  // Everything else — projected, pending, verified, allocated, reserved, disputed, reversed — is NOT.
+  return state === 'settled' || state === 'rewarded' || state === 'reinvested';
+}
+
+const TRANSITIONS: Record<ValueState, ValueState[]> = {
+  projected: ['pending', 'reversed'],
+  pending: ['verified', 'disputed', 'reversed'],
+  verified: ['settled', 'allocated', 'reserved', 'disputed'],
+  settled: ['reinvested', 'disputed'],
+  allocated: ['settled', 'reversed'],
+  rewarded: ['reinvested', 'disputed'],
+  reinvested: ['disputed'],
+  reserved: ['settled', 'allocated'],
+  disputed: ['settled', 'reversed'],
+  reversed: [],
+};
+
+/** Only these moves are legal. Anything else is rejected (never silently forced). */
+export function allowedTransition(from: ValueState, to: ValueState): boolean {
+  return TRANSITIONS[from].includes(to);
 }
 
 export function totalBalance(b: Balances): string {

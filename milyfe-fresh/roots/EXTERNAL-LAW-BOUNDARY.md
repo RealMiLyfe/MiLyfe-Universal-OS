@@ -1,6 +1,6 @@
 # External-Law Boundary — Phase 1
 
-**Status:** `READY_FOR_REVIEW` as a design boundary. **Not a legal opinion.** Qualified U.S. legal + financial review must be supplied in Phase 8 (see tracker blockers).
+**Status:** `READY_FOR_REVIEW` as a design boundary. **Not a legal opinion.** Risk/disclosure/partner reviews for external touchpoints are tracked in Phase 8 (see tracker). Internal MLY activity is never gated on outside permission.
 **Sources:** Constitution Art XII (whole) + Art II limits + Art XI scope · Commons Charter legal-boundary line · Mi Being Charter legal-status lines · System Context "Outside MiLyfe" list · Finance boundary · Manual Part Two ($MLY legal framework), MiLegal default-deny (L963, L1458), "What MiLyfe Is Not", Dispute L∞ (real courts available).
 
 ## 0. Internal freedom (Foundation V2 §3, human-supplied 2026-09-21)
@@ -26,7 +26,7 @@ Internal governance (proposals, votes, Oath, compact) is not a substitute for le
 - Stated nature (Manual Part Two, **pending Phase 8 qualified review**): community credit — not a security, commodity, or currency; voluntary peer exchange/barter between consenting adults.
 - What MiLyfe does NOT do: run an exchange, custody others' money, sell $MLY (no ICO/sale/pre-mine beyond UBI rules), pitch $MLY as investment (no APY/yield/appreciation promise), set prices, restrict consenting-adult P2P trade. (Manual Part Two.)
 - **Doorways rule:** shops/ramps that custody or cash out for the public follow MSB/MiCA/local rules themselves. MiLyfe lists self-declared doorways; listing is not operating. (Manual "The Protocol".)
-- Locked until review + human approval: USD-facing rails, reverse-$MLY redemption automation, public exchange listing, cross-border automated exchange infra, merchant POS with fiat settlement. (Finance Boundary; V2 §8; Manual "What Requires Community Vote + Legal Review".)
+- Locked until risk/disclosure/partner review + evidence + human approval: USD-facing rails, reverse-MLY redemption automation, public exchange listing, cross-border automated exchange infra, merchant POS with fiat settlement. (Finance Boundary; V2 §8.) These locks cover outside touchpoints only — never MiLyfe's existence or internal voluntary MLY activity.
 - Tax/accounting treatment, reserves, consumer terms, fraud/sanctions controls: Phase 8 deliverables, human-supplied.
 
 ## 4. External parties and adapters (System Context)
@@ -50,7 +50,9 @@ Outside MiLyfe: payment providers, banks, government agencies, courts, election 
 
 ## 7. What Phase 8 must supply (not fabricated here)
 
-U.S. legal review (entity posture, $MLY characterization, MSB/money-transmitter analysis, tax, consumer protection, youth privacy e.g. COPPA, accessibility law) and U.S. financial review (reserves, reconciliation, accounting treatment, fraud/sanctions program). Until supplied, all externally-facing money capabilities stay locked and all public claims stay inside the reviewed-disclosure set.
+Risk/disclosure/partner reviews for outside touchpoints (entity posture, MLY characterization questions, money-transmitter analysis, tax, consumer protection, youth privacy e.g. COPPA, accessibility law, reserves, reconciliation, accounting treatment, fraud/sanctions program). Until supplied, externally-facing money capabilities stay locked and public claims stay inside the reviewed-disclosure set. Internal MLY activity is not permission-gated.
+
+External payment providers and outside financial relationships are separate participant or adapter relationships — never the source of MiLyfe's authority.
 
 ## 8. Internal foundation vs external review (recorded 2026-09-21, human-directed)
 

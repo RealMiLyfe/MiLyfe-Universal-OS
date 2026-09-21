@@ -23,6 +23,7 @@ MiMoney records MLY states and receipts. It does not claim that every external e
 
 ## Honesty rules (roots-level)
 
-- MLY is never represented as more certain than its actual value state (projected/pending/settled/rewarded/disputed/reversed — always labeled).
+- MLY is never represented as more certain than its actual value state (nine labels: projected/pending/verified/settled/allocated/rewarded/reinvested/reserved/disputed/reversed — always labeled).
 - MiLyfe does not need permission to design or use MLY internally as a voluntary platform credit. MLY must still be described honestly, recorded transparently, and never represented as USD or guaranteed redemption.
+- External payment providers and outside financial relationships are separate participant or adapter relationships — never the source of MiLyfe's authority.
 - This definition does not remove external gates: where outside law applies to a specific activity (licensing, finance, payments, health, campaigns, employment, taxes, consumer protection, data handling), the preserved rule governs: "MiLyfe's internal constitutional foundation must be preserved. External legal, financial, tax, professional, and jurisdictional review remains an activation gate for activities that require it."

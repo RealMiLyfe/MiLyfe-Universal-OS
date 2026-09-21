@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ApiEnvelope, CryptoDeposit, Posting, TransferParams } from '@/contracts';
+import { ApiEnvelope, CryptoDeposit, MoneyState, Posting, TransferParams, VALUE_STATES } from '@/contracts';
 import { generateKeyPair } from '@/kernel/id';
 
 const CTX = { cell: 'place', context: 'pocket', role: 'member' };
@@ -34,6 +34,11 @@ describe('contracts (Zod, frozen C1–C12)', () => {
     expect(good.success).toBe(true); // self-send rejected at route/RPC layer; schema checks shape
     expect(TransferParams.safeParse({ sender: kp.did, recipient: kp.did, amountMinor: '0', pot: 'spending', signature: 's' }).success).toBe(false);
     expect(TransferParams.safeParse({ sender: kp.did, recipient: kp.did, amountMinor: '10', pot: 'spending' }).success).toBe(false);
+  });
+  it('money states accept all nine labels (ten values)', () => {
+    expect(VALUE_STATES).toHaveLength(10);
+    for (const s of VALUE_STATES) expect(MoneyState.safeParse(s).success).toBe(true);
+    expect(MoneyState.safeParse('moon').success).toBe(false);
   });
   it('crypto deposits accept only the six V2 assets', async () => {
     const kp = await generateKeyPair();

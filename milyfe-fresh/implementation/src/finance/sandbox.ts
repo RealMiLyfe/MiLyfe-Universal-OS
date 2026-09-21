@@ -3,7 +3,8 @@
 // ledger paths: every sandbox artifact is tagged synthetic, and the real-path
 // guard refuses it. Same no-negative math as real money (shared functions).
 
-import { applyCredit, applyDebit, canDebit } from './mimoney';
+import { allowedTransition, applyCredit, applyDebit, canDebit } from './mimoney';
+import type { ValueState } from '@/contracts';
 
 export const SYNTHETIC_BANNER = 'SYNTHETIC — not real money, not spendable, practice only';
 
@@ -26,8 +27,7 @@ function syntheticReceipt(kind: string, detail: string): SyntheticReceipt {
   return { id: `syn-${Date.now().toString(36)}-${receiptCounter}`, synthetic: true, kind, detail, at: new Date().toISOString() };
 }
 
-// ---------- Synthetic MiMoney states ----------
-export type SynthState = 'projected' | 'pending' | 'sandbox-settled' | 'reversed-sandbox';
+// ---------- Synthetic MiMoney states (nine labels, synthetic-guarded) ----------
 
 export class SyntheticLedger {
   private balances = new Map<string, string>();
@@ -44,15 +44,22 @@ export class SyntheticLedger {
     return syntheticReceipt('faucet', `+${amountMinor} to ${account}`);
   }
 
-  transfer(from: string, to: string, amountMinor: string): { state: SynthState; receipt: SyntheticReceipt } {
+  transfer(from: string, to: string, amountMinor: string): { state: ValueState; receipt: SyntheticReceipt } {
     if (!canDebit(this.balance(from), amountMinor)) throw new Error('INSUFFICIENT_OR_INVALID');
     this.balances.set(from, applyDebit(this.balance(from), amountMinor));
     this.balances.set(to, applyCredit(this.balance(to), amountMinor));
-    return { state: 'sandbox-settled', receipt: syntheticReceipt('transfer', `${from}→${to} ${amountMinor}`) };
+    // Label says settled; synthetic flag + banner say practice-only. Real paths refuse this receipt.
+    return { state: 'settled', receipt: syntheticReceipt('transfer', `${from}→${to} ${amountMinor}`) };
+  }
+
+  /** Lifecycle move with transition enforcement (fake money, real rules). */
+  move(from: ValueState, to: ValueState, note: string): { state: ValueState; receipt: SyntheticReceipt } {
+    if (!allowedTransition(from, to)) throw new Error(`ILLEGAL_TRANSITION_${from}_TO_${to}`.toUpperCase());
+    return { state: to, receipt: syntheticReceipt('lifecycle', `${from}→${to}: ${note}`) };
   }
 
   /** Projected amounts are tracked separately and NEVER counted in balance(). */
-  project(account: string, amountMinor: string): { state: SynthState; receipt: SyntheticReceipt } {
+  project(account: string, amountMinor: string): { state: ValueState; receipt: SyntheticReceipt } {
     if (BigInt(amountMinor) <= 0n) throw new Error('PROJECTION_MUST_BE_POSITIVE');
     return { state: 'projected', receipt: syntheticReceipt('projection', `${account} may receive ${amountMinor} (not real, not counted)`) };
   }
@@ -81,7 +88,7 @@ export function simulateWelcome(memberCount: number, perMemberMinor: string, bud
 // ---------- MiMarket sandbox: listings + orders, projected-only ----------
 export interface SandboxListing { id: string; seller: string; title: string; priceMinor: string; synthetic: true }
 export interface SandboxOrder {
-  id: string; listing: string; buyer: string; state: 'projected-hold' | 'synthetic-complete' | 'canceled'; synthetic: true;
+  id: string; listing: string; buyer: string; state: ValueState; synthetic: true;
 }
 
 export function createListing(seller: string, title: string, priceMinor: string): SandboxListing {
@@ -90,11 +97,11 @@ export function createListing(seller: string, title: string, priceMinor: string)
 }
 
 export function placeOrderSandbox(listing: SandboxListing, buyer: string): SandboxOrder {
-  return { id: `order-${Date.now().toString(36)}`, listing: listing.id, buyer, state: 'projected-hold', synthetic: true };
+  return { id: `order-${Date.now().toString(36)}`, listing: listing.id, buyer, state: 'pending', synthetic: true };
 }
 
 export function fulfillOrderSandbox(order: SandboxOrder): { order: SandboxOrder; receipt: SyntheticReceipt } {
-  if (order.state !== 'projected-hold') throw new Error('ORDER_NOT_FULFILLABLE');
-  const next: SandboxOrder = { ...order, state: 'synthetic-complete' };
+  if (order.state !== 'pending') throw new Error('ORDER_NOT_FULFILLABLE');
+  const next: SandboxOrder = { ...order, state: 'settled' };
   return { order: next, receipt: syntheticReceipt('order', `sandbox order ${order.id} complete (fake)`) };
 }

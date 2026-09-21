@@ -56,3 +56,4 @@
 
 - The current app passing 56 out of 56 tests is valuable evidence for the tests that exist. It proves the current tested scope — not that the platform or roadmap is complete.
 - Locked capabilities stay locked behind explicit gates. No passing suite, constitutional principle, or personal sign-off replaces the evidence required for production activation.
+- Gate scope (2026-09-21): outside review is used for risk, disclosure, partner, health, safety, tax, professional, and jurisdiction-specific questions. It is never permission for MiLyfe's existence or internal voluntary MLY activity.
