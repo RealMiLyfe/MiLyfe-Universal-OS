@@ -1,6 +1,6 @@
 # MiLyfe Governance Branch Design
 
-**Status:** Focused design phase
+**Status:** Focused design phase · V2-aligned 2026-09-21 (see `../../FOUNDATION-DELTAS-V2.md`)
 **Primary OSes:** Governance OS, MiLegal, MiResolve, MiJustice
 
 ## 1. Branch purpose
@@ -31,8 +31,7 @@ Owns:
 - Jurisdiction profiles
 - Professional routing
 - Legal holds
-- Legal document provenance
-- External legal relationship records
+- External relationship records
 
 Does not pretend that AI summaries are legal advice or that internal rules override external law.
 
@@ -41,12 +40,11 @@ Does not pretend that AI summaries are legal advice or that internal rules overr
 Owns:
 
 - Internal disputes
+- Service disputes
 - Marketplace disputes
-- Service failures
 - Corrections
 - Appeals
 - Restorative processes
-- Community resolution
 
 Does not absorb criminal, constitutional, civil-rights, court, incarceration, or public-office authority.
 
@@ -61,7 +59,6 @@ Owns:
 - Redress
 - Restitution
 - Government accountability
-- Incarceration access
 
 ## 6. Branch contracts
 

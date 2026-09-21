@@ -1,7 +1,7 @@
 # MiLyfe Finance Branch Design
 
 **Status:** Focused design phase
-**Primary OSes:** MiForge, MiMarket, MiMoney, MiWork
+**Primary OSes:** MiForge, MiMarket, MiMoney, MiWork · V2-aligned 2026-09-21
 **Binding rail spec:** `FINANCE-BRANCH-CRYPTO-RAIL-V2.md` — No GoCardless, no Whop, no Stripe, no Visa/MC rails for $MLY. Crypto (USDC/USDT/SOL/BTC/ETH/XRP) + cash via trusted nodes in, $MLY sole ledger, swap out via community nodes P2P, own cards (digital NFC phone-first MiPay BLE/NFC/QR offline store-carry-forward; plastic later on own network).
 
 ## 1. Branch purpose
@@ -22,7 +22,7 @@ It does not own the authoritative ledger or regulated professional authority.
 
 ## 4. MiMoney
 
-Owns the authoritative `$MLY` ledger, balances, postings, settlement, rewards, treasury interfaces, reserves, refunds, reversals, reconciliation, and financial receipts.
+Owns one authoritative MLY ledger, pending and settled states, verified contributions, rewards, treasury interfaces, reserves, refunds, reversals, reconciliation, and financial receipts. (Balances/postings/settlement wording in detailed specs = same meaning; see MIMONEY.md.)
 
 It does not automatically authorize USD conversion, redemption, custody, or regulated financial activity.
 

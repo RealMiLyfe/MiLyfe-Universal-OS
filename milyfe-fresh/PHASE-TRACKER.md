@@ -102,3 +102,5 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 | 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice 0–3 | ◐ 56/56 scope | — | — | — | — | rails locked |
 
 - 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.
+
+- 2026-09-21: Foundation V2 adopted (human-supplied Updated Tree Foundation Design, saved verbatim). MLY-is-MLY definition, internal freedom, V2 tree lists reconciled across README/TREE-LOCK/branches/disclosure/terminology. 3 variances (legal provenance, community resolution, incarceration access) retained as subordinate detail pending human confirmation. Approval meaning, gates, locks, and nine-state vocabulary unchanged.

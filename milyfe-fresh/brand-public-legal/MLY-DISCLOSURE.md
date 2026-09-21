@@ -1,10 +1,11 @@
 # $MLY Disclosure — Phase 8
 
 **Status:** `READY_FOR_REVIEW` as disclosure draft; financial/legal sign-off PENDING (human-supplied).
-**Sources:** Manual Part Two · Money-State Contract · V2 rail spec. Plain words, no promises.
+**Sources:** Manual Part Two · Money-State Contract · V2 rail spec · Foundation V2 §2/§9 (`roots/MLY-DEFINITION.md`). Plain words, no promises.
 
-- **What it is:** a community credit for the MiLyfe commons. Real from day one. Not issued by a government; MiLyfe claims no government status.
+- **What it is:** MLY is MLY — a MiLyfe platform credit and value unit for the commons. Real from day one. Not USD, not represented as USD, not pegged to USD. Value comes from use, acceptance, demand, work, verified contribution, and voluntary market choice. Not issued by a government; MiLyfe claims no government status.
 - **What MiLyfe does NOT do:** run an exchange; custody your money (your credits, your keys, your export); sell $MLY (no ICO, sale, investor allocation, founder cut); promise returns (no APY/yield/appreciation); set prices (peers agree their own rates); restrict consenting-adult peer exchange.
+- **Voluntary exchange:** you may trade MLY with any willing counterparty, including for USD or other agreed value. That trade does not make MLY USD. MiLyfe promises no automatic redemption and no fixed rate. MiMoney records MLY states and receipts; it does not claim every outside exchange is controlled by MiLyfe.
 - **Earn:** weekly UBI (verified humans; kids gift-only until money-age), quests, verified contributions, small capped circulation bonuses. Earn caps/week. NEVER: founder cut, referral pyramid, buying a right, HODL contest.
 - **States:** projected (not real yet, never shown as balance) / pending / settled / rewarded / disputed / reversed — always labeled.
 - **Safeguards:** no-negative ever; 34% treasury circuit breaker (48h cooldown + 80% supermajority); default issuance split 70% place / 30% commons; safety freeze; full export anytime, even in disputes.

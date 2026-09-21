@@ -1,7 +1,8 @@
 # MiJustice — Governance Branch (Phase 4)
 
 **Status:** `READY_FOR_REVIEW`. **Plain value:** when your rights are violated — by anyone, including MiLyfe itself — you get knowledge, witnesses, paper, lawyers, and neighbors. Shield, not sword.
-**Sources:** Governance Branch design §5 · Manual Part Eight (shield philosophy/table, leave-now, defense circles, peace system), rights prep (court-date flows), incarceration access.
+**Sources:** Governance Branch design §5 · Foundation V2 §7
+**V2 variance V3:** incarceration access + reentry support below are retained as subordinate detail of court support, pending human confirmation (see `../../FOUNDATION-DELTAS-V2.md`). · Manual Part Eight (shield philosophy/table, leave-now, defense circles, peace system), rights prep (court-date flows), incarceration access.
 
 - **Purpose:** rights defense, serious accountability, court support, appeals, redress, restitution, government accountability, incarceration access, civil-rights pathways.
 - **Users:** rights-holders in trouble, witnesses, families, reentering members, incarcerated members (where facility allows), lawyers/aides.

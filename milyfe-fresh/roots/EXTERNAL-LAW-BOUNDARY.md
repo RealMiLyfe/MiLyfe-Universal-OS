@@ -3,6 +3,12 @@
 **Status:** `READY_FOR_REVIEW` as a design boundary. **Not a legal opinion.** Qualified U.S. legal + financial review must be supplied in Phase 8 (see tracker blockers).
 **Sources:** Constitution Art XII (whole) + Art II limits + Art XI scope · Commons Charter legal-boundary line · Mi Being Charter legal-status lines · System Context "Outside MiLyfe" list · Finance boundary · Manual Part Two ($MLY legal framework), MiLegal default-deny (L963, L1458), "What MiLyfe Is Not", Dispute L∞ (real courts available).
 
+## 0. Internal freedom (Foundation V2 §3, human-supplied 2026-09-21)
+
+MiLyfe does not require external permission to: exist as a voluntary platform; organize participants; create internal rules; provide useful services; create a community value unit; let participants voluntarily exchange value; preserve transparent records; build a people-owned network; develop political and civic organizing capacity.
+
+External requirements may apply to specific external activities. Those requirements do not own MiLyfe or determine whether MiLyfe may exist. MiLyfe represents external relationships honestly without making them the foundation of internal authority. Health, safety, children, vulnerable people, physical services, professional practice, and similar areas receive additional safeguards because they involve direct human and physical risk.
+
 ## 1. What MiLyfe is not (externally)
 
 MiLyfe does not claim to be, and its charters do not create: a government, state, nation, sovereign, corporation, trust, cooperative, nonprofit, bank, exchange, financial institution, court of record, land registry, hospital, law firm, or police force. (Constitution header + Art I.5 + Art XII; Commons legal boundary; Manual "What It Is Not".)

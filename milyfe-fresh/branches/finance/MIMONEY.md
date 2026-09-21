@@ -1,7 +1,8 @@
 # MiMoney — Finance Branch (Phase 6)
 
 **Status:** `READY_FOR_REVIEW`. **Plain value:** one honest ledger. Your $MLY is real, never negative, every move signed by you and receipted. No bank, no hidden fees, no fake balances.
-**Sources:** Finance design §4 · Money-State Contract · V2 rail spec · Constitution Art VII · Manual Part Two ($MLY framework, safeguards, issuance).
+**Sources:** Finance design §4 · Money-State Contract · V2 rail spec · Constitution Art VII · Manual Part Two (MLY framework, safeguards, issuance) · Foundation V2 §2/§9 (`MLY-DEFINITION.md`).
+**V2 note:** "balances/postings/settlement" below = V2's "pending and settled states" + "verified contributions". MLY is MLY: not USD, not pegged, no promised redemption; MiMoney records states/receipts and claims no control of every external exchange.
 
 - **Purpose:** the sole authoritative $MLY ledger — balances, postings, settlement, rewards, treasury interfaces, reserves, refunds, reversals, reconciliation, financial receipts.
 - **Users:** members (Pocket), shops (tills), circles/places (treasuries), stewards (oversight), auditors.

@@ -33,7 +33,7 @@ Domain events (versioned/idempotent/replay-safe, emitted only after commit) · M
 ## Interface laws
 
 1. One identity model (MiID), one capability model (MiScope), one receipt model (MiReceipt), one event model, one data-space model, one security baseline, one configuration hierarchy, one human-approval policy.
-2. Trunk provides shared capability; never absorbs domain decisions (money/governance/legal/clinical/marketplace/venture/campaign authority stay put).
+2. Trunk provides shared capability; never absorbs domain decisions (money/governance/legal/clinical/marketplace/venture/work-livelihood/campaign authority stay put). V2 adds: MiWork owns work and livelihood records.
 3. No hidden branch authority: any branch-side capability not in this contract + Phase 3 registry is a defect.
 4. Reserved actions need H regardless of initiating branch. Offline never auto-resolves money/guardianship/binding ballots.
 5. All interfaces versioned; breaking changes need migration + dual-run + notice (Phase 3 versioning rules).

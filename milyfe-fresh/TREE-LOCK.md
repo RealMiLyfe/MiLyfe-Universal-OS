@@ -5,8 +5,8 @@
 
 ## Locked structure
 
-- **Roots:** MiLyfe Constitution · Commons Charter · Mi Being Charter · Ratification and Amendment Procedure (+ root commitments: dignity, consent, data ownership, security/privacy, accessibility, due process, truth+receipts, no hidden custody, no negative balances, human authority over reserved actions).
-- **Trunk — MiLyfe Core (16):** Kernel (+MiID) · MiName · MiOnboard · MiData · MiPresence · MiPsyche · MiMind · MiAgent · MiDevice · MiSecurity · MiDev · MiOps · MiCloud · MiNet · MiComm · MiScale.
+- **Roots (V2):** MiLyfe Constitution · Commons Charter · Mi Being Charter · Ratification and Amendment Procedure (+ root commitments: dignity, consent, identity and existence, data ownership, security/privacy, accessibility, due process, truth+receipts, voluntary participation, no hidden custody, no negative balances, human authority over reserved actions).
+- **Trunk — MiLyfe Core (16):** MiID / Kernel identity services · MiName · MiOnboard · MiData · MiPresence · MiPsyche · MiMind · MiAgent · MiDevice · MiSecurity · MiDev · MiOps · MiCloud · MiNet · MiComm · MiScale.
 - **Governance Branch (4):** Governance OS · MiLegal · MiResolve · MiJustice.
 - **Lifestyle Branch (4):** MiCare · MiHealth · MiPlace · MiEducation.
 - **Finance Branch (4):** MiForge · MiMarket · MiMoney · MiWork.

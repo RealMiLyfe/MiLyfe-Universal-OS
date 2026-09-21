@@ -1,6 +1,6 @@
 # MiLyfe Lifestyle Branch Design
 
-**Status:** Focused design phase
+**Status:** Focused design phase · V2-aligned 2026-09-21
 **Primary OSes:** MiCare, MiHealth, MiPlace, MiEducation
 
 ## 1. Branch purpose
@@ -21,7 +21,7 @@ It does not turn general AI into an unlicensed clinician.
 
 ## 4. MiPlace
 
-Owns local service coordination for housing, food, energy, water, transportation, repair, emergency resources, and community projects.
+Owns local service coordination for housing, food, energy, water, transportation, repair, emergency resources, local services, and community projects.
 
 It does not replace government, emergency authorities, utilities, courts, or licensed providers.
 

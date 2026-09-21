@@ -1,7 +1,8 @@
 # MiResolve — Governance Branch (Phase 4)
 
 **Status:** `READY_FOR_REVIEW`. **Plain value:** when something goes wrong — a bad purchase, a wrong ban, a broken promise — you get notice, a fair hearing, a fix, and a way to appeal. No retaliation for complaining.
-**Sources:** Governance Branch design §4 · Constitution Art V · Manual dispute path L1–L5, MiAppeal/MiHandoff/MiPeace, restorative processes.
+**Sources:** Governance Branch design §4 · Foundation V2 §7
+**V2 variance V2:** community-level resolution below is retained as the community-room form of restorative processes, pending human confirmation (see `../../FOUNDATION-DELTAS-V2.md`). · Constitution Art V · Manual dispute path L1–L5, MiAppeal/MiHandoff/MiPeace, restorative processes.
 
 - **Purpose:** internal disputes, service failures, marketplace disputes, corrections, appeals, restorative processes, community-level resolution.
 - **Users:** complainants, respondents, peer panels, mediators, stewards, builders (correction intake).

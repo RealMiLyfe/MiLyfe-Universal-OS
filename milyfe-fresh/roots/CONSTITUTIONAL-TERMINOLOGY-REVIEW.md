@@ -51,3 +51,11 @@
 ## 5. Phase 1 exit position
 
 Roots are coherent and reviewable. No branch can silently override them: change requires Ratification Procedure + Authority Matrix `H` approvals + ADR (per Architecture Source of Truth change rule). Substantive roots amendments are out of scope for design phases — only the human ratification path may alter roots text.
+
+## 6. Foundation V2 adoptions (2026-09-21, human-supplied)
+
+- **MLY is canonical.** `$MLY` stays as the display ticker (prices, balances, buttons). Docs use MLY in prose; code/UX may use either, never implying USD.
+- **Trunk first item:** "MiID / Kernel identity services". Code keeps `kernel/` (module) + `MiID` (service) — same thing, two names for two audiences; no rename needed.
+- **Not reduced to:** person ≠ username, balance, device, role, customer record, campaign contact, reputation score, business account (V2 §5).
+- **MLY certainty rule:** MLY is never represented as more certain than its actual value state (V2 §5).
+- **Political honesty:** organizing stays accountable; no campaign goal or election result is ever represented as guaranteed (V2 §1, §5).

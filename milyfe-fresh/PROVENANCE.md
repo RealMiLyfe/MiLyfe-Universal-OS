@@ -55,6 +55,8 @@ Source root: `MILYFE-TREE-FOUNDATION-PACKAGE/MILYFE-TREE-FOUNDATION-PACKAGE/`
 | 18 | Manual's referenced docs (`MiLyfe_Complete_Build_Map.md`, `MiLyfe_UI_UX_Blueprint.md`, `MiLyfe_Blueprint_Gap_and_New_Tech_Audit.md`, `MiLyfe_Interactive_Design_Spec.md`, `MiLyfe_COMPLETE.md`) + "43 services" brain codebase | `MISSING` | Verified absent (find, 2026-09-21). Must not be cited as sources until supplied. See `roots/CONSTITUTIONAL-TERMINOLOGY-REVIEW.md` §3.3. |
 | 19 | "Vault keys never leave device" / "Shield ciphertext only" (verbatim wordings) | `PROMPT` + FOUND cousins | Verbatim = directive text. Cousins: Vault pin + "your keys" (Manual Part 5E, Part Two), MiShield firewall (Manual L842), Dual Telemetry XChaCha20 (Part 5E). Exact protocol: Phase 2 + Phase 9. |
 
+| 20 | Updated Tree Foundation Design (MLY-is-MLY, internal freedom, V2 tree/roots/trunk/branch lists, seed-to-tree, strategy) | `FOUND` (human-supplied 2026-09-21) | `UPDATED-TREE-FOUNDATION-DESIGN.md` saved verbatim; reconciliation in `FOUNDATION-DELTAS-V2.md`; MLY definition extracted to `roots/MLY-DEFINITION.md`. V2 is now the current design direction. |
+
 ## Rules for later phases
 
 1. New design docs cite sources with `FOUND` paths or `PROMPT` section names.

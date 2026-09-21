@@ -22,17 +22,19 @@ MiLyfe
 │   ├── Ratification and Amendment Procedure
 │   ├── Human dignity
 │   ├── Consent
+│   ├── Identity and existence
 │   ├── Data ownership
 │   ├── Security and privacy
 │   ├── Accessibility
 │   ├── Due process
 │   ├── Truth and receipts
+│   ├── Voluntary participation
 │   ├── No hidden custody
 │   ├── No negative balances
 │   └── Human authority over reserved actions
 │
 ├── Trunk — MiLyfe Core (16 components)
-│   ├── Kernel (+ MiID identity services)
+│   ├── MiID / Kernel identity services
 │   ├── MiName
 │   ├── MiOnboard
 │   ├── MiData
@@ -74,7 +76,7 @@ MiLyfe
 
 - **No GoCardless. No Whop. No Stripe. No Visa/MC rails for $MLY.**
 - **In:** USDC / USDT / SOL / BTC / ETH / XRP crypto deposits + cash in via trusted nodes (people, businesses, devices, ATMs).
-- **Ledger:** $MLY sole ledger (MiMoney). No negative ever. No parallel ledger. Projected ≠ settled.
+- **Ledger:** MLY sole ledger (MiMoney). MLY is MLY — not USD, not pegged, no promised redemption. No negative ever. No parallel ledger. Projected ≠ settled.
 - **Out:** swap out via community nodes, P2P (meet at library).
 - **Cards:** own cards — digital NFC phone-first (MiPay: BLE / NFC / QR, offline store-carry-forward); regular plastic later on our own network (debit/credit, not Visa).
 - Spec: `branches/finance/FINANCE-BRANCH-CRYPTO-RAIL-V2.md` (requirements sourced from the Tree V1 build directive; no prior repo copy exists — see `PROVENANCE.md`).
@@ -122,6 +124,7 @@ MiLyfe
 | Tree lock record | `TREE-LOCK.md` |
 | Phase tracker + gates | `PHASE-TRACKER.md` |
 | Roots (Phase 1) | `roots/` |
+| MLY definition (V2) | `roots/MLY-DEFINITION.md` |
 | Trunk (Phase 2) | `trunk/` |
 | Shared contracts (Phase 3) | `contracts/` |
 | Governance (Phase 4) | `branches/governance/` |
