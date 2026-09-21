@@ -1,6 +1,7 @@
 # Tree Lock Record — Phase 0
 
-**Status:** `APPROVED` by human sign-off on 2026-09-21 (chat: "yes this looks right").
+**Status:** `APPROVED (direction + architecture only)` by human sign-off on 2026-09-21.
+**Meaning:** this approves the tree shape, the rails law, the roadmap, and continued work. It is NOT certification that phases are complete, legally cleared, or production-ready.
 
 ## Locked structure
 
@@ -44,4 +45,14 @@
 **Approval record (to be filled by human):**
 
 - Approved by: Founder (chat sign-off: "yes this looks right") · Date: 2026-09-21 · Scope: Phase 0 exit → Phase 1
-- Receipt: chat approval recorded in commit; blanket design approval Phases 0–10 recorded in PHASE-TRACKER.md same date.
+- Receipt: chat approval recorded in commit; approval meaning + status vocabulary recorded in PHASE-TRACKER.md same date.
+
+## Approval meaning + legal-gate preservation (recorded 2026-09-21, human-directed)
+
+- The United States Constitution is the foundation for MiLyfe's internal principles of limited authority, due process, participation, speech, association, equal treatment, and accountable governance. However, it is not the only source of law, and it does not automatically authorize every activity. Lawyer licensing, financial activity, payments, health services, campaigns, employment, taxes, consumer protection, and data handling can still involve jurisdiction-specific requirements.
+- It is NOT recorded that legal review is unconstitutional or unnecessary. The opposite is recorded:
+
+> "MiLyfe's internal constitutional foundation must be preserved. External legal, financial, tax, professional, and jurisdictional review remains an activation gate for activities that require it."
+
+- The current app passing 56 out of 56 tests is valuable evidence for the tests that exist. It proves the current tested scope — not that the platform or roadmap is complete.
+- Locked capabilities stay locked behind explicit gates. No passing suite, constitutional principle, or personal sign-off replaces the evidence required for production activation.

@@ -153,3 +153,19 @@ export const TransferParams = z.object({
   signature: z.string().min(1), // human signature required — never auto
 });
 export type TransferParams = z.infer<typeof TransferParams>;
+
+export const BusinessOnboardParams = z.object({
+  entity: DidRef,
+  shopName: z.string().trim().min(2).max(60),
+  place: z.string().min(1),
+  owner: DidRef,
+  acceptsMly: z.boolean().default(true),
+  acceptsCash: z.boolean().default(true),
+});
+export type BusinessOnboardParams = z.infer<typeof BusinessOnboardParams>;
+
+export const GrantCreateParams = MiScopeGrant.omit({ approval: true, id: true });
+export type GrantCreateParams = z.infer<typeof GrantCreateParams>;
+
+export const GrantRevokeParams = z.object({ id: z.uuid(), reason: z.string().min(1).max(280) });
+export type GrantRevokeParams = z.infer<typeof GrantRevokeParams>;

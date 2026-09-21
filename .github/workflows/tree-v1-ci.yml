@@ -1,0 +1,23 @@
+# Tree V1 CI: typecheck + tests + rails gate + build. All green = mergeable.
+# This proves the tested scope only — never completeness, security, or legal clearance.
+name: tree-v1-ci
+on:
+  push:
+    paths: ['milyfe-fresh/implementation/**']
+  pull_request:
+    paths: ['milyfe-fresh/implementation/**']
+defaults:
+  run:
+    working-directory: milyfe-fresh/implementation
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: milyfe-fresh/implementation/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run rails-gate
+      - run: npm run build

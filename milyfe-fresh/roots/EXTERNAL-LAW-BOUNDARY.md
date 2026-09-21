@@ -45,3 +45,11 @@ Outside MiLyfe: payment providers, banks, government agencies, courts, election 
 ## 7. What Phase 8 must supply (not fabricated here)
 
 U.S. legal review (entity posture, $MLY characterization, MSB/money-transmitter analysis, tax, consumer protection, youth privacy e.g. COPPA, accessibility law) and U.S. financial review (reserves, reconciliation, accounting treatment, fraud/sanctions program). Until supplied, all externally-facing money capabilities stay locked and all public claims stay inside the reviewed-disclosure set.
+
+## 8. Internal foundation vs external review (recorded 2026-09-21, human-directed)
+
+The United States Constitution is the foundation for MiLyfe's internal principles of limited authority, due process, participation, speech, association, equal treatment, and accountable governance. However, it is not the only source of law, and it does not automatically authorize every activity. Lawyer licensing, financial activity, payments, health services, campaigns, employment, taxes, consumer protection, and data handling can still involve jurisdiction-specific requirements.
+
+It is not recorded that legal review is unconstitutional or unnecessary. The binding rule is:
+
+> "MiLyfe's internal constitutional foundation must be preserved. External legal, financial, tax, professional, and jurisdictional review remains an activation gate for activities that require it."

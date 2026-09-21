@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { randomId } from '@/kernel';
 import { apiTransfer, totalBalance, zeroBalances } from '@/finance/mimoney';
 import { Celebration } from '@/components/celebrations';
+import { saveReceipt } from '@/trunk/receipts';
+import type { MiReceipt } from '@/kernel';
 
 // Pocket slice: balance view + signed send (human signature required).
 export default function PocketPage() {
@@ -27,6 +29,7 @@ export default function PocketPage() {
         cell: 'place', context: 'pocket', role: 'member',
       });
       if (!res.ok) throw new Error(res.error ?? 'Transfer failed');
+      if (res.receipt) await saveReceipt(res.receipt as MiReceipt).catch(() => {});
       setSent(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Send failed');

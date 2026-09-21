@@ -16,7 +16,7 @@
 | 8 — Brand/public/legal | Brand, story, white paper, terms, disclosures, U.S. legal + financial review | `APPROVED` | Public claims accurate, sourced, owned, accessible, reviewed | `brand-public-legal/` (12 docs; legal/financial OPINIONS still human-supplied, see LEGAL-REVIEW-REQUESTS)|
 | 9 — Security/agent/release | Threat model, data flows, secrets, agents, tests, incident, backup, SBOM, release, rollback | `APPROVED` | Future build testable, publishable, monitorable, rollback-safe | `security-agent-release/` (threat model, flows, policy, agents, injection defense, test matrix, incident, backup, SBOM, release, rollback, evidence register)|
 | 10 — Build readiness | Doc register, owners, ADRs, contract registry, risks, repo plan, slice plan, synthetic data, pilot, locked capabilities | `APPROVED` | **Human approval to leave design phase** | `build-readiness/` (register, ADRs proposed, contracts, risks, repo plan, slice plan, synthetic data, pilot, locked caps; OWNERS still TBD-human)|
-| 11 — Implementation | Repo bootstrap, kernel slice, MiOnboard, trunk contracts, first branch slice, tests + security evidence | `IN_DESIGN` (blocked until Phase 10) | Tuesday tests proven offline | `implementation/` slice 0–3 BUILT: tsc clean, 38/38 vitest, next build 15 routes, rails-gate PASS, kernel 490 lines, RLS×24; slice 4 (Tuesday proofs vs live backend) + pilot PENDING|
+| 11 — Implementation | Repo bootstrap, kernel slice, MiOnboard, trunk contracts, first branch slice, tests + security evidence | `IN_DESIGN` (blocked until Phase 10) | Tuesday tests proven offline | `implementation/` slice 0–3 extended: tsc clean, 56/56 vitest, next build 18 routes, rails-gate PASS, kernel ~500 lines, RLS×25 (shops added); slice 4 (Tuesday proofs vs live backend) + pilot PENDING|
 
 ## Quality gates (per `roadmap/DESIGN-QUALITY-GATES.md`)
 
@@ -44,3 +44,61 @@ Gates 1–9 must pass for each phase's scope before the next phase begins; Gate 
 - 2026-09-21: Phases 2–10 drafted (trunk 16 + contracts 12 + OSes 12 + journeys + brand/legal + security + readiness). Phase 11 slice 0–3 BUILT + evidenced (tsc/vitest/build/rails-gate/RLS). Built per explicit human order to complete all phases; phase-exit APPROVALS still pending human sign-off. Human-supplied items still open: owners, legal/financial opinions, 151-feature list, UI blueprint, founder-story confirm, live-backend + pilot evidence.
 
 - 2026-09-21: HUMAN BLANKET APPROVAL ("yes this looks right") — Phases 0–10 marked APPROVED. Still open and still blocking pilot/launch (not the design record): owner names, U.S. legal + financial opinions, 151-feature list, UI blueprint, founder-story confirmation, live-backend + pilot Tuesday evidence. Phase 11 stays IN_DESIGN until slice 4 + pilot runs complete.
+
+## Status vocabulary (human-directed, 2026-09-21)
+
+Every phase/item carries EACH of these states separately. One state never implies another.
+
+| State | Meaning |
+|---|---|
+| Designed | design doc exists and is coherent |
+| Approved | human approved the direction/plan (NOT completion, legal clearance, or production-readiness) |
+| Implemented | working code exists for the stated scope |
+| Tested | automated + manual tests exist AND have been run with linked evidence |
+| Security-reviewed | independent security review completed with findings tracked (not just self-tests) |
+| Legally reviewed | qualified legal/financial/tax/professional review completed where the activity requires it |
+| Piloted | run with real people in the pilot scope with evidence |
+| Released | shipped to members through the release workflow with receipts |
+| Locked | intentionally gated; activation needs named reviews + evidence + human approval |
+
+## Approval meaning (human-directed, 2026-09-21)
+
+Human approval on 2026-09-21 covers **architecture + roadmap direction only**. It certifies none of: phase completeness, legal clearance, production-readiness. Binding rule:
+
+> "MiLyfe's internal constitutional foundation must be preserved. External legal, financial, tax, professional, and jurisdictional review remains an activation gate for activities that require it."
+
+Legal and financial gates stay in place. Locked capabilities stay locked. A passing test suite (56/56 proves the current tested scope only), a constitutional principle, or a personal sign-off never replaces the evidence required for production activation.
+
+## Current accurate status (human-directed, 2026-09-21)
+
+- Direction: Approved
+- Roots/trunk/tree design: Approved for continued design
+- Core application slice: Implemented within tested scope
+- Full 12-OS tree: Not fully implemented
+- Real-person Tuesday test: Not completed
+- Independent security evidence: Not completed
+- Legal and financial review: Not completed
+- Production brand assets: Not completed
+- Public monetary rails: Locked
+- Public launch: Not approved yet
+
+## Per-phase nine-state matrix (2026-09-21)
+
+✓ = yes · ◐ = partial (see note) · — = no · n/a = not applicable to a design phase
+
+| Phase | Designed | Approved | Implemented | Tested | Sec-reviewed | Legally-reviewed | Piloted | Released | Locked |
+|---|---|---|---|---|---|---|---|---|---|
+| 0 Tree lock | ✓ | ✓ direction | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
+| 1 Roots | ✓ | ✓ direction | n/a | n/a | n/a | — (opinions pending) | n/a | n/a | n/a |
+| 2 Trunk | ✓ | ✓ direction | ◐ kernel+6 services | ◐ 56/56 scope | — | n/a | — | — | n/a |
+| 3 Contracts | ✓ | ✓ direction | ◐ Zod schemas live | ◐ schema tests | — | n/a | — | — | n/a |
+| 4 Governance | ✓ | ✓ direction | — | — | — | — | — | — | n/a |
+| 5 Lifestyle | ✓ | ✓ direction | — | — | — | — | — | — | n/a |
+| 6 Finance | ✓ | ✓ direction | ◐ math+sandbox only | ◐ math tests | — | — | — | — | rails locked (L1–L8) |
+| 7 Journeys | ✓ | ✓ direction | — | — | — | n/a | — | — | n/a |
+| 8 Brand/legal | ✓ | ✓ direction | — | — | — | — (reviews requested) | — | — | n/a |
+| 9 Security | ✓ | ✓ direction | ◐ controls in slice | ◐ suite subset | — (self-tests only) | n/a | — | — | n/a |
+| 10 Readiness | ✓ | ✓ direction | ◐ repo controls (CI next) | — | — | — | — | — | register live |
+| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice 0–3 | ◐ 56/56 scope | — | — | — | — | rails locked |
+
+- 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.

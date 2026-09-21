@@ -20,3 +20,11 @@
 - [ ] `npx tsc --noEmit` passes
 - [ ] Tested on mobile viewport
 - [ ] Dark mode verified
+
+## Tree V1 additions (for milyfe-fresh/implementation PRs)
+
+- [ ] `npm run rails-gate` passes from milyfe-fresh/implementation (no forbidden payment rails)
+- [ ] Contract ref noted (C1–C12) or explained why none
+- [ ] Rollback plan included
+- [ ] Locked capabilities untouched (or unlock evidence linked)
+- [ ] No claim that tests/approval replace security, legal, or pilot evidence

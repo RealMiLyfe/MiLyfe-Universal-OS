@@ -7,7 +7,9 @@
 - **Signed money shape:** `/api/transfer` rejects unsigned/malformed calls (`BAD_ENVELOPE`, shape checks), requires auth, enforces idempotency + atomic RPC; ledger math tested (no-negative, 70/30, breaker 34%/48h/80%, runway) — `mimoney.test.ts`, 7 tests.
 - **Export always:** one-tap client export (Dexie → JSON download) on `/you`; `GET /api/export` has NO freeze/dispute/status gate by design (auth only).
 - **Safety one tap:** leave-now button → session kill + presence hide + jar-freeze request (`panicFreeze`).
-- **Build/test evidence:** `tsc --noEmit` clean, vitest 38/38, `next build` green (15 routes), rails-gate PASS, kernel 490/1000 lines, RLS on 24 tables, service role server-only, Zod on all 6 API routes.
+- **Build/test evidence:** `tsc --noEmit` clean, vitest 56/56, `next build` green (18 routes), rails-gate PASS, kernel ~500/1000 lines, RLS on 25 tables, service role server-only, Zod on all 6 API routes.
+
+- **Foundation batch 2:** MiPsyche continuity (change/memory/pause lineage), agent leases + chorus cap, MiWalk offline classifier (money/guardianship/ballots always human-review), synthetic-ledger + forge/market sandboxes (refused by real paths), business onboarding (shops table + RLS), grants API (create/revoke, owner-checked), receipts keeper + verify page, offline sync panel, roots About page, a11y baseline (skip link, focus, 44px targets), CI workflow + release checklist + PR template.
 
 ## NOT yet proven (needs live backend + later slices + pilot runs)
 

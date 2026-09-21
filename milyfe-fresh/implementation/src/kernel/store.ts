@@ -124,6 +124,11 @@ export async function getDoc<T>(collection: string, id: string): Promise<T | und
   return row?.value as T | undefined;
 }
 
+export async function listDocs<T>(collection: string): Promise<T[]> {
+  const rows = await db.docs.where('collection').equals(collection).toArray();
+  return rows.map((r) => r.value as T);
+}
+
 export async function recordEvent(e: EventRecord): Promise<void> {
   const existing = await db.events.get(e.id);
   if (existing) return; // replay-safe: same id twice = same state
