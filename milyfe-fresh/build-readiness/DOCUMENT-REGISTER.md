@@ -30,3 +30,8 @@ Finance (7): `branches/finance/FINANCE-BRANCH-DESIGN.md` · `FINANCE-BRANCH-CRYP
 
 ## Build readiness (10, this folder)
 `build-readiness/DOCUMENT-REGISTER.md` (this file) · `OWNER-ASSIGNMENTS.md` · `ADRS.md` · `CONTRACT-REGISTRY.md` · `ACTIVE-RISK-REVIEW.md` · `GITHUB-REPO-PLAN.md` · `FIRST-VERTICAL-SLICE-PLAN.md` · `SYNTHETIC-DATA-PLAN.md` · `PILOT-SCOPE.md` · `LOCKED-CAPABILITY-REGISTER.md`
+
+## V2 approval build-out (2026-09-21)
+- `implementation/src/trunk/{mimind,midevice,miscale}.ts` + `implementation/src/app/api/rails-status/route.ts` — one profile, device registry, public lock board (L1–L10). Tests: `tests/{mimind,midevice,miscale}.test.ts`.
+- `implementation/src/governance/{rewards,proposals}.ts` — treasury vault + proposals/ballots. Tests: `tests/{rewards,proposals}.test.ts`.
+- `implementation/src/finance/mimoney.ts` (+ tests) — nine-label `isSpendable` + `allowedTransition` enforcement; sandbox adopts nine labels, synthetic guard unchanged.
