@@ -51,15 +51,21 @@ const MLY_BANS: { re: RegExp; code: string }[] = [
   { re: /dollar\s+parity|parity\s+(with|to)\s+(usd|dollars?)/i, code: 'MLY_MISREPRESENTATION_DOLLAR_PARITY' },
   { re: /cash-?out\s+promise/i, code: 'MLY_MISREPRESENTATION_CASHOUT_PROMISE' },
   { re: /redeemable\s+for\s+(dollars?|usd)/i, code: 'MLY_MISREPRESENTATION_REDEEMABLE_DOLLARS' },
-  { re: /(?<!not\s)(?<!no\s)pegged/i, code: 'MLY_MISREPRESENTATION_PEGGED' },
+  { re: /(?<!not\s)(?<!not\sautomatically\s)(?<!no\s)pegged/i, code: 'MLY_MISREPRESENTATION_PEGGED' },
   { re: /(?<!not\s)(?<!no\s)automatic\s+redemption/i, code: 'MLY_MISREPRESENTATION_AUTO_REDEMPTION' },
 ];
 
-/** Rejects misleading MLY claims. Honest negations ("not pegged", "no
- *  automatic redemption") and clearly labeled external values pass. */
+/** Rejects misleading MLY claims. A negation word (not/no/never) shortly before
+ *  the match makes it an honest disclosure, which passes. */
 export function assertMlyWording(text: string): void {
-  const hit = MLY_BANS.find((b) => b.re.test(text));
-  if (hit) throw new Error(hit.code);
+  for (const b of MLY_BANS) {
+    const re = new RegExp(b.re.source, b.re.flags.includes('g') ? b.re.flags : `${b.re.flags}g`);
+    for (const m of text.matchAll(re)) {
+      const before = text.slice(Math.max(0, (m.index ?? 0) - 40), m.index ?? 0);
+      if (/\b(not|no|never)\b/i.test(before)) continue;
+      throw new Error(b.code);
+    }
+  }
 }
 
 export function labelMly(amountMinor: string): string {

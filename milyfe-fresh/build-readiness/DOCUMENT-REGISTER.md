@@ -50,3 +50,7 @@ Finance (7): `branches/finance/FINANCE-BRANCH-DESIGN.md` · `FINANCE-BRANCH-CRYP
 
 ## Finance corrections (2026-09-21)
 - Provisional treasury breaker (opt-in, full override records, audit, rollback) + corrected MLY/external-USD wording (`recordExternalExchange`). Code: `src/finance/{shared,mimoney}.ts`. Tests: 203/203.
+
+## Integration batch 1 (2026-09-21)
+- `implementation/tests/integration/*.test.ts` — 7 suites: trunk, journeys (J1–J10), isolation/recovery, agent/device, money-hardening, accessibility/brand, support/incident.
+- `build-readiness/{RELEASE-GATES,INTEGRATION-EVIDENCE,JACKSONVILLE-PILOT-PREP}.md` — gate tracking (all open), evidence index, pilot prep.

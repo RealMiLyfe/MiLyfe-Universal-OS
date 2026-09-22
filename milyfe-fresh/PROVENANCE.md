@@ -74,3 +74,7 @@ Source root: `MILYFE-TREE-FOUNDATION-PACKAGE/MILYFE-TREE-FOUNDATION-PACKAGE/`
 ## 25. 2026-09-21 — Finance branch code (agent): shared/ledger/forge/market/work/bridges + tests; 198/198 tested scope; gates green; all 12 OSes in code; conformance reviewed; acceptance pending.
 
 ## 26. 2026-09-21 — Finance accepted (human, 12/12); corrections applied (agent): provisional treasury + corrected MLY/USD wording; 203/203; gates green.
+
+## 27. 2026-09-21 — Finance corrections accepted (human); integration + hardening phase opened (no new OSes).
+
+## 28. 2026-09-21 — Integration batch 1 (agent): 7 integration suites (J1–J10), RELEASE-GATES.md, JAX pilot prep, INTEGRATION-EVIDENCE.md; 240/240; gates green.
