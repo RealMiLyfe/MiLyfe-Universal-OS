@@ -90,16 +90,16 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 |---|---|---|---|---|---|---|---|---|---|
 | 0 Tree lock | ✓ | ✓ direction | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | 1 Roots | ✓ | ✓ direction | n/a | n/a | n/a | — (opinions pending) | n/a | n/a | n/a |
-| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 86/86 scope | — | n/a | — | — | n/a |
+| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 142/142 scope | — | n/a | — | — | n/a |
 | 3 Contracts | ✓ | ✓ direction | ◐ Zod schemas live | ◐ schema tests | — | n/a | — | — | n/a |
-| 4 Governance | ✓ | ✓ direction | ◐ gov-os+milegal+miresolve+mijustice | ◐ gov tests | — | — | — | — | n/a |
-| 5 Lifestyle | ✓ | ✓ direction | — | — | — | — | — | — | n/a |
+| 4 Governance | ✓ | ✓ direction | ◐ gov-os+milegal+miresolve+mijustice | ◐ handed off (86/86) | — | — | — | — | n/a |
+| 5 Lifestyle | ✓ | ✓ direction | ◐ micare+mihealth+miplace+miedu | ◐ lifestyle tests | — (self-check) | — | — | — | n/a |
 | 6 Finance | ✓ | ✓ direction | ◐ math+nine-label states+sandbox | ◐ math/state tests | — | — | — | — | rails locked (L1–L10) |
 | 7 Journeys | ✓ | ✓ direction | — | — | — | n/a | — | — | n/a |
 | 8 Brand/legal | ✓ | ✓ direction | — | — | — | — (reviews requested) | — | — | n/a |
 | 9 Security | ✓ | ✓ direction | ◐ controls in slice | ◐ suite subset | — (self-tests only) | n/a | — | — | n/a |
 | 10 Readiness | ✓ | ✓ direction | ◐ repo controls (CI next) | — | — | — | — | — | register live |
-| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice 0–5 + gov branch | ◐ 86/86 scope | — | — | — | — | rails locked |
+| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice + gov + lifestyle | ◐ 142/142 scope | — | — | — | — | rails locked |
 
 - 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.
 
@@ -109,3 +109,6 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 - 2026-09-21: Nine-label value system live in contract (MoneyState: projected/pending/verified/settled/allocated/rewarded/reinvested/reserved/disputed/reversed), MiMoney (isSpendable = settled/rewarded/reinvested; transition enforcement), sandbox, disclosure, and docs. Core slice grew: MiMind, MiDevice, MiScale (+ /api/rails-status), rewards/treasury, proposals/ballots. Suite 71/71 in tested scope; typecheck/build/rails-gate pass. Tests prove only what they test.
 
 - 2026-09-21: Governance branch code live (first 4-OS branch): delegations + circles (Governance OS), MiLegal (fail-closed enable checks, holds, counsel routing), MiResolve (case lifecycle, remedies, retaliation guard), MiJustice (rights cases, evidence anchors, peace terms, reentry packs). Suite 86/86 in tested scope; typecheck/build/rails-gate pass. Tests prove only what they test.
+
+- 2026-09-21: Governance branch ACCEPTED by human as first completed 4-OS branch (design/release gates still apply). Commit `2c5f485` (86/86). Repository reconciliation recorded in HANDOFF.md (local history lost in sandbox, remote verified intact, clean 13-file recommmit, nothing lost).
+- 2026-09-21: Lifestyle branch code live (second 4-OS branch, no scope expansion): MiCare, MiHealth, MiPlace, MiEducation + shared trunk wiring. Suite 142/142 (27 files); required coverage (unit/contract/permission/isolation/consent/accessibility/offline/export/agent-boundary/escalation/security-self-check) present. Agent self-check only; human review pending. Next: Finance branch.
