@@ -9,7 +9,8 @@ export default function Home() {
         One signup, one profile, your whole life together. Free forever for rights, learning, and emergencies.
       </p>
       <div className="grid gap-3">
-        <Link href="/onboarding" className="rounded-2xl bg-emerald-700 p-4 font-semibold text-white">Join MiLyfe — start onboarding</Link>
+        <Link href="/tree" className="rounded-2xl bg-emerald-700 p-4 font-semibold text-white">See the whole tree — all 12 systems, live</Link>
+        <Link href="/onboarding" className="rounded-2xl border border-gray-200 bg-white p-4 font-semibold dark:border-gray-700 dark:bg-gray-900">Join MiLyfe — start onboarding</Link>
         <Link href="/pocket" className="rounded-2xl border border-gray-200 bg-white p-4 font-semibold dark:border-gray-700 dark:bg-gray-900">Open your Pocket</Link>
         <Link href="/you" className="rounded-2xl border border-gray-200 bg-white p-4 font-semibold dark:border-gray-700 dark:bg-gray-900">Safety is one tap away</Link>
         <Link href="/receipts" className="rounded-2xl border border-gray-200 bg-white p-4 font-semibold dark:border-gray-700 dark:bg-gray-900">Your receipts — proof of everything</Link>

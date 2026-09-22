@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const TABS = [
+  { href: '/tree', label: 'Tree' },
   { href: '/pocket', label: 'Pocket' },
   { href: '/learn', label: 'Learn' },
   { href: '/street', label: 'Street' },
@@ -14,7 +15,7 @@ export function Nav() {
   const path = usePathname();
   return (
     <nav aria-label="MiLyfe tabs" className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 dark:border-gray-700 dark:bg-gray-900/95">
-      <div className="mx-auto grid max-w-2xl grid-cols-5">
+      <div className="mx-auto grid max-w-2xl grid-cols-6">
         {TABS.map((t) => (
           <Link
             key={t.href}
