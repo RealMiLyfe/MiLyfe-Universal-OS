@@ -15,8 +15,8 @@
 - Trunk/kernel slice: identity, ledger math, nine-label money states, sandbox, MiMind, MiDevice, MiScale, rewards/treasury, proposals/ballots, delegations, circles, lock board + `/api/rails-status`.
 - Governance branch (4/4): Governance OS core, MiLegal, MiResolve, MiJustice.
 - Lifestyle branch (4/4): MiCare, MiHealth, MiPlace, MiEducation.
-- Suite: **240/240 passing** (41 files), plus clean typecheck, clean build, rails-gate pass. Synthetic values only. Tests prove only what they test.
-- Phase: integration + hardening batch 1 done (journeys J1–J10, trunk integration, money hardening, 9 gates tracked open, Jax pilot prep written). No launch claim.
+- Suite: **246/246 passing** (43 files), plus clean typecheck, clean build, rails-gate pass. Synthetic values only. Tests prove only what they test.
+- Phase: integration + hardening batch 2 done (14-item evidence + readiness layer, regression pins, architecture freeze recorded). All 9 gates open with human checklists. No launch claim.
 
 ## What is NOT claimed
 

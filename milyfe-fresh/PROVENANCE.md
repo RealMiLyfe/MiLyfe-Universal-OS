@@ -78,3 +78,7 @@ Source root: `MILYFE-TREE-FOUNDATION-PACKAGE/MILYFE-TREE-FOUNDATION-PACKAGE/`
 ## 27. 2026-09-21 — Finance corrections accepted (human); integration + hardening phase opened (no new OSes).
 
 ## 28. 2026-09-21 — Integration batch 1 (agent): 7 integration suites (J1–J10), RELEASE-GATES.md, JAX pilot prep, INTEGRATION-EVIDENCE.md; 240/240; gates green.
+
+## 29. 2026-09-21 — Integration batch 1 accepted (human); batch 2 ordered (evidence + readiness layer, 14 items).
+
+## 30. 2026-09-21 — Integration batch 2 (agent): evidence/readiness layer (14 items), regression pins, freeze; 246/246; gates green.

@@ -54,3 +54,7 @@ Finance (7): `branches/finance/FINANCE-BRANCH-DESIGN.md` · `FINANCE-BRANCH-CRYP
 ## Integration batch 1 (2026-09-21)
 - `implementation/tests/integration/*.test.ts` — 7 suites: trunk, journeys (J1–J10), isolation/recovery, agent/device, money-hardening, accessibility/brand, support/incident.
 - `build-readiness/{RELEASE-GATES,INTEGRATION-EVIDENCE,JACKSONVILLE-PILOT-PREP}.md` — gate tracking (all open), evidence index, pilot prep.
+
+## Integration batch 2 (2026-09-21)
+- 12 packets: SECURITY-REVIEW-PACKET, INDEPENDENT-SECURITY-HANDOFF, ACCESSIBILITY-EVIDENCE, SUPPORT-PLAN, RECOVERY-EXERCISE, DATA-RETENTION-AND-INCIDENT-RECORDS, EXTERNAL-BOUNDARY-REGISTER, CONTRACT-EVIDENCE-INDEX, AGENT-DEVICE-EVIDENCE, LEDGER-TREASURY-AUDIT, PILOT-CONSENT-AND-SAFETY, PILOT-OPERATIONS, GATE-REVIEW-CHECKLISTS, CHANGE-CONTROL (all in `build-readiness/`).
+- `tests/integration/{recovery-drill,regression}.test.ts` — wipe/restore drill + permanent regression pins (R1–R4).

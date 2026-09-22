@@ -90,7 +90,7 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 |---|---|---|---|---|---|---|---|---|---|
 | 0 Tree lock | ✓ | ✓ direction | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | 1 Roots | ✓ | ✓ direction | n/a | n/a | n/a | — (opinions pending) | n/a | n/a | n/a |
-| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 240/240 scope | — | n/a | — | — | n/a |
+| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 246/246 scope | — | n/a | — | — | n/a |
 | 3 Contracts | ✓ | ✓ direction | ◐ Zod schemas live | ◐ schema tests | — | n/a | — | — | n/a |
 | 4 Governance | ✓ | ✓ direction | ◐ gov-os+milegal+miresolve+mijustice | ◐ handed off (86/86) | — | — | — | — | n/a |
 | 5 Lifestyle | ✓ | ✓ direction | ◐ micare+mihealth+miplace+miedu | ◐ handed off (142/142) | — (self-check) | — | — | — | n/a |
@@ -99,7 +99,7 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 | 8 Brand/legal | ✓ | ✓ direction | — | — | — | — (reviews requested) | — | — | n/a |
 | 9 Security | ✓ | ✓ direction | ◐ controls in slice | ◐ suite subset | — (self-tests only) | n/a | — | — | n/a |
 | 10 Readiness | ✓ | ✓ direction | ◐ repo controls (CI next) | — | — | — | — | — | register live |
-| 11 Implementation | ✓ slice plan | ✓ direction | ◐ all 12 OSes in code | ◐ 240/240 scope | — | — | — | — | rails locked |
+| 11 Implementation | ✓ slice plan | ✓ direction | ◐ all 12 OSes in code | ◐ 246/246 scope | — | — | — | — | rails locked |
 
 - 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.
 
@@ -122,3 +122,5 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 - 2026-09-21: Finance corrections ACCEPTED by human (`cf56a4e`, 203/203). Treasury provisional-only; MLY wording corrected + tested. All 12 OSes accepted in implemented scope. Phase opened: integration + hardening (18 work items, 9 release gates tracked open). No new OSes. No launch claim.
 
 - 2026-09-21: Integration + hardening batch 1 (agent): trunk integration, J1–J10 cross-branch journeys, isolation/recovery, agent/device, money hardening, accessibility + brand scans, support/incident suites. Suite 240/240 (41 files). Release gates file created (all 9 open). Jacksonville pilot prep written (no real people yet). Negation-aware MLY wording fix included.
+
+- 2026-09-21: Integration batch 2 (agent): 12 evidence/readiness packets + recovery-drill + regression suites (246/246, 43 files). Gate checklists + change-control freeze written. All 9 gates open; pilot TODOs unfilled. No launch claim.

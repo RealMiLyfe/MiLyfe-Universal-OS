@@ -44,4 +44,11 @@ Each entry records acceptance, exact commit, test evidence, and exact scope. Han
 - **Evidence:** `build-readiness/INTEGRATION-EVIDENCE.md` (suite 240/240, 41 files) · gates tracked open in `build-readiness/RELEASE-GATES.md` · pilot prep in `build-readiness/JACKSONVILLE-PILOT-PREP.md`.
 - **Commit:** `e48b688` — "Integration + hardening batch 1: journeys, isolation, money-hardening, gates, pilot prep (240/240 scope)".
 - **Fixes surfaced:** negation-aware MLY wording; refunds on disputed originals (prior batch); provisional treasury (prior batch).
-- **Still open:** all 9 release gates. Human review, independent security, staffing, and real-person pilot are pending. No launch claim.
+- **Batch 1 accepted:** 2026-09-21 by human direction. Integration commit `e48b688`, stamp `5a00d7e`, suite 240/240, 12/12 implemented, no new OSes, all gates OPEN, no launch approved, human/independent-security/staffing/pilot pending. J1–J10 + 7 suites stand as evidence for tested behaviors only. MLY-negation + presence-tombstone fixes stay in the permanent regression suite. No gate closes on tests alone.
+
+## Integration + hardening batch 2 (evidence + readiness layer, built 2026-09-21)
+
+- **Scope:** 14 items, no new OSes, no unrelated features: security packet + threat mapping, independent-review handoff, accessibility packet, support plan, recovery exercise (+ drill suite), retention/incident records, external-boundary register, contract evidence index, agent/device evidence, ledger/treasury audit, pilot consent/safety, pilot operations, gate checklists, change-control freeze.
+- **Evidence:** 12 packets in `build-readiness/` + `tests/integration/{recovery-drill,regression}.test.ts`. Suite 246/246 (43 files).
+- **Commit:** `STAMP_ON_PUSH` — "Integration batch 2: evidence + readiness layer (246/246 scope)".
+- **Still open:** all 9 release gates (closure needs the 7-part human package per gate). Pilot TODOs unfilled — pilot must not begin. No launch claim.
