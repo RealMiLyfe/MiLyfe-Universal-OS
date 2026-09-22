@@ -64,3 +64,5 @@ Source root: `MILYFE-TREE-FOUNDATION-PACKAGE/MILYFE-TREE-FOUNDATION-PACKAGE/`
 3. `MISSING` items (legal opinions, owner assignments, test evidence, the 151-feature list, founder-story confirmation) are NEVER fabricated. They block their gates until a human supplies them.
 
 ## 21. 2026-09-21 — V2 approval build-out (agent): wording law + nine labels + slice growth (MiMind/MiDevice/MiScale/rewards/ballots/rails-status); 71/71 tested scope; gates green.
+
+## 22. 2026-09-21 — Governance branch code (agent): delegations/circles/milegal/miresolve/mijustice + tests; 86/86 tested scope; gates green.

@@ -90,16 +90,16 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 |---|---|---|---|---|---|---|---|---|---|
 | 0 Tree lock | ✓ | ✓ direction | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | 1 Roots | ✓ | ✓ direction | n/a | n/a | n/a | — (opinions pending) | n/a | n/a | n/a |
-| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 71/71 scope | — | n/a | — | — | n/a |
+| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 86/86 scope | — | n/a | — | — | n/a |
 | 3 Contracts | ✓ | ✓ direction | ◐ Zod schemas live | ◐ schema tests | — | n/a | — | — | n/a |
-| 4 Governance | ✓ | ✓ direction | ◐ rewards+ballots | ◐ rewards/ballot tests | — | — | — | — | n/a |
+| 4 Governance | ✓ | ✓ direction | ◐ gov-os+milegal+miresolve+mijustice | ◐ gov tests | — | — | — | — | n/a |
 | 5 Lifestyle | ✓ | ✓ direction | — | — | — | — | — | — | n/a |
 | 6 Finance | ✓ | ✓ direction | ◐ math+nine-label states+sandbox | ◐ math/state tests | — | — | — | — | rails locked (L1–L10) |
 | 7 Journeys | ✓ | ✓ direction | — | — | — | n/a | — | — | n/a |
 | 8 Brand/legal | ✓ | ✓ direction | — | — | — | — (reviews requested) | — | — | n/a |
 | 9 Security | ✓ | ✓ direction | ◐ controls in slice | ◐ suite subset | — (self-tests only) | n/a | — | — | n/a |
 | 10 Readiness | ✓ | ✓ direction | ◐ repo controls (CI next) | — | — | — | — | — | register live |
-| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice 0–5 | ◐ 71/71 scope | — | — | — | — | rails locked |
+| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice 0–5 + gov branch | ◐ 86/86 scope | — | — | — | — | rails locked |
 
 - 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.
 
@@ -107,3 +107,5 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 
 - 2026-09-21: V2 APPROVED as current direction (human). Variances 1–3 confirmed kept with framings (legal paper trails, MiResolve fix-it rooms, MiJustice reentry support). Wording law applied: outside review = risk/disclosure/partner homework for external touchpoints only; L1–L10 scoped to outside touchpoints; nothing gates existence or internal voluntary MLY activity.
 - 2026-09-21: Nine-label value system live in contract (MoneyState: projected/pending/verified/settled/allocated/rewarded/reinvested/reserved/disputed/reversed), MiMoney (isSpendable = settled/rewarded/reinvested; transition enforcement), sandbox, disclosure, and docs. Core slice grew: MiMind, MiDevice, MiScale (+ /api/rails-status), rewards/treasury, proposals/ballots. Suite 71/71 in tested scope; typecheck/build/rails-gate pass. Tests prove only what they test.
+
+- 2026-09-21: Governance branch code live (first 4-OS branch): delegations + circles (Governance OS), MiLegal (fail-closed enable checks, holds, counsel routing), MiResolve (case lifecycle, remedies, retaliation guard), MiJustice (rights cases, evidence anchors, peace terms, reentry packs). Suite 86/86 in tested scope; typecheck/build/rails-gate pass. Tests prove only what they test.
