@@ -17,7 +17,7 @@ All test values are synthetic. No public financial claims come from test data.
 
 ## Money-law checks (by OS test file)
 
-- MiMoney: one ledger; no negatives; pending → verified → settled with balance checks; serialized settles (no double-spend under concurrency); refunds linked to originals; disputes flaggable by anyone, resolvable by humans; mint needs human + budget ref; treasury spends capped by budget with 34% breaker → 80% override; reconciliation breaks must be zero.
+- MiMoney: one ledger; no negatives; pending → verified → settled with balance checks; serialized settles (no double-spend under concurrency); refunds linked to originals; disputes flaggable by anyone, resolvable by humans; mint needs human + budget ref; treasury spends capped by budget; breaker is PROVISIONAL and opt-in only (full override record + audit + rollback path required); reconciliation breaks must be zero.
 - MiForge: no money for proposing/signing up; welcome credits budgeted + human + online only (offline mint refused); revenue counts settled + accepted-delivery only; splits total 100; every party signs self.
 - MiMarket: campaign/donor/constituent/public-office records refused (routed to governance); merchants verify by human; orders follow the state machine; settlement via bus to MiMoney; reviews need completed orders; fees visible; volume counts settled only; takedowns need humans with appeal path.
 - MiWork: relationships stated explicitly with outside-review note visible; youth fenced (apprenticeships + guardian only); device attestation rejects unverified devices; verification is human; recruitment is never work; rewards need evidence; terms flagged with labor-clinic route.
@@ -32,3 +32,8 @@ All seven required examples implemented and tested: credential→opportunity, ca
 - The ledger here is an application-layer record; production persistence, key management, and audit are separate work.
 - Fraud/sanctions/tax/custody handling beyond records + routing is outside this scope.
 - Locked rails (L1–L10) remain locked; nothing here moves real-world money.
+
+## Corrections applied 2026-09-21 (human-directed, before full alignment)
+
+1. **Treasury breaker is provisional.** The 34%/80% figures are not constitutional and not universal: books default to no breaker, and any override carries human approval, budget ref, scope, reason, expiry, receipt, audit record, and rollback path (`correctTreasurySpend` / MiResolve dispute). Stated as provisional in code, the Money-State Contract, MIMONEY spec, and disclosure.
+2. **MLY wording corrected.** The rule still rejects misleading claims (MLY-equals-USD, backed-by-USD, guaranteed cash-out/dollar value, peg/promise language) but no longer bans plain "dollar" talk or honest negations. Voluntary external swaps may be recorded as participant-declared, labeled non-authoritative records (`recordExternalExchange`) with receipts.

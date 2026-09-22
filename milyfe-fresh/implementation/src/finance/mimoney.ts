@@ -42,12 +42,16 @@ export function splitIssuance(amountMinor: string, placePct = 70): { place: stri
   return { place: place.toString(), commons: (total - place).toString() };
 }
 
-/** Circuit breaker: spend > 34% of treasury triggers 48h cooldown + 80% supermajority. */
-export function breakerTrips(spendMinor: string, treasuryMinor: string): boolean {
+/** PROVISIONAL (2026-09-21): the 34% breaker figure is not constitutional and not
+ *  universal. It applies only to treasury books that explicitly opt in, until a
+ *  MiTreasury specification + authority record adopts (or replaces) it. */
+export const PROVISIONAL_BREAKER_PCT = 34;
+
+export function breakerTrips(spendMinor: string, treasuryMinor: string, pct: number = PROVISIONAL_BREAKER_PCT): boolean {
   const spend = BigInt(spendMinor);
   const treasury = BigInt(treasuryMinor);
   if (treasury <= 0n) return true;
-  return spend * 100n > treasury * 34n;
+  return spend * 100n > treasury * BigInt(pct);
 }
 
 export function supermajorityNeeded(votesFor: number, votesTotal: number): boolean {
@@ -314,16 +318,18 @@ export class Ledger {
   }
 }
 
-// ---------- Treasury book (budgeted, breaker-guarded, human-spent) ----------
+// ---------- Treasury book (budgeted, human-spent, provisional breaker opt-in) ----------
 export interface TreasuryBook {
   balanceMinor: string;
   paidMinor: string;
   budgetMinor: string;
+  /** Provisional breaker threshold, or null for no breaker. Opt-in only. */
+  breakerPct: number | null;
 }
 
-export function openTreasuryBook(budgetMinor: string): TreasuryBook {
+export function openTreasuryBook(budgetMinor: string, opts?: { breakerPct?: number | null }): TreasuryBook {
   if (BigInt(budgetMinor) <= 0n) throw new Error('BUDGET_MUST_BE_POSITIVE');
-  return { balanceMinor: '0', paidMinor: '0', budgetMinor };
+  return { balanceMinor: '0', paidMinor: '0', budgetMinor, breakerPct: opts?.breakerPct ?? null };
 }
 
 export function fundTreasuryBook(b: TreasuryBook, amountMinor: string): TreasuryBook {
@@ -331,27 +337,64 @@ export function fundTreasuryBook(b: TreasuryBook, amountMinor: string): Treasury
   return { ...b, balanceMinor: (BigInt(b.balanceMinor) + BigInt(amountMinor)).toString() };
 }
 
-export interface SpendOverride {
+/** A breaker override is a full record: human, budget, scope, reason, expiry,
+ *  receipt, and supermajority evidence — never a bare vote count. */
+export interface TreasuryOverride {
+  approvedBy: string;
+  budgetRef: string;
+  scope: string;
+  reason: string;
+  expiresAt: string;
+  receiptId: string;
   votesFor: number;
   votesTotal: number;
 }
 
+export interface TreasurySpendAudit {
+  spentMinor: string;
+  at: string;
+  approval: HumanApproval;
+  override: TreasuryOverride | null;
+  /** Rollback/correction path, always attached. */
+  rollback: string;
+}
+
+export const TREASURY_ROLLBACK_PATH = 'Correct via correctTreasurySpend (same books, same day) or dispute via MiResolve → ledger reverse.';
+
 export function spendTreasuryBook(
-  b: TreasuryBook, amountMinor: string, caller: Caller, approval: HumanApproval, override?: SpendOverride,
-): TreasuryBook {
+  b: TreasuryBook, amountMinor: string, caller: Caller, approval: HumanApproval, nowIso: string, override?: TreasuryOverride,
+): { book: TreasuryBook; audit: TreasurySpendAudit } {
   assertHumanFor(caller, 'treasury.spend');
   if (!approval.by || !approval.reason) throw new Error('APPROVAL_INCOMPLETE');
   if (BigInt(amountMinor) <= 0n) throw new Error('INVALID_AMOUNT');
   if (BigInt(b.balanceMinor) < BigInt(amountMinor)) throw new Error('TREASURY_SHORT');
   if (BigInt(b.paidMinor) + BigInt(amountMinor) > BigInt(b.budgetMinor)) throw new Error('BUDGET_EXCEEDED');
-  if (breakerTrips(amountMinor, b.balanceMinor)) {
-    if (!override || !supermajorityNeeded(override.votesFor, override.votesTotal)) {
-      throw new Error('BREAKER_TRIPPED_NEEDS_80PCT');
+  let usedOverride: TreasuryOverride | null = null;
+  if (b.breakerPct !== null && breakerTrips(amountMinor, b.balanceMinor, b.breakerPct)) {
+    if (!override) throw new Error('BREAKER_TRIPPED_NEEDS_OVERRIDE');
+    for (const field of ['approvedBy', 'budgetRef', 'scope', 'reason', 'expiresAt', 'receiptId'] as const) {
+      if (!override[field]) throw new Error(`OVERRIDE_MISSING_${field.toUpperCase()}`);
     }
+    if (override.expiresAt <= nowIso) throw new Error('OVERRIDE_EXPIRED');
+    if (!supermajorityNeeded(override.votesFor, override.votesTotal)) throw new Error('OVERRIDE_WEAK');
+    usedOverride = override;
   }
-  return {
+  const book: TreasuryBook = {
     ...b,
     balanceMinor: (BigInt(b.balanceMinor) - BigInt(amountMinor)).toString(),
     paidMinor: (BigInt(b.paidMinor) + BigInt(amountMinor)).toString(),
+  };
+  return { book, audit: { spentMinor: amountMinor, at: nowIso, approval, override: usedOverride, rollback: TREASURY_ROLLBACK_PATH } };
+}
+
+/** Rollback: restores a spend to the books (same-day correction path). */
+export function correctTreasurySpend(b: TreasuryBook, amountMinor: string, caller: Caller, reason: string): TreasuryBook {
+  assertHumanFor(caller, 'treasury.spend');
+  if (!reason) throw new Error('REASON_REQUIRED');
+  if (BigInt(amountMinor) <= 0n || BigInt(b.paidMinor) < BigInt(amountMinor)) throw new Error('NOTHING_TO_CORRECT');
+  return {
+    ...b,
+    balanceMinor: (BigInt(b.balanceMinor) + BigInt(amountMinor)).toString(),
+    paidMinor: (BigInt(b.paidMinor) - BigInt(amountMinor)).toString(),
   };
 }

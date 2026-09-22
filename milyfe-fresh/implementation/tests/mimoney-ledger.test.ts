@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
-  fundTreasuryBook, Ledger, openTreasuryBook, spendTreasuryBook,
+  correctTreasurySpend, fundTreasuryBook, Ledger, openTreasuryBook, PROVISIONAL_BREAKER_PCT,
+  spendTreasuryBook, TREASURY_ROLLBACK_PATH, type TreasuryOverride,
 } from '@/finance/mimoney';
 import { MLY_DISCLOSURE, type Caller } from '@/finance/shared';
 
@@ -33,7 +34,7 @@ describe('mimoney ledger invariants (one ledger, no negatives)', () => {
     const ledger = await funded();
     expect(() => ledger.post(HUMAN, { key: 's', from: ALICE, to: ALICE, amountMinor: '1' }, NOW)).toThrow('NO_SELF_SEND');
     expect(() => ledger.post(HUMAN, { key: 'z', from: ALICE, to: tdid('bob'), amountMinor: '0' }, NOW)).toThrow('AMOUNT_MUST_BE_POSITIVE');
-    expect(() => ledger.post(HUMAN, { key: 'u', from: ALICE, to: tdid('bob'), amountMinor: '1', note: 'worth 1 USD' }, NOW)).toThrow('MLY_MISREPRESENTATION_USD');
+    expect(() => ledger.post(HUMAN, { key: 'u', from: ALICE, to: tdid('bob'), amountMinor: '1', note: 'worth 1 USD' }, NOW)).toThrow('MLY_MISREPRESENTATION_WORTH_USD');
   });
 });
 
@@ -114,17 +115,44 @@ describe('mimoney states (pending → settled, disputes, reversals, refunds)', (
   });
 });
 
-describe('mimoney treasury (budgeted, breaker-guarded)', () => {
-  it('spends within budget; breaker needs 80% override', () => {
+describe('mimoney treasury (budgeted, provisional breaker opt-in)', () => {
+  const OVER: TreasuryOverride = {
+    approvedBy: ALICE, budgetRef: 'budget-1', scope: 'treasury-spend', reason: 'roof repair',
+    expiresAt: '2027-01-01T00:00:00Z', receiptId: 'vote-8', votesFor: 8, votesTotal: 10,
+  };
+  it('books default to NO breaker — the 34% rule is provisional, never universal', () => {
+    expect(PROVISIONAL_BREAKER_PCT).toBe(34);
+    expect(openTreasuryBook('1000').breakerPct).toBeNull();
+    let plain = fundTreasuryBook(openTreasuryBook('1000'), '1000');
+    // 90% of the book spends fine with no breaker opted in (budget still caps).
+    plain = spendTreasuryBook(plain, '900', HUMAN, APPROVAL, NOW).book;
+    expect(plain.paidMinor).toBe('900');
+  });
+  it('opted-in breaker needs a full override record (human/budget/scope/reason/expiry/receipt/votes)', () => {
+    let book = fundTreasuryBook(openTreasuryBook('1000', { breakerPct: 34 }), '1000');
+    expect(() => spendTreasuryBook(book, '100', AGENT, APPROVAL, NOW)).toThrow('AGENT_BLOCKED_TREASURY_SPEND');
+    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW)).toThrow('BREAKER_TRIPPED_NEEDS_OVERRIDE');
+    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW, { ...OVER, receiptId: '' })).toThrow('OVERRIDE_MISSING_RECEIPTID');
+    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW, { ...OVER, expiresAt: NOW })).toThrow('OVERRIDE_EXPIRED');
+    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW, { ...OVER, votesFor: 5 })).toThrow('OVERRIDE_WEAK');
+    const { book: spent, audit } = spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW, OVER);
+    expect(spent.paidMinor).toBe('500');
+    expect(audit.override?.receiptId).toBe('vote-8');
+    expect(audit.rollback).toBe(TREASURY_ROLLBACK_PATH);
+    // Small spends under the breaker need no override.
+    const small = spendTreasuryBook(spent, '100', HUMAN, APPROVAL, NOW);
+    expect(small.audit.override).toBeNull();
+  });
+  it('budgets and balances still cap; corrections roll spends back', () => {
     let book = fundTreasuryBook(openTreasuryBook('1000'), '1000');
-    expect(() => spendTreasuryBook(book, '100', AGENT, APPROVAL)).toThrow('AGENT_BLOCKED_TREASURY_SPEND');
-    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL)).toThrow('BREAKER_TRIPPED_NEEDS_80PCT');
-    book = spendTreasuryBook(book, '500', HUMAN, APPROVAL, { votesFor: 8, votesTotal: 10 });
-    expect(book.paidMinor).toBe('500');
-    expect(() => spendTreasuryBook(book, '600', HUMAN, APPROVAL, { votesFor: 10, votesTotal: 10 })).toThrow('TREASURY_SHORT');
-    let big = fundTreasuryBook(openTreasuryBook('1000'), '2000');
-    big = spendTreasuryBook(big, '600', HUMAN, APPROVAL);
-    expect(() => spendTreasuryBook(big, '500', HUMAN, APPROVAL, { votesFor: 10, votesTotal: 10 })).toThrow('BUDGET_EXCEEDED');
+    expect(() => spendTreasuryBook(book, '600', HUMAN, APPROVAL, NOW, undefined)).not.toThrow();
+    book = spendTreasuryBook(fundTreasuryBook(openTreasuryBook('1000'), '2000'), '600', HUMAN, APPROVAL, NOW).book;
+    expect(() => spendTreasuryBook(book, '500', HUMAN, APPROVAL, NOW)).toThrow('BUDGET_EXCEEDED');
+    expect(() => correctTreasurySpend(book, '100', AGENT, 'fix')).toThrow('AGENT_BLOCKED_TREASURY_SPEND');
+    const fixed = correctTreasurySpend(book, '600', HUMAN, 'entered twice');
+    expect(fixed.balanceMinor).toBe('2000');
+    expect(fixed.paidMinor).toBe('0');
+    expect(() => correctTreasurySpend(fixed, '1', HUMAN, 'nothing')).toThrow('NOTHING_TO_CORRECT');
   });
 });
 

@@ -29,6 +29,6 @@ const Posting = z.object({ id: z.string().uuid(), at: z.string().datetime(),
 - `cash_exchanges`: id, node ref, member ref, fiat amount, mly credited, dual confirmations, limits check, receipts.
 - `swap_listings`: id, maker, offer, terms, meeting policy, status (listed→matched→met→settled/disputed), receipts.
 - `finance_cards`: id, entity, form factor (digital-nfc/ble/qr; plastic later), key ref, limits, status, receipts.
-- `transfers`: atomic MiMoney postings (transfer_mly semantics: row-lock, positive-only, no self-send, sufficient balance, receipt). Circuit breaker: >34% treasury spend → 48h cooldown + 80% supermajority. Issuance split default 70% place / 30% commons. Earn caps/week.
+- `transfers`: atomic MiMoney postings (transfer_mly semantics: row-lock, positive-only, no self-send, sufficient balance, receipt). Circuit breaker (PROVISIONAL 2026-09-21 — not constitutional, opt-in only until a MiTreasury spec + authority record adopts it): >34% treasury spend → 48h cooldown + 80% supermajority override with full record (human, budget, scope, reason, expiry, receipt, audit, rollback path). Issuance split default 70% place / 30% commons. Earn caps/week.
 
 Rules: every mutation human-signed or human-approved-policy-executed; every mutation balanced + receipted; rewards need verified contribution + approved rules; treasury explicit/auditable; USD-facing/reverse rails locked (MiScale) until risk/disclosure/partner review + evidence + H. Internal MLY activity is never gated on outside permission.

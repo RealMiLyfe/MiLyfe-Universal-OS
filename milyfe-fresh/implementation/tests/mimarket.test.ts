@@ -52,7 +52,7 @@ describe('mimarket listings + orders + settlement', () => {
     const raw = createMerchant('m1', HUMAN, 'Bakery', 'terms');
     expect(() => publishListing('l1', HUMAN, raw, 'goods', 'Loaf', '5', 'fresh', NOW)).toThrow('MERCHANT_UNVERIFIED');
     const m = approveMerchant(raw, HUMAN, APPROVAL);
-    expect(() => publishListing('l1', HUMAN, m, 'goods', 'Loaf', '5', 'worth 5 USD', NOW)).toThrow('MLY_MISREPRESENTATION_USD');
+    expect(() => publishListing('l1', HUMAN, m, 'goods', 'Loaf', '5', 'worth 5 USD', NOW)).toThrow('MLY_MISREPRESENTATION_WORTH_USD');
     const l = offerFromVenture('l1', HUMAN, m, 'venture-9', 'Bread subscription', '40', NOW);
     expect(l.terms).toContain('venture-9');
     expect(retireListing(l, HUMAN, m).state).toBe('retired');

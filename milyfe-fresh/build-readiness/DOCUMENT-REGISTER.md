@@ -47,3 +47,6 @@ Finance (7): `branches/finance/FINANCE-BRANCH-DESIGN.md` · `FINANCE-BRANCH-CRYP
 ## Finance branch code (2026-09-21)
 - `implementation/src/finance/{shared,mimoney,miforge,mimarket,miwork,bridges}.ts` — third full 4-OS branch, trunk-wired. Tests: `tests/{finance-shared,finance-bridges,finance-security,mimoney-ledger,miforge-venture,mimarket,miwork}.test.ts`.
 - `branches/finance/FINANCE-SECURITY-REVIEW.md` — agent self-check (human review pending).
+
+## Finance corrections (2026-09-21)
+- Provisional treasury breaker (opt-in, full override records, audit, rollback) + corrected MLY/external-USD wording (`recordExternalExchange`). Code: `src/finance/{shared,mimoney}.ts`. Tests: 203/203.

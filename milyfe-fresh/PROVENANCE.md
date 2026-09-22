@@ -72,3 +72,5 @@ Source root: `MILYFE-TREE-FOUNDATION-PACKAGE/MILYFE-TREE-FOUNDATION-PACKAGE/`
 ## 24. 2026-09-21 — Lifestyle accepted (human, 8/12); Finance branch ordered (MiForge/MiMarket/MiMoney/MiWork only).
 
 ## 25. 2026-09-21 — Finance branch code (agent): shared/ledger/forge/market/work/bridges + tests; 198/198 tested scope; gates green; all 12 OSes in code; conformance reviewed; acceptance pending.
+
+## 26. 2026-09-21 — Finance accepted (human, 12/12); corrections applied (agent): provisional treasury + corrected MLY/USD wording; 203/203; gates green.

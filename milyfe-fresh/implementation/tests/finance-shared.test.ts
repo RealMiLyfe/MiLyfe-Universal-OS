@@ -103,3 +103,39 @@ describe('finance offline + notices', () => {
     expect(n.audioOffered).toBe(true);
   });
 });
+
+describe('finance MLY/external-USD rule (corrected 2026-09-21)', () => {
+  it('rejects the five misleading claims', async () => {
+    const { assertMlyWording: check } = await import('@/finance/shared');
+    for (const bad of [
+      '1 MLY equals 1 USD',
+      'MLY is backed by USD',
+      'guaranteed cash-out here',
+      'guaranteed dollar value inside',
+      'MLY is USD, trust us',
+    ]) {
+      expect(() => check(bad)).toThrow(/^MLY_MISREPRESENTATION_/);
+    }
+  });
+  it('allows honest negations and plain dollar talk', async () => {
+    const { assertMlyWording: check, MLY_DISCLOSURE: d } = await import('@/finance/shared');
+    for (const ok of [
+      d,
+      'Not an MLY peg. No automatic redemption.',
+      'We talked about dollars over coffee.',
+      'The counterparty said 20 USD face to face.',
+    ]) {
+      expect(() => check(ok)).not.toThrow();
+    }
+  });
+  it('records voluntary external swaps with all seven labels + receipt', async () => {
+    const { recordExternalExchange } = await import('@/finance/shared');
+    const { record, receipt } = recordExternalExchange('x1', HUMAN, '250', '20', 'USD', 'neighbor-jo', NOW);
+    expect(record).toMatchObject({
+      kind: 'external-counterparty-value', participantDeclared: true, notMlyBalance: true,
+      notMlyPeg: true, notMiLyfeGuarantee: true, noAutomaticRedemption: true, notLedgerAuthoritative: true,
+    });
+    expect(receipt.os).toBe('MiMoney');
+    expect(receipt.status).toBe('approved');
+  });
+});

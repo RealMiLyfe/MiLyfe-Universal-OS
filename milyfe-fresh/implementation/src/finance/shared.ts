@@ -37,18 +37,76 @@ export const FINANCE_FORBIDDEN = [
 ] as const;
 
 // ---------- MLY honesty: MLY is MLY. Never USD, never pegged, never promised. ----------
-export const MLY_DISCLOSURE = 'MLY is MLY: not USD, not pegged to anything, no promised cash-out or guaranteed value. Voluntary exchange with willing counterparties only.';
+export const MLY_DISCLOSURE = 'MLY is MLY: not USD, not pegged to anything, no promised cash-out or promised value. Voluntary exchange with willing counterparties only.';
 
-const USD_WORDS = ['USD', 'US dollar', 'pegged', 'guaranteed cash', 'guaranteed redemption', 'guaranteed appreciation', 'cash-out promise', 'redeemable for dollars'];
+/** Misleading claims that are always rejected (case-insensitive). Plain words
+ *  like "dollar" alone are allowed — only the misleading claims are banned. */
+const MLY_BANS: { re: RegExp; code: string }[] = [
+  { re: /mly\s+(is|equals|=)\s*(usd|u\.?\s?s\.?\s*dollars?|dollars?|\$)/i, code: 'MLY_MISREPRESENTATION_EQUALS_USD' },
+  { re: /\b1\s*mly\s*=\s*1\b/i, code: 'MLY_MISREPRESENTATION_EQUALS_USD' },
+  { re: /1\s*mly\s+equals/i, code: 'MLY_MISREPRESENTATION_EQUALS_USD' },
+  { re: /backed\s+by\s+(usd|dollars?)/i, code: 'MLY_MISREPRESENTATION_BACKED_BY_USD' },
+  { re: /guaranteed\s+(cash-?out|cash|dollars?|redemption|appreciation|value)/i, code: 'MLY_MISREPRESENTATION_GUARANTEED_CASHOUT' },
+  { re: /worth\s+[\d.]+\s*(usd|dollars?)/i, code: 'MLY_MISREPRESENTATION_WORTH_USD' },
+  { re: /dollar\s+parity|parity\s+(with|to)\s+(usd|dollars?)/i, code: 'MLY_MISREPRESENTATION_DOLLAR_PARITY' },
+  { re: /cash-?out\s+promise/i, code: 'MLY_MISREPRESENTATION_CASHOUT_PROMISE' },
+  { re: /redeemable\s+for\s+(dollars?|usd)/i, code: 'MLY_MISREPRESENTATION_REDEEMABLE_DOLLARS' },
+  { re: /(?<!not\s)(?<!no\s)pegged/i, code: 'MLY_MISREPRESENTATION_PEGGED' },
+  { re: /(?<!not\s)(?<!no\s)automatic\s+redemption/i, code: 'MLY_MISREPRESENTATION_AUTO_REDEMPTION' },
+];
 
-/** Rejects any wording that dresses MLY up as dollars or promises. */
+/** Rejects misleading MLY claims. Honest negations ("not pegged", "no
+ *  automatic redemption") and clearly labeled external values pass. */
 export function assertMlyWording(text: string): void {
-  const hit = USD_WORDS.find((w) => text.includes(w));
-  if (hit) throw new Error(`MLY_MISREPRESENTATION_${hit.toUpperCase().replace(/[^A-Z]+/g, '_')}`);
+  const hit = MLY_BANS.find((b) => b.re.test(text));
+  if (hit) throw new Error(hit.code);
 }
 
 export function labelMly(amountMinor: string): string {
   return `${amountMinor} MLY (${MLY_DISCLOSURE})`;
+}
+
+// ---------- Voluntary external exchanges (participant-declared, never authoritative) ----------
+export interface ExternalExchangeRecord {
+  id: string;
+  mlyAmountMinor: string;
+  externalAmount: string;
+  externalUnit: string;
+  counterparty: string;
+  kind: 'external-counterparty-value';
+  participantDeclared: true;
+  notMlyBalance: true;
+  notMlyPeg: true;
+  notMiLyfeGuarantee: true;
+  noAutomaticRedemption: true;
+  notLedgerAuthoritative: true;
+  at: string;
+}
+
+/** Records a participant's own voluntary swap with a willing counterparty.
+ *  The outside value is their claim, labeled as such — never a peg, promise,
+ *  or ledger fact. */
+export function recordExternalExchange(
+  id: string, caller: Caller, mlyAmountMinor: string, externalAmount: string, externalUnit: string, counterparty: string, nowIso: string,
+) {
+  assertCaller(caller);
+  if (BigInt(mlyAmountMinor) <= 0n) throw new Error('AMOUNT_MUST_BE_POSITIVE');
+  if (!externalAmount || !externalUnit || !counterparty) throw new Error('EXCHANGE_FACTS_REQUIRED');
+  assertMlyWording(counterparty);
+  const record: ExternalExchangeRecord = {
+    id, mlyAmountMinor, externalAmount, externalUnit, counterparty,
+    kind: 'external-counterparty-value', participantDeclared: true,
+    notMlyBalance: true, notMlyPeg: true, notMiLyfeGuarantee: true,
+    noAutomaticRedemption: true, notLedgerAuthoritative: true, at: nowIso,
+  };
+  const receipt = receiptFor('MiMoney', {
+    actor: caller.did, purpose: `Record voluntary exchange of ${mlyAmountMinor} MLY with ${counterparty}`, capability: 'money.external-exchange-record',
+    approval: { by: caller.did, role: 'participant', scope: 'own-record', reason: 'participant declared' },
+    impact: { other: `outside claim: ${externalAmount} ${externalUnit}` }, status: 'approved',
+    correction: { path: 'Records correct through MiResolve', route: 'resolve.dispute-open' },
+    explains: `A participant recorded swapping ${mlyAmountMinor} MLY outside MiLyfe. The outside value is their claim, not ours, and it changes nothing on the ledger.`,
+  });
+  return { record, receipt };
 }
 
 // ---------- Callers, permissions, human gates ----------
