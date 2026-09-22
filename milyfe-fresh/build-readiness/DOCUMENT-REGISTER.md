@@ -43,3 +43,7 @@ Finance (7): `branches/finance/FINANCE-BRANCH-DESIGN.md` · `FINANCE-BRANCH-CRYP
 - `implementation/src/lifestyle/{shared,micare,mihealth,miplace,mieducation}.ts` — second full 4-OS branch, trunk-wired. Tests: `tests/{lifestyle-shared,lifestyle-security,micare,mihealth,miplace,mieducation}.test.ts`.
 - `branches/lifestyle/LIFESTYLE-SECURITY-REVIEW.md` — agent self-check (human review pending).
 - `CURRENT-STATE.md` + `HANDOFF.md` — live status + branch handoff log (governance acceptance, `2c5f485`, reconciliation, 142/142 scope).
+
+## Finance branch code (2026-09-21)
+- `implementation/src/finance/{shared,mimoney,miforge,mimarket,miwork,bridges}.ts` — third full 4-OS branch, trunk-wired. Tests: `tests/{finance-shared,finance-bridges,finance-security,mimoney-ledger,miforge-venture,mimarket,miwork}.test.ts`.
+- `branches/finance/FINANCE-SECURITY-REVIEW.md` — agent self-check (human review pending).

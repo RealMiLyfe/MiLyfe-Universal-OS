@@ -5,7 +5,7 @@
 ## Status in plain words
 
 - Direction: approved. Core slice + two branches: implemented within tested scope.
-- Full 12-OS tree: NOT complete (8 of 12 primary OSes in code; Finance branch next).
+- Accepted: Governance 4/4 (`2c5f485`), Lifestyle 4/4 (code `b41aebf`, records `e813ad2`). Built, awaiting acceptance: Finance 4/4. Total 12 of 12 primary OSes in code — still NOT a launch claim.
 - Security review: agent self-checks only; independent human review pending.
 - Outside risk/disclosure homework (legal, tax, money-handling, health, jurisdiction): pending.
 - Money rails: LOCKED (L1–L10). Public launch: NOT approved.
@@ -15,7 +15,7 @@
 - Trunk/kernel slice: identity, ledger math, nine-label money states, sandbox, MiMind, MiDevice, MiScale, rewards/treasury, proposals/ballots, delegations, circles, lock board + `/api/rails-status`.
 - Governance branch (4/4): Governance OS core, MiLegal, MiResolve, MiJustice.
 - Lifestyle branch (4/4): MiCare, MiHealth, MiPlace, MiEducation.
-- Suite: **142/142 passing**, plus clean typecheck, clean build, rails-gate pass.
+- Suite: **198/198 passing** (34 files), plus clean typecheck, clean build, rails-gate pass. Synthetic values only.
 
 ## What is NOT claimed
 
@@ -25,7 +25,7 @@
 
 ## Build order (unchanged)
 
-Trunk + first slice (done) → Governance 4/4 (done) → Lifestyle 4/4 (done) → Finance 4/4 (next: MiForge, MiMarket, MiMoney, MiWork) → integration of all 12 → reviews → launch decision.
+Trunk + first slice (done) → Governance 4/4 (accepted) → Lifestyle 4/4 (accepted) → Finance 4/4 (built, awaiting acceptance) → integration of all 12 → reviews → launch decision.
 
 ## Pointers
 

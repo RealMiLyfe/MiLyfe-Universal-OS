@@ -90,16 +90,16 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 |---|---|---|---|---|---|---|---|---|---|
 | 0 Tree lock | ✓ | ✓ direction | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
 | 1 Roots | ✓ | ✓ direction | n/a | n/a | n/a | — (opinions pending) | n/a | n/a | n/a |
-| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 142/142 scope | — | n/a | — | — | n/a |
+| 2 Trunk | ✓ | ✓ direction | ◐ kernel+9 services | ◐ 198/198 scope | — | n/a | — | — | n/a |
 | 3 Contracts | ✓ | ✓ direction | ◐ Zod schemas live | ◐ schema tests | — | n/a | — | — | n/a |
 | 4 Governance | ✓ | ✓ direction | ◐ gov-os+milegal+miresolve+mijustice | ◐ handed off (86/86) | — | — | — | — | n/a |
-| 5 Lifestyle | ✓ | ✓ direction | ◐ micare+mihealth+miplace+miedu | ◐ lifestyle tests | — (self-check) | — | — | — | n/a |
-| 6 Finance | ✓ | ✓ direction | ◐ math+nine-label states+sandbox | ◐ math/state tests | — | — | — | — | rails locked (L1–L10) |
+| 5 Lifestyle | ✓ | ✓ direction | ◐ micare+mihealth+miplace+miedu | ◐ handed off (142/142) | — (self-check) | — | — | — | n/a |
+| 6 Finance | ✓ | ✓ direction | ◐ miforge+mimarket+mimoney+miwork | ◐ finance tests | — (self-check) | — | — | — | rails locked (L1–L10) |
 | 7 Journeys | ✓ | ✓ direction | — | — | — | n/a | — | — | n/a |
 | 8 Brand/legal | ✓ | ✓ direction | — | — | — | — (reviews requested) | — | — | n/a |
 | 9 Security | ✓ | ✓ direction | ◐ controls in slice | ◐ suite subset | — (self-tests only) | n/a | — | — | n/a |
 | 10 Readiness | ✓ | ✓ direction | ◐ repo controls (CI next) | — | — | — | — | — | register live |
-| 11 Implementation | ✓ slice plan | ✓ direction | ◐ slice + gov + lifestyle | ◐ 142/142 scope | — | — | — | — | rails locked |
+| 11 Implementation | ✓ slice plan | ✓ direction | ◐ all 12 OSes in code | ◐ 198/198 scope | — | — | — | — | rails locked |
 
 - 2026-09-21 CORRECTION: earlier entry said phases "marked APPROVED" without qualification. Corrected meaning: APPROVED = direction/plan approved only. Completeness, legal clearance, and production-readiness are NOT claimed. Nine-state vocabulary + matrix added so status can never be misread again.
 
@@ -112,3 +112,7 @@ Legal and financial gates stay in place. Locked capabilities stay locked. A pass
 
 - 2026-09-21: Governance branch ACCEPTED by human as first completed 4-OS branch (design/release gates still apply). Commit `2c5f485` (86/86). Repository reconciliation recorded in HANDOFF.md (local history lost in sandbox, remote verified intact, clean 13-file recommmit, nothing lost).
 - 2026-09-21: Lifestyle branch code live (second 4-OS branch, no scope expansion): MiCare, MiHealth, MiPlace, MiEducation + shared trunk wiring. Suite 142/142 (27 files); required coverage (unit/contract/permission/isolation/consent/accessibility/offline/export/agent-boundary/escalation/security-self-check) present. Agent self-check only; human review pending. Next: Finance branch.
+
+- 2026-09-21: Lifestyle branch ACCEPTED by human for defined implementation scope (code `b41aebf`, records `e813ad2`). Counts: Governance 4/4, Lifestyle 4/4, total 8/12. Security review remains agent self-check; 142/142 = tested scope only, no launch claim.
+
+- 2026-09-21: Finance branch code live (third 4-OS branch, no scope expansion): MiForge, MiMarket, MiMoney (authoritative ledger), MiWork + 7 cross-branch bridges. Suite 198/198 (34 files); all required Finance coverage present. All 12 primary OSes now exist in code — NOT a launch claim; integrated gates still pending. Agent self-check only; human review pending.
