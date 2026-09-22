@@ -42,6 +42,6 @@ Each entry records acceptance, exact commit, test evidence, and exact scope. Han
 
 - **Scope:** no new primary OSes. Trunk integration, 10 cross-branch journeys (J1–J10), bus/receipt verification, identity continuity, data-space isolation, permission/revocation, psyche continuity, agent/device boundaries, money hardening, market/work/gov reconciliations, export/deletion/recovery, accessibility, security self-check, support/incident, brand scans, Jacksonville pilot prep.
 - **Evidence:** `build-readiness/INTEGRATION-EVIDENCE.md` (suite 240/240, 41 files) · gates tracked open in `build-readiness/RELEASE-GATES.md` · pilot prep in `build-readiness/JACKSONVILLE-PILOT-PREP.md`.
-- **Commit:** `STAMP_ON_PUSH` — "Integration + hardening batch 1: journeys, isolation, money-hardening, gates, pilot prep (240/240 scope)".
+- **Commit:** `e48b688` — "Integration + hardening batch 1: journeys, isolation, money-hardening, gates, pilot prep (240/240 scope)".
 - **Fixes surfaced:** negation-aware MLY wording; refunds on disputed originals (prior batch); provisional treasury (prior batch).
 - **Still open:** all 9 release gates. Human review, independent security, staffing, and real-person pilot are pending. No launch claim.
