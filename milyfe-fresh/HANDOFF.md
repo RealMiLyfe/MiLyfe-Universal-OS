@@ -14,7 +14,7 @@ Each entry records acceptance, exact commit, test evidence, and exact scope. Han
 ## Handoff 2 — Lifestyle branch (second 4-OS branch)
 
 - **Built:** 2026-09-21 per human Lifestyle order (MiCare, MiHealth, MiPlace, MiEducation only; no scope expansion).
-- **Commit:** recorded on push (see `git log`).
+- **Commit:** `b41aebf` — "Lifestyle branch code: MiCare/MiHealth/MiPlace/MiEducation + shared trunk wiring (142/142 scope)".
 - **Test evidence at handoff:** 142/142 passing (27 files), typecheck clean, build clean, rails-gate pass. Required coverage present: unit, contract (MiEvent/MiReceiptSchema/MiScopeGrant), permission, sensitive-data isolation, consent/revocation, accessibility (plain-notice), offline/reconnect, export/deletion, agent-boundary, support/escalation, executable security review (SR-1…SR-7). Tests prove only what they test.
 - **Exact scope:** `implementation/src/lifestyle/{shared,micare,mihealth,miplace,mieducation}.ts` + `tests/{lifestyle-shared,lifestyle-security,micare,mihealth,miplace,mieducation}.test.ts` + `branches/lifestyle/LIFESTYLE-SECURITY-REVIEW.md` (agent self-check; human review pending).
 - **Boundaries held:** trunk-only wiring (no cross-branch source imports — pinned by SR-3); receipts on consequential acts; references-only sealed bus traffic; human-only high-impact acts (13-item agent-forbidden list); no clinical acts without licensed authority; no government/utility replacement claims; no reputation scores; no credentials without authorized issuers.
