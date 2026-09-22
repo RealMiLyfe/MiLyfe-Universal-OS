@@ -50,5 +50,5 @@ Each entry records acceptance, exact commit, test evidence, and exact scope. Han
 
 - **Scope:** 14 items, no new OSes, no unrelated features: security packet + threat mapping, independent-review handoff, accessibility packet, support plan, recovery exercise (+ drill suite), retention/incident records, external-boundary register, contract evidence index, agent/device evidence, ledger/treasury audit, pilot consent/safety, pilot operations, gate checklists, change-control freeze.
 - **Evidence:** 12 packets in `build-readiness/` + `tests/integration/{recovery-drill,regression}.test.ts`. Suite 246/246 (43 files).
-- **Commit:** `STAMP_ON_PUSH` — "Integration batch 2: evidence + readiness layer (246/246 scope)".
+- **Commit:** `68d4f63` — "Integration batch 2: evidence + readiness layer (246/246 scope)".
 - **Still open:** all 9 release gates (closure needs the 7-part human package per gate). Pilot TODOs unfilled — pilot must not begin. No launch claim.
